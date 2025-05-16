@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Schedule Service Test UI</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 2em auto; }
+    input, button, select { margin: 0.2em 0; padding: 0.4em; }
+    .block { border: 1px solid #ccc; padding: 1em; margin-bottom: 1em; border-radius: 8px; }
+    pre { background: #f8f8f8; padding: 0.5em; }
+    .row { display: flex; gap: 1em; }
+    .col { flex: 1; }
+  </style>
+</head>
+<body>
+  <h1>Schedule Service Test UI</h1>
+
+  <div class="row">
+    <div class="col block">
+      <h2>Группы</h2>
+      <input id="group_name" placeholder="Название группы"><br>
+      <input id="group_faculty" placeholder="Факультет"><br>
+      <input id="group_year" placeholder="Курс" type="number"><br>
+      <button onclick="createGroup()">Создать группу</button>
+      <button onclick="listGroups()">Список групп</button>
+      <pre id="group_result"></pre>
+    </div>
+    <div class="col block">
+      <h2>Предметы</h2>
+      <input id="subject_name" placeholder="Название предмета"><br>
+      <input id="subject_code" placeholder="Код"><br>
+      <input id="subject_credits" placeholder="Кредиты" type="number"><br>
+      <button onclick="createSubject()">Создать предмет</button>
+      <button onclick="listSubjects()">Список предметов</button>
+      <pre id="subject_result"></pre>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Расписание</h2>
+    <input id="sch_subject_id" placeholder="ID предмета" type="number">
+    <input id="sch_teacher_id" placeholder="ID преподавателя" type="number">
+    <input id="sch_group_id" placeholder="ID группы" type="number">
+    <input id="sch_day" placeholder="День недели (1-7)" type="number">
+    <input id="sch_start" placeholder="Время начала (2024-05-17T09:00:00Z)">
+    <input id="sch_end" placeholder="Время конца (2024-05-17T10:30:00Z)">
+    <input id="sch_room" placeholder="Аудитория">
+    <button onclick="createSchedule()">Создать пару</button>
+    <br>
+    <input id="sch_id" placeholder="ID пары" type="number">
+    <button onclick="getSchedule()">Получить пару</button>
+    <button onclick="deleteSchedule()">Удалить пару</button>
+    <br>
+    <input id="sch_teacher_id2" placeholder="ID преподавателя для поиска" type="number">
+    <button onclick="listByTeacher()">Пары по преподавателю</button>
+    <input id="sch_group_id2" placeholder="ID группы для поиска" type="number">
+    <button onclick="listByGroup()">Пары по группе</button>
+    <pre id="schedule_result"></pre>
+  </div>
+
+  <script>
+    const api = (path, method, body) => fetch('http://localhost:8082/api/v1' + path, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined
+    }).then(async r => {
+      let text = await r.text();
+      let data;
+      try { data = JSON.parse(text); } catch { data = text; }
+      return { status: r.status, data };
+    });
+
+    function createGroup() {
+      api('/group/', 'POST', {
+        name: group_name.value,
+        faculty: group_faculty.value,
+        year: +group_year.value
+      }).then(res => group_result.textContent = JSON.stringify(res, null, 2));
+    }
+    function listGroups() {
+      api('/group/', 'GET').then(res => group_result.textContent = JSON.stringify(res, null, 2));
+    }
+    function createSubject() {
+      api('/subject/', 'POST', {
+        name: subject_name.value,
+        code: subject_code.value,
+        credits: +subject_credits.value
+      }).then(res => subject_result.textContent = JSON.stringify(res, null, 2));
+    }
+    function listSubjects() {
+      api('/subject/', 'GET').then(res => subject_result.textContent = JSON.stringify(res, null, 2));
+    }
+    function createSchedule() {
+      api('/schedule/', 'POST', {
+        subject_id: +sch_subject_id.value,
+        teacher_id: +sch_teacher_id.value,
+        group_id: +sch_group_id.value,
+        day_of_week: +sch_day.value,
+        start_time: sch_start.value,
+        end_time: sch_end.value,
+        room: sch_room.value
+      }).then(res => schedule_result.textContent = JSON.stringify(res, null, 2));
+    }
+    function getSchedule() {
+      api('/schedule/' + sch_id.value, 'GET').then(res => schedule_result.textContent = JSON.stringify(res, null, 2));
+    }
+    function deleteSchedule() {
+      api('/schedule/' + sch_id.value, 'DELETE').then(res => schedule_result.textContent = JSON.stringify(res, null, 2));
+    }
+    function listByTeacher() {
+      api('/schedule/teacher/' + sch_teacher_id2.value, 'GET').then(res => schedule_result.textContent = JSON.stringify(res, null, 2));
+    }
+    function listByGroup() {
+      api('/schedule/group/' + sch_group_id2.value, 'GET').then(res => schedule_result.textContent = JSON.stringify(res, null, 2));
+    }
+  </script>
+</body>
+</html> 

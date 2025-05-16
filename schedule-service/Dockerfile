@@ -15,6 +15,7 @@ WORKDIR /app
 
 COPY --from=builder /app/schedule-service .
 COPY --from=builder /app/configs ./configs
+COPY --from=builder /app/frontend.html .
 
 EXPOSE 8082
 

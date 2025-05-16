@@ -79,6 +79,10 @@ func main() {
 		router.Use(otelgin.Middleware(viper.GetString("telemetry.service_name")))
 	}
 
+	// Обслуживание статических файлов
+	router.StaticFile("/", "./frontend.html")
+	router.StaticFile("/test.html", "./frontend.html")
+
 	// Регистрация маршрутов
 	v1 := router.Group("/api/v1")
 	{
@@ -138,21 +142,46 @@ func main() {
 }
 
 func initConfig() error {
+	// Загрузка конфигурации из файла
 	viper.AddConfigPath("configs")
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	return viper.ReadInConfig()
+	
+	// Установка переменных окружения
+	viper.AutomaticEnv()
+	
+	// Маппинг переменных окружения
+	viper.SetEnvPrefix("")
+	viper.BindEnv("database.host", "DB_HOST")
+	viper.BindEnv("database.port", "DB_PORT")
+	viper.BindEnv("database.user", "DB_USER")
+	viper.BindEnv("database.password", "DB_PASSWORD")
+	viper.BindEnv("database.dbname", "DB_NAME")
+	viper.BindEnv("jwt.secret", "JWT_SECRET")
+	
+	// Чтение конфигурации из файла
+	if err := viper.ReadInConfig(); err != nil {
+		return err
+	}
+	
+	return nil
 }
 
 func initDB() (*gorm.DB, error) {
+	// Получение параметров подключения к БД
+	host := viper.GetString("database.host")
+	port := viper.GetString("database.port")
+	user := viper.GetString("database.user")
+	password := viper.GetString("database.password")
+	dbname := viper.GetString("database.dbname")
+	sslmode := viper.GetString("database.sslmode")
+	
+	// Формирование строки подключения
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
-		viper.GetString("database.host"),
-		viper.GetString("database.port"),
-		viper.GetString("database.user"),
-		viper.GetString("database.password"),
-		viper.GetString("database.dbname"),
-		viper.GetString("database.sslmode"),
-	)
+		host, port, user, password, dbname, sslmode)
+		
+	fmt.Printf("Connecting to database: host=%s port=%s user=%s dbname=%s\n", 
+		host, port, user, dbname)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {

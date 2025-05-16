@@ -199,4 +199,8 @@ INSERT INTO auth.roles (name) VALUES
     ('teacher'),
     ('dean_office'),
     ('applicant')
-ON CONFLICT (name) DO NOTHING; 
+ON CONFLICT (name) DO NOTHING;
+
+-- Вставка тестовой группы для студентов
+INSERT INTO schedule.groups (id, name, faculty, year) VALUES 
+    (1, 'Test Group', 'Test Faculty', 1); 

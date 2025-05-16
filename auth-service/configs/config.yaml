@@ -6,7 +6,7 @@ server:
   max_header_bytes: 1048576
 
 database:
-  host: postgres
+  host: localhost
   port: 5432
   user: postgres
   password: postgres
@@ -30,10 +30,10 @@ password:
   bcrypt_cost: 10
 
 telemetry:
-  enabled: true
+  enabled: false
   service_name: auth-service
   collector_url: otel-collector:4317
 
 logging:
-  level: info
-  format: json 
+  level: debug
+  format: console 

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Auth Service Test UI</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2em auto; }
+    input, button { margin: 0.2em 0; padding: 0.4em; }
+    .block { border: 1px solid #ccc; padding: 1em; margin-bottom: 1em; border-radius: 8px; }
+    pre { background: #f8f8f8; padding: 0.5em; }
+  </style>
+</head>
+<body>
+  <h1>Auth Service Test UI</h1>
+
+  <div class="block">
+    <h2>Регистрация</h2>
+    <input id="reg_email" placeholder="Email"><br>
+    <input id="reg_password" placeholder="Пароль" type="password"><br>
+    <input id="reg_first_name" placeholder="Имя"><br>
+    <input id="reg_last_name" placeholder="Фамилия"><br>
+    <select id="reg_role">
+      <option value="student">Студент</option>
+      <option value="teacher">Преподаватель</option>
+      <option value="dean_office">Деканат</option>
+      <option value="admin">Админ</option>
+      <option value="applicant">Абитуриент</option>
+    </select><br>
+    <button onclick="register()">Зарегистрироваться</button>
+    <pre id="reg_result"></pre>
+  </div>
+
+  <div class="block">
+    <h2>Логин</h2>
+    <input id="login_email" placeholder="Email"><br>
+    <input id="login_password" placeholder="Пароль" type="password"><br>
+    <button onclick="login()">Войти</button>
+    <pre id="login_result"></pre>
+  </div>
+
+  <div class="block">
+    <h2>Профиль</h2>
+    <button onclick="getProfile()">Показать профиль</button>
+    <pre id="profile_result"></pre>
+  </div>
+
+  <div class="block">
+    <h2>Смена пароля</h2>
+    <input id="old_password" placeholder="Старый пароль" type="password"><br>
+    <input id="new_password" placeholder="Новый пароль" type="password"><br>
+    <button onclick="changePassword()">Сменить пароль</button>
+    <pre id="change_result"></pre>
+  </div>
+
+  <script>
+    let accessToken = '';
+
+    function api(path, method, body, auth) {
+      return fetch('http://localhost:8081/api/v1' + path, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(auth ? { 'Authorization': 'Bearer ' + accessToken } : {})
+        },
+        body: body ? JSON.stringify(body) : undefined
+      }).then(async r => {
+        let text = await r.text();
+        let data;
+        try { data = JSON.parse(text); } catch { data = text; }
+        return { status: r.status, data };
+      });
+    }
+
+    function register() {
+      api('/auth/register', 'POST', {
+        email: document.getElementById('reg_email').value,
+        password: document.getElementById('reg_password').value,
+        first_name: document.getElementById('reg_first_name').value,
+        last_name: document.getElementById('reg_last_name').value,
+        role: document.getElementById('reg_role').value
+      }).then(res => {
+        document.getElementById('reg_result').textContent = JSON.stringify(res, null, 2);
+      });
+    }
+
+    function login() {
+      api('/auth/login', 'POST', {
+        email: document.getElementById('login_email').value,
+        password: document.getElementById('login_password').value
+      }).then(res => {
+        document.getElementById('login_result').textContent = JSON.stringify(res, null, 2);
+        if (res.data && res.data.access_token) {
+          accessToken = res.data.access_token;
+        }
+      });
+    }
+
+    function getProfile() {
+      api('/users/profile', 'GET', null, true).then(res => {
+        document.getElementById('profile_result').textContent = JSON.stringify(res, null, 2);
+      });
+    }
+
+    function changePassword() {
+      api('/users/change-password', 'POST', {
+        old_password: document.getElementById('old_password').value,
+        new_password: document.getElementById('new_password').value
+      }, true).then(res => {
+        document.getElementById('change_result').textContent = JSON.stringify(res, null, 2);
+      });
+    }
+  </script>
+</body>
+</html> 
