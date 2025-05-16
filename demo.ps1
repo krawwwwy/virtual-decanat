@@ -32,11 +32,26 @@ Start-Sleep -Seconds 2
 Write-Host "Демонстрация API endpoints:"
 
 Write-Host "`n1. Регистрация нового пользователя:"
-$registerResponse = Invoke-RestMethod -Uri "http://localhost:$env:PORT/register" -Method Post -Headers @{"Content-Type" = "application/json"} -Body '{"username":"testuser", "email":"test@example.com", "password":"password123", "first_name":"Test", "last_name":"User", "role":"student", "group":"ИС-21"}' -ErrorAction SilentlyContinue
+$jsonBody = @{
+    username = "testuser"
+    email = "test@example.com"
+    password = "password123"
+    first_name = "Test"
+    last_name = "User"
+    role = "student"
+    group = "IS-21"
+} | ConvertTo-Json
+
+$registerResponse = Invoke-RestMethod -Uri "http://localhost:$env:PORT/register" -Method Post -Headers @{"Content-Type" = "application/json"} -Body $jsonBody -ErrorAction SilentlyContinue
 $registerResponse | ConvertTo-Json
 
 Write-Host "`n2. Аутентификация пользователя:"
-$loginResponse = Invoke-RestMethod -Uri "http://localhost:$env:PORT/login" -Method Post -Headers @{"Content-Type" = "application/json"} -Body '{"username":"testuser", "password":"password123"}' -ErrorAction SilentlyContinue
+$loginBody = @{
+    username = "testuser"
+    password = "password123"
+} | ConvertTo-Json
+
+$loginResponse = Invoke-RestMethod -Uri "http://localhost:$env:PORT/login" -Method Post -Headers @{"Content-Type" = "application/json"} -Body $loginBody -ErrorAction SilentlyContinue
 $token = $loginResponse.token
 Write-Host "Получен токен: $token"
 
@@ -45,11 +60,22 @@ $profileResponse = Invoke-RestMethod -Uri "http://localhost:$env:PORT/profile" -
 $profileResponse | ConvertTo-Json
 
 Write-Host "`n4. Обновление профиля пользователя:"
-$updateResponse = Invoke-RestMethod -Uri "http://localhost:$env:PORT/profile" -Method Put -Headers @{"Authorization" = "Bearer $token"; "Content-Type" = "application/json"} -Body '{"first_name":"Updated", "last_name":"Name", "faculty":"Обновленный факультет"}' -ErrorAction SilentlyContinue
+$updateBody = @{
+    first_name = "Updated"
+    last_name = "Name"
+    faculty = "Updated Faculty"
+} | ConvertTo-Json
+
+$updateResponse = Invoke-RestMethod -Uri "http://localhost:$env:PORT/profile" -Method Put -Headers @{"Authorization" = "Bearer $token"; "Content-Type" = "application/json"} -Body $updateBody -ErrorAction SilentlyContinue
 $updateResponse | ConvertTo-Json
 
 Write-Host "`n5. Изменение пароля пользователя:"
-$passwordResponse = Invoke-RestMethod -Uri "http://localhost:$env:PORT/change-password" -Method Post -Headers @{"Authorization" = "Bearer $token"; "Content-Type" = "application/json"} -Body '{"old_password":"password123", "new_password":"newpassword123"}' -ErrorAction SilentlyContinue
+$passwordBody = @{
+    old_password = "password123"
+    new_password = "newpassword123"
+} | ConvertTo-Json
+
+$passwordResponse = Invoke-RestMethod -Uri "http://localhost:$env:PORT/change-password" -Method Post -Headers @{"Authorization" = "Bearer $token"; "Content-Type" = "application/json"} -Body $passwordBody -ErrorAction SilentlyContinue
 $passwordResponse | ConvertTo-Json
 
 # Останавливаем сервис
