@@ -1,97 +1,106 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
-	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
-	"github.com/krawwwwy/virtual-decanat/api-gateway/internal/handlers"
-	"github.com/krawwwwy/virtual-decanat/api-gateway/internal/proxy"
+	"github.com/krawwwwy/virtual-decanat/api-gateway/internal/handler"
+	"github.com/krawwwwy/virtual-decanat/api-gateway/internal/middleware"
+	"github.com/spf13/viper"
+	"go.uber.org/zap"
 )
 
-func init() {
-	// Загрузка переменных окружения из .env файла
-	if err := godotenv.Load(); err != nil {
-		log.Println("No .env file found, using environment variables")
-	}
-}
-
 func main() {
-	// Создаем маршрутизатор
-	router := mux.NewRouter()
+	// Инициализация логгера
+	logger, err := zap.NewProduction()
+	if err != nil {
+		fmt.Printf("Failed to initialize logger: %v\n", err)
+		os.Exit(1)
+	}
+	defer logger.Sync()
 
-	// Инициализируем прокси для микросервисов
-	serviceProxy := proxy.NewServiceProxy()
-
-	// Устанавливаем маршруты
-	setupRoutes(router, serviceProxy)
-
-	// Определяем порт
-	port := os.Getenv("API_GATEWAY_PORT")
-	if port == "" {
-		port = "8080"
+	// Загрузка конфигурации
+	if err := loadConfig(); err != nil {
+		logger.Fatal("Failed to load configuration", zap.Error(err))
 	}
 
-	// Запускаем сервер
-	log.Printf("API Gateway starting on port %s\n", port)
-	if err := http.ListenAndServe(":"+port, router); err != nil {
-		log.Fatalf("Failed to start server: %v", err)
+	// Инициализация трассировки, если она включена
+	if viper.GetBool("telemetry.enabled") {
+		serviceName := viper.GetString("telemetry.service_name")
+		collectorURL := viper.GetString("telemetry.collector_url")
+		
+		tp, err := middleware.InitTracer(serviceName, collectorURL, logger)
+		if err != nil {
+			logger.Warn("Failed to initialize tracer", zap.Error(err))
+		} else {
+			defer middleware.ShutdownTracer(tp)
+		}
 	}
+
+	// Настройка маршрутов
+	router := handler.SetupRouter(logger)
+
+	// Настройка HTTP сервера
+	server := &http.Server{
+		Addr:           fmt.Sprintf(":%d", viper.GetInt("server.port")),
+		Handler:        router,
+		ReadTimeout:    viper.GetDuration("server.read_timeout"),
+		WriteTimeout:   viper.GetDuration("server.write_timeout"),
+		MaxHeaderBytes: viper.GetInt("server.max_header_bytes"),
+	}
+
+	// Запуск сервера в горутине
+	go func() {
+		logger.Info("Starting API Gateway", zap.String("address", server.Addr))
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			logger.Fatal("Failed to start server", zap.Error(err))
+		}
+	}()
+
+	// Настройка грациозного завершения
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+
+	logger.Info("Shutting down server...")
+
+	// Установка таймаута для завершения
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	// Завершение сервера
+	if err := server.Shutdown(ctx); err != nil {
+		logger.Fatal("Server forced to shutdown", zap.Error(err))
+	}
+
+	logger.Info("Server exiting")
 }
 
-func setupRoutes(router *mux.Router, proxy *proxy.ServiceProxy) {
-	// Установка CORS и общих middleware
-	router.Use(handlers.CorsMiddleware)
-	router.Use(handlers.LoggingMiddleware)
+// loadConfig загружает конфигурацию из файла
+func loadConfig() error {
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("./configs")
 
-	// API v1
-	apiV1 := router.PathPrefix("/api/v1").Subrouter()
+	// Установка значений по умолчанию
+	viper.SetDefault("server.port", 8080)
+	viper.SetDefault("server.timeout", "30s")
+	viper.SetDefault("server.read_timeout", "15s")
+	viper.SetDefault("server.write_timeout", "15s")
+	viper.SetDefault("server.max_header_bytes", 1<<20) // 1 MB
 
-	// Роуты для сервиса аутентификации
-	authRouter := apiV1.PathPrefix("/auth").Subrouter()
-	authRouter.HandleFunc("/register", proxy.ProxyRequest("auth")).Methods("POST")
-	authRouter.HandleFunc("/login", proxy.ProxyRequest("auth")).Methods("POST")
-	authRouter.HandleFunc("/profile", proxy.ProxyRequest("auth")).Methods("GET")
+	// Чтение переменных окружения
+	viper.AutomaticEnv()
 
-	// Роуты для сервиса расписания
-	scheduleRouter := apiV1.PathPrefix("/schedule").Subrouter()
-	scheduleRouter.HandleFunc("", proxy.ProxyRequest("schedule")).Methods("GET")
-	scheduleRouter.HandleFunc("", proxy.ProxyRequest("schedule")).Methods("POST")
-	scheduleRouter.HandleFunc("/{id}", proxy.ProxyRequest("schedule")).Methods("GET", "PUT", "DELETE")
+	// Чтение конфигурационного файла
+	if err := viper.ReadInConfig(); err != nil {
+		return fmt.Errorf("failed to read config file: %w", err)
+	}
 
-	// Роуты для сервиса студенческих объединений
-	clubRouter := apiV1.PathPrefix("/clubs").Subrouter()
-	clubRouter.HandleFunc("", proxy.ProxyRequest("club")).Methods("GET")
-	clubRouter.HandleFunc("", proxy.ProxyRequest("club")).Methods("POST")
-	clubRouter.HandleFunc("/{id}", proxy.ProxyRequest("club")).Methods("GET", "PUT", "DELETE")
-
-	// Роуты для сервиса успеваемости
-	performanceRouter := apiV1.PathPrefix("/performance").Subrouter()
-	performanceRouter.HandleFunc("/current", proxy.ProxyRequest("performance")).Methods("GET")
-	performanceRouter.HandleFunc("/rating", proxy.ProxyRequest("performance")).Methods("GET")
-	performanceRouter.HandleFunc("/attendance", proxy.ProxyRequest("performance")).Methods("GET")
-	performanceRouter.HandleFunc("/grades", proxy.ProxyRequest("performance")).Methods("GET", "POST", "PUT")
-
-	// Роуты для сервиса абитуриентов
-	applicantRouter := apiV1.PathPrefix("/applicants").Subrouter()
-	applicantRouter.HandleFunc("/apply", proxy.ProxyRequest("applicant")).Methods("POST")
-	applicantRouter.HandleFunc("/status/{id}", proxy.ProxyRequest("applicant")).Methods("GET")
-	applicantRouter.HandleFunc("/list", proxy.ProxyRequest("applicant")).Methods("GET")
-
-	// Роуты для сервиса социальной поддержки
-	supportRouter := apiV1.PathPrefix("/support").Subrouter()
-	supportRouter.HandleFunc("/apply", proxy.ProxyRequest("support")).Methods("POST")
-	supportRouter.HandleFunc("/status/{id}", proxy.ProxyRequest("support")).Methods("GET")
-	supportRouter.HandleFunc("/types", proxy.ProxyRequest("support")).Methods("GET")
-
-	// Добавляем обработчик для остальных маршрутов
-	router.PathPrefix("/").HandlerFunc(handlers.NotFoundHandler)
-
-	// Добавляем healthcheck
-	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "API Gateway is running")
-	}).Methods("GET")
+	return nil
 } 

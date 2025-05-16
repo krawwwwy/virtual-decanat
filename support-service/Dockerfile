@@ -7,15 +7,15 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-gateway ./cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o support-service ./cmd/main.go
 
 FROM alpine:latest
 
 WORKDIR /app
 
-COPY --from=builder /app/api-gateway .
+COPY --from=builder /app/support-service .
 COPY --from=builder /app/configs ./configs
 
-EXPOSE 8080
+EXPOSE 8086
 
-CMD ["./api-gateway"] 
+CMD ["./support-service"] 

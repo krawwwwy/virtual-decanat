@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+*.bin
 
 # Test binary, built with `go test -c`
 *.test
@@ -11,7 +12,7 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Dependency directories (remove the comment below to include it)
+# Dependency directories
 vendor/
 
 # Go workspace file
@@ -19,27 +20,40 @@ go.work
 
 # Environment variables
 .env
+.env.local
+.env.*.local
 
-# IDE files
-.idea/
+# IDE specific files
 .vscode/
+.idea/
 *.swp
 *.swo
+.cursor/
 
-# OS specific
-.DS_Store
-Thumbs.db
-
-# Log files
+# Logs
 *.log
+logs/
 
-# Temporary files
-tmp/
-temp/
-
-# Build directories
+# Build
 bin/
+build/
 dist/
 
-# Docker volumes
-data/ 
+# Docker
+.docker/
+.docker-data/
+
+# Local database files
+*.db
+
+# Mac OS X
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+*.cert 

@@ -1,0 +1,167 @@
+version: '3.8'
+
+services:
+  # PostgreSQL - основная база данных
+  postgres:
+    image: postgres:16-alpine
+    container_name: decanat-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: decanat
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # API Gateway - входная точка для всех запросов
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: decanat-api-gateway
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - AUTH_SERVICE_URL=http://auth-service:8081
+      - SCHEDULE_SERVICE_URL=http://schedule-service:8082
+      - CLUB_SERVICE_URL=http://club-service:8083
+      - PERFORMANCE_SERVICE_URL=http://performance-service:8084
+      - APPLICANT_SERVICE_URL=http://applicant-service:8085
+      - SUPPORT_SERVICE_URL=http://support-service:8086
+    depends_on:
+      - auth-service
+      - schedule-service
+      - club-service
+      - performance-service
+      - applicant-service
+      - support-service
+
+  # Сервис аутентификации - управление пользователями и авторизацией
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: decanat-auth-service
+    restart: unless-stopped
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=decanat
+      - JWT_SECRET=your-secret-key
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # Сервис расписания - управление учебным расписанием
+  schedule-service:
+    build:
+      context: ./schedule-service
+      dockerfile: Dockerfile
+    container_name: decanat-schedule-service
+    restart: unless-stopped
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=decanat
+      - AUTH_SERVICE_URL=http://auth-service:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+
+  # Сервис студенческих объединений - управление клубами и студенческими организациями
+  club-service:
+    build:
+      context: ./club-service
+      dockerfile: Dockerfile
+    container_name: decanat-club-service
+    restart: unless-stopped
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=decanat
+      - AUTH_SERVICE_URL=http://auth-service:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+
+  # Сервис успеваемости - отслеживание оценок, посещаемости и рейтинга
+  performance-service:
+    build:
+      context: ./performance-service
+      dockerfile: Dockerfile
+    container_name: decanat-performance-service
+    restart: unless-stopped
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=decanat
+      - AUTH_SERVICE_URL=http://auth-service:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+
+  # Сервис абитуриентов - подача и обработка заявлений
+  applicant-service:
+    build:
+      context: ./applicant-service
+      dockerfile: Dockerfile
+    container_name: decanat-applicant-service
+    restart: unless-stopped
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=decanat
+      - AUTH_SERVICE_URL=http://auth-service:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+
+  # Сервис социальной поддержки - управление социальной поддержкой студентов
+  support-service:
+    build:
+      context: ./support-service
+      dockerfile: Dockerfile
+    container_name: decanat-support-service
+    restart: unless-stopped
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=decanat
+      - AUTH_SERVICE_URL=http://auth-service:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+
+volumes:
+  postgres-data: 

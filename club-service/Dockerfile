@@ -7,15 +7,15 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-gateway ./cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o club-service ./cmd/main.go
 
 FROM alpine:latest
 
 WORKDIR /app
 
-COPY --from=builder /app/api-gateway .
+COPY --from=builder /app/club-service .
 COPY --from=builder /app/configs ./configs
 
-EXPOSE 8080
+EXPOSE 8083
 
-CMD ["./api-gateway"] 
+CMD ["./club-service"] 
