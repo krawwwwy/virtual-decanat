@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма заявления</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="/apply" method="POST" id="application-form">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="surname" placeholder="Surname" required>
+            <input type="text" name="otchestvo" placeholder="Otchestvo" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="text" name="number" placeholder="Number" required>
+            <input type="text" name="faculty" placeholder="Faculty" required>
+            <input type="text" name="snils" placeholder="SNILS" required>
+            <input type="text" name="passport_seial" placeholder="Passport Serial" required>
+            <input type="text" name="passport_number" placeholder="Passport Number" required>
+            <input type="date" name="passport_date" placeholder="Passport Date" required>
+            <input type="text" name="passport_adress" placeholder="Passport Address" required>
+            <input type="number" name="russian" placeholder="Russian Score" min="1" max="100" required>
+            <input type="number" name="math" placeholder="Math Score" min="1" max="100" required>
+            <input type="number" name="physics" placeholder="Physics Score" min="0" max="100">
+            <input type="number" name="informatics" placeholder="Informatics Score" min="0" max="100">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
