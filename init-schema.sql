@@ -68,4 +68,20 @@ ON CONFLICT (name) DO NOTHING;
 -- Insert a default group for testing
 INSERT INTO schedule.groups (name, faculty, year)
 VALUES ('Test Group', 'Test Faculty', 2023)
-ON CONFLICT (name) DO NOTHING; 
+ON CONFLICT (name) DO NOTHING;
+
+-- Club Service Tables
+CREATE TABLE IF NOT EXISTS clubs (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS club_members (
+    id SERIAL PRIMARY KEY,
+    club_id INTEGER REFERENCES clubs(id) ON DELETE CASCADE,
+    user_id INTEGER NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+); 

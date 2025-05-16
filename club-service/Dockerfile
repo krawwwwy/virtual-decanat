@@ -1,4 +1,4 @@
-FROM golang:1.21-alpine AS builder
+FROM golang:1.21-alpine
 
 WORKDIR /app
 
@@ -7,15 +7,8 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o club-service ./cmd/main.go
-
-FROM alpine:latest
-
-WORKDIR /app
-
-COPY --from=builder /app/club-service .
-COPY --from=builder /app/configs ./configs
+RUN go build -o main ./cmd/server
 
 EXPOSE 8083
 
-CMD ["./club-service"] 
+CMD ["./main"] 
