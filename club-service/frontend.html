@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club Service</title>
+    <title>Студенческие клубы</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
@@ -13,24 +13,24 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mb-4">Club Management</h1>
+        <h1 class="mb-4">Управление клубами</h1>
         
         <!-- Club Creation Form -->
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0">Create New Club</h5>
+                <h5 class="mb-0">Создать новый клуб</h5>
             </div>
             <div class="card-body">
                 <form id="createClubForm">
                     <div class="mb-3">
-                        <label for="clubName" class="form-label">Club Name</label>
-                        <input type="text" class="form-control" id="clubName" required>
+                        <label for="clubName" class="form-label">Название клуба</label>
+                        <input type="text" class="form-control" id="clubName" required placeholder="Введите название клуба">
                     </div>
                     <div class="mb-3">
-                        <label for="clubDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="clubDescription" rows="3" required></textarea>
+                        <label for="clubDescription" class="form-label">Описание</label>
+                        <textarea class="form-control" id="clubDescription" rows="3" required placeholder="Введите описание клуба"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create Club</button>
+                    <button type="submit" class="btn btn-primary">Создать клуб</button>
                 </form>
             </div>
         </div>
@@ -38,7 +38,7 @@
         <!-- Club List -->
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0">Clubs</h5>
+                <h5 class="mb-0">Список клубов</h5>
             </div>
             <div class="card-body">
                 <div id="clubList"></div>
@@ -48,26 +48,26 @@
         <!-- Member Management -->
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0">Add Member</h5>
+                <h5 class="mb-0">Добавить участника</h5>
             </div>
             <div class="card-body">
                 <form id="addMemberForm">
                     <div class="mb-3">
-                        <label for="clubId" class="form-label">Club ID</label>
-                        <input type="number" class="form-control" id="clubId" required>
+                        <label for="clubId" class="form-label">ID клуба</label>
+                        <input type="number" class="form-control" id="clubId" required placeholder="Введите ID клуба">
                     </div>
                     <div class="mb-3">
-                        <label for="userId" class="form-label">User ID</label>
-                        <input type="number" class="form-control" id="userId" required>
+                        <label for="userId" class="form-label">ID пользователя</label>
+                        <input type="number" class="form-control" id="userId" required placeholder="Введите ID пользователя">
                     </div>
                     <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
+                        <label for="role" class="form-label">Роль</label>
                         <select class="form-control" id="role" required>
-                            <option value="member">Member</option>
-                            <option value="admin">Admin</option>
+                            <option value="member">Участник</option>
+                            <option value="admin">Админ</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Member</button>
+                    <button type="submit" class="btn btn-primary">Добавить участника</button>
                 </form>
             </div>
         </div>
@@ -75,13 +75,13 @@
         <!-- Member List -->
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0">Club Members</h5>
+                <h5 class="mb-0">Участники клуба</h5>
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label for="viewClubId" class="form-label">Club ID</label>
-                    <input type="number" class="form-control" id="viewClubId">
-                    <button onclick="viewMembers()" class="btn btn-info mt-2">View Members</button>
+                    <label for="viewClubId" class="form-label">ID клуба</label>
+                    <input type="number" class="form-control" id="viewClubId" placeholder="Введите ID клуба">
+                    <button onclick="viewMembers()" class="btn btn-info mt-2">Показать участников</button>
                 </div>
                 <div id="memberList"></div>
             </div>
@@ -107,15 +107,15 @@
                 });
 
                 if (response.ok) {
-                    alert('Club created successfully!');
+                    alert('Клуб успешно создан!');
                     loadClubs();
                     e.target.reset();
                 } else {
                     const error = await response.json();
-                    alert(`Error: ${error.error}`);
+                    alert(`Ошибка: ${error.error}`);
                 }
             } catch (error) {
-                alert('Error creating club');
+                alert('Ошибка при создании клуба');
             }
         });
 
@@ -126,24 +126,28 @@
                 const clubs = await response.json();
                 
                 const clubList = document.getElementById('clubList');
+                if (clubs.length === 0) {
+                    clubList.innerHTML = '<p>Нет созданных клубов.</p>';
+                    return;
+                }
                 clubList.innerHTML = clubs.map(club => `
                     <div class="card mb-2">
                         <div class="card-body">
                             <h5 class="card-title">${club.name}</h5>
                             <p class="card-text">${club.description}</p>
                             <p class="card-text"><small class="text-muted">ID: ${club.id}</small></p>
-                            <button onclick="deleteClub(${club.id})" class="btn btn-danger btn-sm">Delete</button>
+                            <button onclick="deleteClub(${club.id})" class="btn btn-danger btn-sm">Удалить</button>
                         </div>
                     </div>
                 `).join('');
             } catch (error) {
-                console.error('Error loading clubs:', error);
+                console.error('Ошибка загрузки клубов:', error);
             }
         }
 
         // Delete Club
         async function deleteClub(id) {
-            if (!confirm('Are you sure you want to delete this club?')) return;
+            if (!confirm('Вы уверены, что хотите удалить этот клуб?')) return;
 
             try {
                 const response = await fetch(`${API_URL}/clubs/${id}`, {
@@ -151,14 +155,14 @@
                 });
 
                 if (response.ok) {
-                    alert('Club deleted successfully!');
+                    alert('Клуб успешно удалён!');
                     loadClubs();
                 } else {
                     const error = await response.json();
-                    alert(`Error: ${error.error}`);
+                    alert(`Ошибка: ${error.error}`);
                 }
             } catch (error) {
-                alert('Error deleting club');
+                alert('Ошибка при удалении клуба');
             }
         }
 
@@ -179,15 +183,15 @@
                 });
 
                 if (response.ok) {
-                    alert('Member added successfully!');
+                    alert('Участник успешно добавлен!');
                     e.target.reset();
                     viewMembers();
                 } else {
                     const error = await response.json();
-                    alert(`Error: ${error.error}`);
+                    alert(`Ошибка: ${error.error}`);
                 }
             } catch (error) {
-                alert('Error adding member');
+                alert('Ошибка при добавлении участника');
             }
         });
 
@@ -195,7 +199,7 @@
         async function viewMembers() {
             const clubId = document.getElementById('viewClubId').value;
             if (!clubId) {
-                alert('Please enter a club ID');
+                alert('Пожалуйста, введите ID клуба');
                 return;
             }
 
@@ -204,24 +208,28 @@
                 const members = await response.json();
                 
                 const memberList = document.getElementById('memberList');
+                if (members.length === 0) {
+                    memberList.innerHTML = '<p>Нет участников в этом клубе.</p>';
+                    return;
+                }
                 memberList.innerHTML = members.map(member => `
                     <div class="card mb-2">
                         <div class="card-body">
-                            <p class="card-text">User ID: ${member.user_id}</p>
-                            <p class="card-text">Role: ${member.role}</p>
-                            <p class="card-text"><small class="text-muted">Joined: ${new Date(member.joined_at).toLocaleString()}</small></p>
-                            <button onclick="removeMember(${member.id})" class="btn btn-danger btn-sm">Remove</button>
+                            <p class="card-text">ID пользователя: ${member.user_id}</p>
+                            <p class="card-text">Роль: ${member.role}</p>
+                            <p class="card-text"><small class="text-muted">Дата вступления: ${new Date(member.joined_at).toLocaleString()}</small></p>
+                            <button onclick="removeMember(${member.id})" class="btn btn-danger btn-sm">Удалить</button>
                         </div>
                     </div>
                 `).join('');
             } catch (error) {
-                console.error('Error loading members:', error);
+                console.error('Ошибка загрузки участников:', error);
             }
         }
 
         // Remove Member
         async function removeMember(id) {
-            if (!confirm('Are you sure you want to remove this member?')) return;
+            if (!confirm('Вы уверены, что хотите удалить этого участника?')) return;
 
             try {
                 const response = await fetch(`${API_URL}/members/${id}`, {
@@ -229,14 +237,14 @@
                 });
 
                 if (response.ok) {
-                    alert('Member removed successfully!');
+                    alert('Участник успешно удалён!');
                     viewMembers();
                 } else {
                     const error = await response.json();
-                    alert(`Error: ${error.error}`);
+                    alert(`Ошибка: ${error.error}`);
                 }
             } catch (error) {
-                alert('Error removing member');
+                alert('Ошибка при удалении участника');
             }
         }
 

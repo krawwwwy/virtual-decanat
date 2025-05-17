@@ -126,14 +126,16 @@ CREATE TABLE IF NOT EXISTS club.clubs (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Создание таблицы членства в клубах
-CREATE TABLE IF NOT EXISTS club.memberships (
+-- Удаляем старую таблицу memberships, если есть
+DROP TABLE IF EXISTS club.memberships;
+
+-- Создание таблицы членства в клубах (актуальная структура)
+CREATE TABLE IF NOT EXISTS club.club_members (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER REFERENCES auth.students(id),
-    club_id INTEGER REFERENCES club.clubs(id),
+    club_id INTEGER REFERENCES club.clubs(id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES auth.users(id) ON DELETE CASCADE,
     role VARCHAR(50) NOT NULL,
-    joined_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (student_id, club_id)
+    joined_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Создание таблицы заявок на вступление в клуб

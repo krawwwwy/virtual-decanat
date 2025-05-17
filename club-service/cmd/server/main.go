@@ -72,6 +72,7 @@ func main() {
 		memberRoutes.POST("/", memberHandler.AddMember)
 		memberRoutes.GET("/club/:clubId", memberHandler.GetClubMembers)
 		memberRoutes.DELETE("/:id", memberHandler.RemoveMember)
+		memberRoutes.POST("/debug", memberHandler.DebugAddMember)
 	}
 
 	// Serve frontend

@@ -2,6 +2,8 @@ package handler
 
 import (
 	"club-service/internal/repository"
+	"encoding/json"
+	"io"
 	"net/http"
 	"strconv"
 
@@ -67,4 +69,19 @@ func (h *MemberHandler) RemoveMember(c *gin.Context) {
 	}
 
 	c.Status(http.StatusNoContent)
+}
+
+func (h *MemberHandler) DebugAddMember(c *gin.Context) {
+	body, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	var member repository.Member
+	err = json.Unmarshal(body, &member)
+	c.JSON(http.StatusOK, gin.H{
+		"raw_body": string(body),
+		"unmarshal_error": err,
+		"parsed_member": member,
+	})
 } 

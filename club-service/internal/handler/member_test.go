@@ -81,4 +81,15 @@ func TestRemoveMemberHandler(t *testing.T) {
 	req, _ := http.NewRequest("DELETE", "/api/members/1", nil)
 	r.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusNoContent, w.Code)
+}
+
+func TestAddMemberHandler_Integration(t *testing.T) {
+	r, _ := setupRouterMember()
+	body := map[string]interface{}{ "club_id": 1, "user_id": 1, "role": "integration_test" }
+	jsonBody, _ := json.Marshal(body)
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("POST", "/api/members/", bytes.NewBuffer(jsonBody))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusCreated, w.Code)
 } 
