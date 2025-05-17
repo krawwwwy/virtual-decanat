@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Service Test</title>
+</head>
+<body>
+    <h1>Тест API успеваемости</h1>
+    <label>Student ID: <input type="text" id="studentId" value="1"></label>
+    <button onclick="fetchPerformance()">Получить данные</button>
+    <pre id="result"></pre>
+    <script>
+        function fetchPerformance() {
+            const id = document.getElementById('studentId').value;
+            fetch(`/performance/${id}`)
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(e => {
+                    document.getElementById('result').textContent = 'Ошибка: ' + e;
+                });
+        }
+    </script>
+</body>
+</html> 

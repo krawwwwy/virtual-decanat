@@ -205,4 +205,31 @@ ON CONFLICT (name) DO NOTHING;
 
 -- Вставка тестовой группы для студентов
 INSERT INTO schedule.groups (id, name, faculty, year) VALUES 
-    (1, 'Test Group', 'Test Faculty', 1); 
+    (1, 'Test Group', 'Test Faculty', 1);
+
+-- Вставка тестового пользователя
+INSERT INTO auth.users (id, email, password_hash, first_name, last_name, role_id) VALUES (1, 'test@student.com', 'testhash', 'Test', 'Student', 2) ON CONFLICT (id) DO NOTHING;
+-- Вставка тестового преподавателя
+INSERT INTO auth.users (id, email, password_hash, first_name, last_name, role_id) VALUES (2, 'test@teacher.com', 'testhash', 'Test', 'Teacher', 3) ON CONFLICT (id) DO NOTHING;
+INSERT INTO auth.teachers (id, user_id, department, position) VALUES (1, 2, 'Test Dept', 'Professor') ON CONFLICT (id) DO NOTHING;
+-- Вставка тестового студента
+INSERT INTO auth.students (id, user_id, group_id, student_id) VALUES (1, 1, 1, 'S1') ON CONFLICT (id) DO NOTHING;
+-- Вставка тестовой дисциплины
+INSERT INTO schedule.subjects (id, name, code, credits) VALUES (1, 'Test Subject', 'TS1', 5) ON CONFLICT (id) DO NOTHING;
+-- Вставка тестового расписания
+INSERT INTO schedule.schedule (id, subject_id, teacher_id, group_id, day_of_week, start_time, end_time, room) VALUES (1, 1, 1, 1, 1, '09:00', '10:30', '101') ON CONFLICT (id) DO NOTHING;
+
+-- Тестовые данные для performance.grades
+INSERT INTO performance.grades (student_id, subject_id, teacher_id, grade, semester)
+VALUES (1, 1, 1, 85, 1), (1, 1, 1, 90, 2)
+ON CONFLICT DO NOTHING;
+
+-- Тестовые данные для performance.attendance
+INSERT INTO performance.attendance (student_id, schedule_id, date, is_present)
+VALUES (1, 1, '2024-04-01', true), (1, 1, '2024-04-02', false)
+ON CONFLICT DO NOTHING;
+
+-- Тестовые данные для performance.debts
+INSERT INTO performance.debts (student_id, subject_id, description, deadline, is_resolved)
+VALUES (1, 1, 'Не сдал курсовую', '2024-06-01', false)
+ON CONFLICT DO NOTHING; 

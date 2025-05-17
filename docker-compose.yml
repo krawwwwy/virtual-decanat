@@ -85,5 +85,27 @@ services:
     ports:
       - "8083:8083"
 
+  # Сервис успеваемости - performance-service
+  performance-service:
+    build:
+      context: ./performance-service
+      dockerfile: Dockerfile
+    container_name: decanat-performance-service
+    restart: unless-stopped
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=decanat
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/decanat?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+    ports:
+      - "8084:8084"
+
 volumes:
   postgres-data: 
