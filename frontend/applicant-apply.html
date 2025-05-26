@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подача заявления | Виртуальный Деканат</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/applicant.css">
+    <link rel="stylesheet" href="css/application-form.css">
+    <link rel="stylesheet" href="css/applicant-form.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700&family=Public+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Дополнительные стили для многошаговой формы подачи заявления */
+        .applicant-form-steps {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Стили для индикатора прогресса с изображениями */
+        .application-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #E8EDF2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4E7397;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .step-name {
+            font-size: 0.9rem;
+            color: #4E7397;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .progress-step.active .step-number {
+            background-color: #1A80E5;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.active .step-name {
+            color: #1A80E5;
+            font-weight: 500;
+        }
+
+        .progress-line {
+            flex-grow: 1;
+            height: 3px;
+            background-color: #E8EDF2;
+            position: relative;
+            z-index: 0;
+            margin: 0 -1rem;
+            top: -20px;
+        }
+
+        /* Стили для заголовков разделов */
+        .section-title {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 1.4rem;
+            color: #1A80E5;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* Чекбоксы в стиле регистрации */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.7rem;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            accent-color: #1A80E5;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="images/header-logo.svg" alt="Логотип ВУЗа" class="logo">
+                    <h1>ВУЗ</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html" class="nav-link">Главная</a></li>
+                        <li><a href="applicant.html" class="nav-link">Абитуриентам</a></li>
+                        <li><a href="login.html" class="nav-link">Вход</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="applicant-form-container">
+            <div class="applicant-image"></div>
+            <div class="applicant-form">
+                <h2>Подача заявления на поступление</h2>
+                <p class="applicant-description">Заполните все необходимые поля для подачи заявления</p>
+
+                <div class="application-progress">
+                    <div class="progress-step active">
+                        <div class="step-number">1</div>
+                        <div class="step-name">Личные данные</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">2</div>
+                        <div class="step-name">Образование</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">3</div>
+                        <div class="step-name">Направления</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-number">4</div>
+                        <div class="step-name">Документы</div>
+                    </div>
+                </div>
+
+                <form class="application-form" id="applicationForm">
+                    <!-- Раздел 1: Личные данные -->
+                    <div class="form-section active" id="personalData">
+                        <h3 class="section-title">Личные данные</h3>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="text" id="lastName" name="lastName" placeholder="Фамилия" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="text" id="firstName" name="firstName" placeholder="Имя" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="text" id="middleName" name="middleName" placeholder="Отчество (при наличии)">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="date" id="birthDate" name="birthDate" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="gender" name="gender" required>
+                                    <option value="" disabled selected>Выберите пол</option>
+                                    <option value="male">Мужской</option>
+                                    <option value="female">Женский</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="text" id="citizenship" name="citizenship" placeholder="Гражданство" required value="Российская Федерация">
+                            </div>
+                        </div>
+                        
+                        <h3 class="section-title">Контактная информация</h3>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="email" id="email" name="email" placeholder="Email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="tel" id="phone" name="phone" placeholder="Телефон (+7)" required>
+                            </div>
+                        </div>
+                        
+                        <div class="nav-buttons">
+                            <button type="button" class="btn-back">Отмена</button>
+                            <button type="button" class="btn-next next-step">Продолжить</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Раздел 2: Образование -->
+                    <div class="form-section" id="education">
+                        <h3 class="section-title">Сведения об образовании</h3>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="educationType" name="educationType" required>
+                                    <option value="" disabled selected>Тип образования</option>
+                                    <option value="secondary">Среднее общее</option>
+                                    <option value="secondary_professional">Среднее профессиональное</option>
+                                    <option value="bachelor">Высшее (бакалавр)</option>
+                                    <option value="specialist">Высшее (специалист)</option>
+                                    <option value="master">Высшее (магистр)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="text" id="educationInstitution" name="educationInstitution" placeholder="Учебное заведение" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="documentType" name="documentType" required>
+                                    <option value="" disabled selected>Тип документа об образовании</option>
+                                    <option value="certificate">Аттестат</option>
+                                    <option value="diploma">Диплом</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="text" id="documentNumber" name="documentNumber" placeholder="Номер документа об образовании" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="date" id="documentDate" name="documentDate" required>
+                            </div>
+                        </div>
+                        
+                        <h3 class="section-title">Результаты ЕГЭ (при наличии)</h3>
+                        
+                        <div id="examResults">
+                            <div class="exam-result-item">
+                                <div class="form-group">
+                                    <div class="select-container">
+                                        <select id="exam1" name="examSubject1">
+                                            <option value="" disabled selected>Выберите предмет</option>
+                                            <option value="russian">Русский язык</option>
+                                            <option value="math">Математика</option>
+                                            <option value="physics">Физика</option>
+                                            <option value="chemistry">Химия</option>
+                                            <option value="biology">Биология</option>
+                                            <option value="history">История</option>
+                                            <option value="social">Обществознание</option>
+                                            <option value="literature">Литература</option>
+                                            <option value="geography">География</option>
+                                            <option value="english">Иностранный язык</option>
+                                            <option value="informatics">Информатика</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="input-container">
+                                        <input type="number" id="score1" name="examScore1" placeholder="Балл" min="0" max="100">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn-back btn-add-exam">+ Добавить предмет</button>
+                        
+                        <div class="nav-buttons">
+                            <button type="button" class="btn-back prev-step">Назад</button>
+                            <button type="button" class="btn-next next-step">Продолжить</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Раздел 3: Направления подготовки -->
+                    <div class="form-section" id="programs">
+                        <h3 class="section-title">Выбор направлений подготовки</h3>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="educationLevel" name="educationLevel" required>
+                                    <option value="" disabled selected>Уровень образования</option>
+                                    <option value="bachelor">Бакалавриат</option>
+                                    <option value="specialist">Специалитет</option>
+                                    <option value="master">Магистратура</option>
+                                    <option value="postgraduate">Аспирантура</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="faculty" name="faculty" required>
+                                    <option value="" disabled selected>Факультет</option>
+                                    <option value="IT">Информационные технологии</option>
+                                    <option value="economics">Экономика и менеджмент</option>
+                                    <option value="law">Юридический факультет</option>
+                                    <option value="philology">Филологический факультет</option>
+                                    <option value="science">Факультет естественных наук</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <h3 class="section-title">Выберите направления подготовки (до 3-х)</h3>
+                        
+                        <div class="form-group program-list">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="program1" name="programs" value="09.03.01">
+                                <label for="program1">09.03.01 Информатика и вычислительная техника</label>
+                            </div>
+                            
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="program2" name="programs" value="09.03.02">
+                                <label for="program2">09.03.02 Информационные системы и технологии</label>
+                            </div>
+                            
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="program3" name="programs" value="09.03.03">
+                                <label for="program3">09.03.03 Прикладная информатика</label>
+                            </div>
+                            
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="program4" name="programs" value="09.03.04">
+                                <label for="program4">09.03.04 Программная инженерия</label>
+                            </div>
+                            
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="program5" name="programs" value="01.03.02">
+                                <label for="program5">01.03.02 Прикладная математика и информатика</label>
+                            </div>
+                        </div>
+                        
+                        <h3 class="section-title">Форма и основа обучения</h3>
+                        
+                        <div class="form-group">
+                            <h4>Форма обучения</h4>
+                            <div class="radio-group">
+                                <div class="checkbox-container">
+                                    <input type="radio" id="fullTime" name="studyForm" value="fullTime" required>
+                                    <label for="fullTime">Очная</label>
+                                </div>
+                                
+                                <div class="checkbox-container">
+                                    <input type="radio" id="partTime" name="studyForm" value="partTime">
+                                    <label for="partTime">Очно-заочная</label>
+                                </div>
+                                
+                                <div class="checkbox-container">
+                                    <input type="radio" id="distance" name="studyForm" value="distance">
+                                    <label for="distance">Заочная</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <h4>Основа обучения</h4>
+                            <div class="radio-group">
+                                <div class="checkbox-container">
+                                    <input type="radio" id="budget" name="studyBasis" value="budget" required>
+                                    <label for="budget">Бюджет</label>
+                                </div>
+                                
+                                <div class="checkbox-container">
+                                    <input type="radio" id="contract" name="studyBasis" value="contract">
+                                    <label for="contract">Контракт</label>
+                                </div>
+                                
+                                <div class="checkbox-container">
+                                    <input type="radio" id="both" name="studyBasis" value="both">
+                                    <label for="both">Бюджет/контракт</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="nav-buttons">
+                            <button type="button" class="btn-back prev-step">Назад</button>
+                            <button type="button" class="btn-next next-step">Продолжить</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Раздел 4: Документы -->
+                    <div class="form-section" id="documents">
+                        <h3 class="section-title">Загрузка документов</h3>
+                        <p class="applicant-description">Загрузите сканы или фотографии документов (PDF, JPG, PNG)</p>
+                        
+                        <div class="form-group">
+                            <label for="passportScan">Паспорт (главная страница и страница с пропиской)</label>
+                            <input type="file" id="passportScan" name="passportScan" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="educationScan">Документ об образовании с приложением</label>
+                            <input type="file" id="educationScan" name="educationScan" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="photoCopy">Фотография 3x4</label>
+                            <input type="file" id="photoCopy" name="photoCopy" accept=".jpg,.jpeg,.png" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="achievementsScan">Документы, подтверждающие индивидуальные достижения (при наличии)</label>
+                            <input type="file" id="achievementsScan" name="achievementsScan" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="dataAgreement" name="dataAgreement" required>
+                                <label for="dataAgreement">Я даю согласие на обработку персональных данных</label>
+                            </div>
+                            
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="infoAgreement" name="infoAgreement" required>
+                                <label for="infoAgreement">Я подтверждаю достоверность предоставленной информации</label>
+                            </div>
+                        </div>
+                        
+                        <div class="nav-buttons">
+                            <button type="button" class="btn-back prev-step">Назад</button>
+                            <button type="submit" class="submit-btn">Отправить заявление</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>© 2025 Виртуальный Деканат. Все права защищены.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Справка</a>
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Условия использования</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nextButtons = document.querySelectorAll('.next-step');
+            const prevButtons = document.querySelectorAll('.prev-step');
+            const formSections = document.querySelectorAll('.form-section');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            let currentStep = 0;
+            
+            // Обработка нажатия кнопки "Продолжить"
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (validateSection(currentStep)) {
+                        formSections[currentStep].classList.remove('active');
+                        currentStep++;
+                        formSections[currentStep].classList.add('active');
+                        updateProgress();
+                    }
+                });
+            });
+            
+            // Обработка нажатия кнопки "Назад"
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    formSections[currentStep].classList.remove('active');
+                    currentStep--;
+                    formSections[currentStep].classList.add('active');
+                    updateProgress();
+                });
+            });
+            
+            // Обновление индикатора прогресса
+            function updateProgress() {
+                progressSteps.forEach((step, index) => {
+                    if (index <= currentStep) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Валидация текущего раздела формы
+            function validateSection(stepIndex) {
+                const currentForm = formSections[stepIndex];
+                const requiredFields = currentForm.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        field.classList.add('invalid');
+                        isValid = false;
+                    } else {
+                        field.classList.remove('invalid');
+                    }
+                });
+                
+                if (!isValid) {
+                    alert('Пожалуйста, заполните все обязательные поля');
+                }
+                
+                return isValid;
+            }
+            
+            // Добавление дополнительного предмета ЕГЭ
+            const addExamButton = document.querySelector('.btn-add-exam');
+            const examResults = document.getElementById('examResults');
+            let examCount = 1;
+            
+            addExamButton.addEventListener('click', function() {
+                examCount++;
+                
+                const newExam = document.createElement('div');
+                newExam.className = 'exam-result-item';
+                newExam.innerHTML = `
+                    <div class="form-group">
+                        <div class="select-container">
+                            <select id="exam${examCount}" name="examSubject${examCount}">
+                                <option value="" disabled selected>Выберите предмет</option>
+                                <option value="russian">Русский язык</option>
+                                <option value="math">Математика</option>
+                                <option value="physics">Физика</option>
+                                <option value="chemistry">Химия</option>
+                                <option value="biology">Биология</option>
+                                <option value="history">История</option>
+                                <option value="social">Обществознание</option>
+                                <option value="literature">Литература</option>
+                                <option value="geography">География</option>
+                                <option value="english">Иностранный язык</option>
+                                <option value="informatics">Информатика</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-container">
+                            <input type="number" id="score${examCount}" name="examScore${examCount}" placeholder="Балл" min="0" max="100">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group remove-exam">
+                        <button type="button" class="btn-back btn-sm">Удалить</button>
+                    </div>
+                `;
+                
+                examResults.appendChild(newExam);
+                
+                // Добавляем обработчик для удаления предмета
+                const removeButton = newExam.querySelector('.remove-exam button');
+                removeButton.addEventListener('click', function() {
+                    newExam.remove();
+                });
+            });
+            
+            // Обработка отправки формы
+            const applicationForm = document.getElementById('applicationForm');
+            applicationForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                if (validateSection(currentStep)) {
+                    alert('Заявление успешно отправлено! Вы будете перенаправлены на страницу отслеживания статуса заявления.');
+                    // Редирект на страницу статуса
+                    window.location.href = 'applicant-status.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -107,5 +107,27 @@ services:
     ports:
       - "8084:8084"
 
+  # Сервис заявок - управление заявками абитуриентов
+  applicant-service:
+    build:
+      context: ./applicant-service
+      dockerfile: Dockerfile
+    container_name: decanat-applicant-service
+    restart: unless-stopped
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=decanat
+      - AUTH_SERVICE_URL=http://auth-service:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+    ports:
+      - "8085:8085"
+    
 volumes:
   postgres-data: 

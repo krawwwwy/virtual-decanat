@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"club-service/internal/repository"
+	"club-service/internal/model"
 	"net/http"
 	"strconv"
 
@@ -9,10 +9,10 @@ import (
 )
 
 type ClubServiceInterface interface {
-	CreateClub(club *repository.Club) error
-	GetAllClubs() ([]repository.Club, error)
-	GetClubByID(id int) (*repository.Club, error)
-	UpdateClub(club *repository.Club) error
+	CreateClub(club *model.Club) error
+	GetAllClubs() ([]model.Club, error)
+	GetClubByID(id int) (*model.Club, error)
+	UpdateClub(club *model.Club) error
 	DeleteClub(id int) error
 }
 
@@ -25,7 +25,7 @@ func NewClubHandler(service ClubServiceInterface) *ClubHandler {
 }
 
 func (h *ClubHandler) CreateClub(c *gin.Context) {
-	var club repository.Club
+	var club model.Club
 	if err := c.ShouldBindJSON(&club); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -72,7 +72,7 @@ func (h *ClubHandler) UpdateClub(c *gin.Context) {
 		return
 	}
 
-	var club repository.Club
+	var club model.Club
 	if err := c.ShouldBindJSON(&club); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

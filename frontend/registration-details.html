@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация: Личные данные | Виртуальный Деканат</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/applicant-form.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700&family=Public+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="images/header-logo.svg" alt="Логотип ВУЗа" class="logo">
+                    <h1>ВУЗ</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html" class="nav-link">Главная</a></li>
+                        <li><a href="applicant.html" class="nav-link">Абитуриентам</a></li>
+                        <li><a href="login.html" class="nav-link">Вход</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="applicant-form-container">
+            <div class="applicant-image"></div>
+            <div class="applicant-form">
+                <h2>Личные данные</h2>
+                <p class="applicant-description">Заполните дополнительную информацию для завершения регистрации</p>
+                
+                <div class="step-indicator">
+                    <div class="step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Учетные данные</div>
+                    </div>
+                    <div class="step-divider"></div>
+                    <div class="step active">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Личные данные</div>
+                    </div>
+                </div>
+                
+                <form id="registrationDetailsForm">
+                    <div class="form-group">
+                        <div class="input-container">
+                            <input type="text" id="lastName" name="lastName" placeholder="Фамилия" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-container">
+                            <input type="text" id="firstName" name="firstName" placeholder="Имя" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-container">
+                            <input type="text" id="middleName" name="middleName" placeholder="Отчество (при наличии)">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-container">
+                            <input type="tel" id="phone" name="phone" placeholder="Номер телефона" required>
+                        </div>
+                    </div>
+                    
+                    <div class="student-fields">
+                        <h3 class="section-title">Данные для студентов</h3>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="faculty" name="faculty">
+                                    <option value="" disabled selected>Выберите факультет</option>
+                                    <option value="IT">Информационные технологии</option>
+                                    <option value="economics">Экономика и менеджмент</option>
+                                    <option value="law">Юридический</option>
+                                    <option value="philology">Филологический</option>
+                                    <option value="science">Естественные науки</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="course" name="course">
+                                    <option value="" disabled selected>Выберите курс</option>
+                                    <option value="1">1 курс</option>
+                                    <option value="2">2 курс</option>
+                                    <option value="3">3 курс</option>
+                                    <option value="4">4 курс</option>
+                                    <option value="5">5 курс</option>
+                                    <option value="6">6 курс</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="group" name="group">
+                                    <option value="" disabled selected>Выберите группу</option>
+                                    <option value="ИТ-101">ИТ-101</option>
+                                    <option value="ИТ-102">ИТ-102</option>
+                                    <option value="ИТ-103">ИТ-103</option>
+                                    <option value="ЭКМ-101">ЭКМ-101</option>
+                                    <option value="ЭКМ-102">ЭКМ-102</option>
+                                    <option value="ЮР-101">ЮР-101</option>
+                                    <option value="ЮР-102">ЮР-102</option>
+                                    <option value="ФИЛ-101">ФИЛ-101</option>
+                                    <option value="ЕН-101">ЕН-101</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="teacher-fields" style="display: none;">
+                        <h3 class="section-title">Данные для преподавателей</h3>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="department" name="department">
+                                    <option value="" disabled selected>Выберите кафедру</option>
+                                    <option value="IT">Информационных технологий</option>
+                                    <option value="economics">Экономики и менеджмента</option>
+                                    <option value="law">Права</option>
+                                    <option value="philology">Филологии</option>
+                                    <option value="science">Естественных наук</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="position" name="position">
+                                    <option value="" disabled selected>Выберите должность</option>
+                                    <option value="assistant">Ассистент</option>
+                                    <option value="senior-lecturer">Старший преподаватель</option>
+                                    <option value="docent">Доцент</option>
+                                    <option value="professor">Профессор</option>
+                                    <option value="head">Заведующий кафедрой</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="academicDegree" name="academicDegree">
+                                    <option value="" disabled selected>Ученая степень</option>
+                                    <option value="none">Отсутствует</option>
+                                    <option value="candidate">Кандидат наук</option>
+                                    <option value="doctor">Доктор наук</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="staff-fields" style="display: none;">
+                        <h3 class="section-title">Данные для сотрудников</h3>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="division" name="division">
+                                    <option value="" disabled selected>Выберите подразделение</option>
+                                    <option value="administration">Администрация</option>
+                                    <option value="accounting">Бухгалтерия</option>
+                                    <option value="hr">Отдел кадров</option>
+                                    <option value="it">ИТ-отдел</option>
+                                    <option value="library">Библиотека</option>
+                                    <option value="maintenance">Хозяйственный отдел</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="select-container">
+                                <select id="staffPosition" name="staffPosition">
+                                    <option value="" disabled selected>Выберите должность</option>
+                                    <option value="specialist">Специалист</option>
+                                    <option value="lead-specialist">Ведущий специалист</option>
+                                    <option value="head">Руководитель отдела</option>
+                                    <option value="accountant">Бухгалтер</option>
+                                    <option value="librarian">Библиотекарь</option>
+                                    <option value="admin">Администратор</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="submit-btn">Завершить регистрацию</button>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <p class="applicant-description">Уже зарегистрированы? <a href="login.html">Войти</a></p>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>© 2025 Виртуальный Деканат. Все права защищены.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Справка</a>
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Условия использования</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получение параметров URL для определения выбранной роли
+            const urlParams = new URLSearchParams(window.location.search);
+            const role = urlParams.get('role');
+            
+            // Отображение соответствующих полей в зависимости от роли
+            if (role === 'student') {
+                document.querySelector('.student-fields').style.display = 'block';
+                document.querySelector('.teacher-fields').style.display = 'none';
+                document.querySelector('.staff-fields').style.display = 'none';
+            } else if (role === 'teacher') {
+                document.querySelector('.student-fields').style.display = 'none';
+                document.querySelector('.teacher-fields').style.display = 'block';
+                document.querySelector('.staff-fields').style.display = 'none';
+            } else if (role === 'staff') {
+                document.querySelector('.student-fields').style.display = 'none';
+                document.querySelector('.teacher-fields').style.display = 'none';
+                document.querySelector('.staff-fields').style.display = 'block';
+            }
+            
+            // Обработка отправки формы
+            const registrationDetailsForm = document.getElementById('registrationDetailsForm');
+            registrationDetailsForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Здесь была бы отправка данных на сервер
+                alert('Регистрация успешно завершена! Переход на страницу входа.');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html> 

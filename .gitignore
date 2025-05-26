@@ -42,6 +42,7 @@ dist/
 # Docker
 .docker/
 .docker-data/
+docker-rerun.txt
 
 # Local database files
 *.db

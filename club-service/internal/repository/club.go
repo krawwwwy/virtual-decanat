@@ -1,24 +1,17 @@
 package repository
 
 import (
+	"club-service/internal/model"
 	"database/sql"
-	"errors"
 )
 
-var ErrNotFound = errors.New("not found")
-
-type Club struct {
-	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	CreatedAt   string `json:"created_at"`
-}
+var ErrNotFound = model.ErrNotFound
 
 type ClubRepositoryInterface interface {
-	Create(club *Club) error
-	GetAll() ([]Club, error)
-	GetByID(id int) (*Club, error)
-	Update(club *Club) error
+	Create(club *model.Club) error
+	GetAll() ([]model.Club, error)
+	GetByID(id int) (*model.Club, error)
+	Update(club *model.Club) error
 	Delete(id int) error
 }
 
@@ -30,12 +23,12 @@ func NewClubRepository(db *sql.DB) *ClubRepository {
 	return &ClubRepository{db: db}
 }
 
-func (r *ClubRepository) Create(club *Club) error {
+func (r *ClubRepository) Create(club *model.Club) error {
 	query := `INSERT INTO club.clubs (name, description) VALUES ($1, $2) RETURNING id, created_at`
 	return r.db.QueryRow(query, club.Name, club.Description).Scan(&club.ID, &club.CreatedAt)
 }
 
-func (r *ClubRepository) GetAll() ([]Club, error) {
+func (r *ClubRepository) GetAll() ([]model.Club, error) {
 	query := `SELECT id, name, description, created_at FROM club.clubs`
 	rows, err := r.db.Query(query)
 	if err != nil {
@@ -43,9 +36,9 @@ func (r *ClubRepository) GetAll() ([]Club, error) {
 	}
 	defer rows.Close()
 
-	var clubs []Club
+	var clubs []model.Club
 	for rows.Next() {
-		var club Club
+		var club model.Club
 		if err := rows.Scan(&club.ID, &club.Name, &club.Description, &club.CreatedAt); err != nil {
 			return nil, err
 		}
@@ -54,9 +47,9 @@ func (r *ClubRepository) GetAll() ([]Club, error) {
 	return clubs, nil
 }
 
-func (r *ClubRepository) GetByID(id int) (*Club, error) {
+func (r *ClubRepository) GetByID(id int) (*model.Club, error) {
 	query := `SELECT id, name, description, created_at FROM club.clubs WHERE id = $1`
-	club := &Club{}
+	club := &model.Club{}
 	err := r.db.QueryRow(query, id).Scan(&club.ID, &club.Name, &club.Description, &club.CreatedAt)
 	if err == sql.ErrNoRows {
 		return nil, ErrNotFound
@@ -67,7 +60,7 @@ func (r *ClubRepository) GetByID(id int) (*Club, error) {
 	return club, nil
 }
 
-func (r *ClubRepository) Update(club *Club) error {
+func (r *ClubRepository) Update(club *model.Club) error {
 	query := `UPDATE club.clubs SET name = $1, description = $2 WHERE id = $3`
 	result, err := r.db.Exec(query, club.Name, club.Description, club.ID)
 	if err != nil {

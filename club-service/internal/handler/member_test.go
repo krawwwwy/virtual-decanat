@@ -2,7 +2,7 @@ package handler
 
 import (
 	"bytes"
-	"club-service/internal/repository"
+	"club-service/internal/model"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -13,16 +13,16 @@ import (
 )
 
 type mockMemberService struct {
-	members []repository.Member
+	members []model.Member
 }
 
-func (m *mockMemberService) AddMember(member *repository.Member) error {
+func (m *mockMemberService) AddMember(member *model.Member) error {
 	member.ID = len(m.members) + 1
 	m.members = append(m.members, *member)
 	return nil
 }
-func (m *mockMemberService) GetClubMembers(clubID int) ([]repository.Member, error) {
-	var res []repository.Member
+func (m *mockMemberService) GetClubMembers(clubID int) ([]model.Member, error) {
+	var res []model.Member
 	for _, mem := range m.members {
 		if mem.ClubID == clubID {
 			res = append(res, mem)
@@ -39,7 +39,7 @@ func (m *mockMemberService) RemoveMember(id int) error {
 	}
 	return nil
 }
-func (m *mockMemberService) GetUserClubs(userID int) ([]repository.Member, error) {
+func (m *mockMemberService) GetUserClubs(userID int) ([]model.Member, error) {
 	return nil, nil
 }
 
@@ -67,7 +67,7 @@ func TestAddMemberHandler(t *testing.T) {
 
 func TestGetClubMembersHandler(t *testing.T) {
 	r, mock := setupRouterMember()
-	mock.members = []repository.Member{{ID: 1, ClubID: 1, UserID: 2, Role: "admin"}}
+	mock.members = []model.Member{{ID: 1, ClubID: 1, UserID: 2, Role: "admin"}}
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/members/club/1", nil)
 	r.ServeHTTP(w, req)
@@ -76,7 +76,7 @@ func TestGetClubMembersHandler(t *testing.T) {
 
 func TestRemoveMemberHandler(t *testing.T) {
 	r, mock := setupRouterMember()
-	mock.members = []repository.Member{{ID: 1, ClubID: 1, UserID: 2, Role: "admin"}}
+	mock.members = []model.Member{{ID: 1, ClubID: 1, UserID: 2, Role: "admin"}}
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("DELETE", "/api/members/1", nil)
 	r.ServeHTTP(w, req)

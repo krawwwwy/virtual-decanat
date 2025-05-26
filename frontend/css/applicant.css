@@ -1,0 +1,338 @@
+/* Стили для страницы абитуриентов */
+:root {
+    --primary-gradient: linear-gradient(135deg, #1A80E5 0%, #0C4C9C 100%);
+    --secondary-gradient: linear-gradient(135deg, #f9fcff 0%, #e5f0ff 100%);
+    --primary-color: #1A80E5;
+    --primary-dark: #0C4C9C;
+    --text-dark: #2B4A70;
+    --text-medium: #4E7397;
+    --text-light: #6C809A;
+    --background-light: #F7FAFC;
+    --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.12);
+    --border-radius: 16px;
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Основной контейнер */
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Приветственная секция */
+.welcome-section {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 3rem;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../images/pattern.svg');
+    background-size: cover;
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.welcome-section h2 {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.welcome-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.7;
+    position: relative;
+}
+
+/* Стили для сервисных карточек */
+.applicant-services {
+    margin-bottom: 3.5rem;
+}
+
+.service-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.service-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-soft);
+    flex: 1;
+    min-width: 280px;
+    max-width: 380px;
+    text-align: center;
+    transition: var(--transition-smooth);
+    border: 1px solid rgba(230, 240, 255, 0.8);
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(26, 128, 229, 0.2);
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    background: var(--secondary-gradient);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.service-card h3 {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.service-card p {
+    color: var(--text-medium);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.card-button {
+    display: inline-block;
+    background: var(--primary-gradient);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 15px rgba(26, 128, 229, 0.3);
+}
+
+.card-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(26, 128, 229, 0.4);
+}
+
+/* Стили для информационных блоков */
+.info-blocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+}
+
+.info-block {
+    flex: 1;
+    min-width: 320px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    border-left: 5px solid var(--primary-color);
+    padding: 2rem;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-smooth);
+}
+
+.info-block:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.info-block h3 {
+    color: var(--text-dark);
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #e0e6ed;
+    font-weight: 600;
+}
+
+.info-content {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-medium);
+}
+
+.info-content ul {
+    padding-left: 1.5rem;
+    margin: 1rem 0 1.5rem;
+}
+
+.info-content li {
+    margin-bottom: 0.8rem;
+}
+
+.info-content strong {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+/* Стили для FAQ секции */
+.faq-section {
+    margin-bottom: 4rem;
+    background: var(--secondary-gradient);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+}
+
+.faq-section h3 {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.faq-item {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-soft);
+}
+
+.faq-question {
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-left: 4px solid var(--primary-color);
+}
+
+.faq-question h4 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--secondary-gradient);
+    color: var(--primary-color);
+    border-radius: 50%;
+}
+
+.faq-answer {
+    padding: 0 1.5rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.faq-answer p {
+    padding: 1.2rem 0;
+    line-height: 1.7;
+    color: var(--text-medium);
+}
+
+/* Адаптивная верстка */
+@media (max-width: 992px) {
+    .welcome-section {
+        padding: 2.5rem 1.5rem;
+    }
+    
+    .welcome-section h2 {
+        font-size: 2.2rem;
+    }
+    
+    .welcome-text {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .service-card {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .info-blocks {
+        flex-direction: column;
+    }
+    
+    .welcome-section h2 {
+        font-size: 1.8rem;
+    }
+    
+    .welcome-text {
+        font-size: 1rem;
+    }
+    
+    .faq-section {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 1.5rem 1rem;
+    }
+    
+    .welcome-section {
+        padding: 2rem 1rem;
+    }
+    
+    .welcome-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .card-icon {
+        font-size: 2.5rem;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .service-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    .faq-question h4 {
+        font-size: 1rem;
+    }
+} 

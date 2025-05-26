@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"club-service/internal/repository"
+	"club-service/internal/model"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -11,10 +11,10 @@ import (
 )
 
 type MemberServiceInterface interface {
-	AddMember(member *repository.Member) error
-	GetClubMembers(clubID int) ([]repository.Member, error)
+	AddMember(member *model.Member) error
+	GetClubMembers(clubID int) ([]model.Member, error)
 	RemoveMember(id int) error
-	GetUserClubs(userID int) ([]repository.Member, error)
+	GetUserClubs(userID int) ([]model.Member, error)
 }
 
 type MemberHandler struct {
@@ -26,7 +26,7 @@ func NewMemberHandler(service MemberServiceInterface) *MemberHandler {
 }
 
 func (h *MemberHandler) AddMember(c *gin.Context) {
-	var member repository.Member
+	var member model.Member
 	if err := c.ShouldBindJSON(&member); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -77,11 +77,27 @@ func (h *MemberHandler) DebugAddMember(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	var member repository.Member
+	var member model.Member
 	err = json.Unmarshal(body, &member)
 	c.JSON(http.StatusOK, gin.H{
 		"raw_body": string(body),
 		"unmarshal_error": err,
 		"parsed_member": member,
 	})
+}
+
+func (h *MemberHandler) GetUserClubs(c *gin.Context) {
+	userID, err := strconv.Atoi(c.Param("userId"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user id"})
+		return
+	}
+
+	clubs, err := h.service.GetUserClubs(userID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, clubs)
 } 

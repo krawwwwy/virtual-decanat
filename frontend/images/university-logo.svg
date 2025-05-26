@@ -1,0 +1,21 @@
+<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+    <!-- Фон логотипа - круг -->
+    <circle cx="25" cy="25" r="23" fill="#ffffff" stroke="#ffffff" stroke-width="1" />
+    
+    <!-- Книга - основа логотипа -->
+    <path d="M10 20 L10 35 L40 35 L40 20 L25 15 Z" fill="#4a76a8" />
+    
+    <!-- Обложка книги -->
+    <path d="M10 20 L10 35 L25 30 L25 15 Z" fill="#2a5885" />
+    
+    <!-- Страницы книги -->
+    <path d="M25 15 L25 30 L40 35 L40 20 Z" fill="#ffffff" opacity="0.6" />
+    
+    <!-- Линии на страницах -->
+    <line x1="28" y1="22" x2="37" y2="24" stroke="#2a5885" stroke-width="0.5" />
+    <line x1="28" y1="25" x2="37" y2="27" stroke="#2a5885" stroke-width="0.5" />
+    <line x1="28" y1="28" x2="37" y2="30" stroke="#2a5885" stroke-width="0.5" />
+    
+    <!-- Звезда наверху -->
+    <polygon points="25,7 27,13 33,13 28,17 30,23 25,19 20,23 22,17 17,13 23,13" fill="#ffcc00" />
+</svg> 

@@ -1,7 +1,7 @@
 package service
 
 import (
-	"club-service/internal/repository"
+	"club-service/internal/model"
 	"errors"
 	"testing"
 
@@ -13,19 +13,19 @@ type MockClubRepo struct {
 	mock.Mock
 }
 
-func (m *MockClubRepo) Create(club *repository.Club) error {
+func (m *MockClubRepo) Create(club *model.Club) error {
 	args := m.Called(club)
 	return args.Error(0)
 }
-func (m *MockClubRepo) GetAll() ([]repository.Club, error) {
+func (m *MockClubRepo) GetAll() ([]model.Club, error) {
 	args := m.Called()
-	return args.Get(0).([]repository.Club), args.Error(1)
+	return args.Get(0).([]model.Club), args.Error(1)
 }
-func (m *MockClubRepo) GetByID(id int) (*repository.Club, error) {
+func (m *MockClubRepo) GetByID(id int) (*model.Club, error) {
 	args := m.Called(id)
-	return args.Get(0).(*repository.Club), args.Error(1)
+	return args.Get(0).(*model.Club), args.Error(1)
 }
-func (m *MockClubRepo) Update(club *repository.Club) error {
+func (m *MockClubRepo) Update(club *model.Club) error {
 	args := m.Called(club)
 	return args.Error(0)
 }
@@ -37,7 +37,7 @@ func (m *MockClubRepo) Delete(id int) error {
 func TestClubService_CreateClub(t *testing.T) {
 	repo := new(MockClubRepo)
 	service := NewClubService(repo)
-	club := &repository.Club{Name: "Test", Description: "Desc"}
+	club := &model.Club{Name: "Test", Description: "Desc"}
 	repo.On("Create", club).Return(nil)
 
 	err := service.CreateClub(club)
@@ -48,7 +48,7 @@ func TestClubService_CreateClub(t *testing.T) {
 func TestClubService_GetAllClubs(t *testing.T) {
 	repo := new(MockClubRepo)
 	service := NewClubService(repo)
-	clubs := []repository.Club{{ID: 1, Name: "A"}}
+	clubs := []model.Club{{ID: 1, Name: "A"}}
 	repo.On("GetAll").Return(clubs, nil)
 
 	result, err := service.GetAllClubs()
@@ -59,7 +59,7 @@ func TestClubService_GetAllClubs(t *testing.T) {
 func TestClubService_GetClubByID_NotFound(t *testing.T) {
 	repo := new(MockClubRepo)
 	service := NewClubService(repo)
-	repo.On("GetByID", 42).Return(&repository.Club{}, errors.New("not found"))
+	repo.On("GetByID", 42).Return(&model.Club{}, errors.New("not found"))
 
 	_, err := service.GetClubByID(42)
 	assert.Error(t, err)
@@ -68,7 +68,7 @@ func TestClubService_GetClubByID_NotFound(t *testing.T) {
 func TestClubService_UpdateClub(t *testing.T) {
 	repo := new(MockClubRepo)
 	service := NewClubService(repo)
-	club := &repository.Club{ID: 1, Name: "Upd"}
+	club := &model.Club{ID: 1, Name: "Upd"}
 	repo.On("Update", club).Return(nil)
 
 	err := service.UpdateClub(club)

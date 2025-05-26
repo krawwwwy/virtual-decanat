@@ -1,0 +1,306 @@
+/* Стили для форм абитуриентов в стиле форм регистрации */
+
+/* Общие стили для контейнера формы */
+.applicant-form-container {
+    display: flex;
+    flex: 1;
+    min-height: calc(100vh - 65px - 60px); /* Высота экрана - высота хедера - высота футера */
+}
+
+/* Стили для фоновой картинки */
+.applicant-image {
+    flex: 1;
+    background-image: linear-gradient(rgba(119, 0, 140, 0.2), rgba(0, 0, 0, 1)), url('../images/campus.jpg');
+    background-size: cover;
+    background-position: center;
+    display: none; /* На мобильных устройствах скрываем */
+}
+
+/* Стили для формы абитуриента */
+.applicant-form {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom, rgba(240, 240, 240, 0), rgba(198, 209, 245, 1));
+}
+
+/* Заголовок формы */
+.applicant-form h2 {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #0E141B;
+}
+
+/* Описание формы */
+.applicant-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    color: #4E7397;
+    margin-bottom: 30px;
+}
+
+/* Группа формы */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Контейнер для инпута в стиле регистрации */
+.input-container {
+    position: relative;
+    height: 70px;
+    border-radius: 12px;
+    background-color: #E7EDF3;
+    display: flex;
+    align-items: center;
+}
+
+/* Стили для поля ввода */
+.input-container input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    padding: 0 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    color: #4E7397;
+    border-radius: 12px;
+    outline: none;
+}
+
+/* Плейсхолдер */
+.input-container input::placeholder {
+    color: #4E7397;
+    opacity: 0.7;
+}
+
+/* Стили для селектов */
+.select-container {
+    position: relative;
+    height: 70px;
+    border-radius: 12px;
+    background-color: #E7EDF3;
+    display: flex;
+    align-items: center;
+}
+
+.select-container select {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    padding: 0 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    color: #4E7397;
+    border-radius: 12px;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.select-container::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #4E7397;
+    pointer-events: none;
+}
+
+/* Кнопка отправки формы */
+.submit-btn {
+    background: linear-gradient(to bottom, #A2AAF4, #0019FF);
+    color: white;
+    border: none;
+    height: 76px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 25, 255, 0.3);
+}
+
+/* Кнопки навигации многостраничных форм */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn-back,
+.btn-next {
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-back {
+    background-color: #E8EDF2;
+    color: #0D141C;
+    border: none;
+}
+
+.btn-back:hover {
+    background-color: #d0d5db;
+}
+
+.btn-next {
+    background: linear-gradient(to bottom, #A2AAF4, #0019FF);
+    color: white;
+    border: none;
+}
+
+.btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 25, 255, 0.3);
+}
+
+/* Стили для индикатора шагов */
+.step-indicator {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #E8EDF2;
+    color: #4E7397;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-weight: 700;
+}
+
+.step.active .step-number {
+    background-color: #1A80E5;
+    color: white;
+}
+
+.step-text {
+    font-family: 'Inter', sans-serif;
+    color: #4E7397;
+}
+
+.step.active .step-text {
+    color: #1A80E5;
+    font-weight: 500;
+}
+
+.step-divider {
+    flex: 1;
+    height: 2px;
+    background-color: #E8EDF2;
+    max-width: 50px;
+}
+
+/* Стили для поля поиска заявлений */
+.search-form-container {
+    background: linear-gradient(to bottom, rgba(240, 240, 240, 0.5), rgba(198, 209, 245, 0.8));
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+/* Результаты отображения заявления */
+.status-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.status-tag {
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Секция помощи */
+.help-section {
+    background: linear-gradient(to bottom, #f5f7ff, #e0e6ff);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.help-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Медиа-запросы для адаптивности */
+@media (min-width: 768px) {
+    .applicant-image {
+        display: block;
+    }
+
+    .applicant-form {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 480px) {
+    .applicant-form {
+        padding: 20px;
+    }
+
+    .applicant-form h2 {
+        font-size: 24px;
+    }
+
+    .applicant-description {
+        font-size: 16px;
+    }
+
+    .input-container {
+        height: 60px;
+    }
+
+    .input-container input {
+        font-size: 16px;
+    }
+
+    .submit-btn {
+        height: 60px;
+        font-size: 18px;
+    }
+} 

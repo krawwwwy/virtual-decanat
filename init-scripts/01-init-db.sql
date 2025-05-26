@@ -150,12 +150,16 @@ CREATE TABLE IF NOT EXISTS club.applications (
 );
 
 -- Создание таблицы абитуриентов
+DROP TABLE IF EXISTS applicant.applications;
+DROP TABLE IF EXISTS applicant.applicants;
+
 CREATE TABLE IF NOT EXISTS applicant.applicants (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     middle_name VARCHAR(100),
     email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
     phone VARCHAR(20) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -167,8 +171,25 @@ CREATE TABLE IF NOT EXISTS applicant.applications (
     applicant_id INTEGER REFERENCES applicant.applicants(id),
     faculty VARCHAR(100) NOT NULL,
     program VARCHAR(255) NOT NULL,
-    status VARCHAR(20) NOT NULL DEFAULT 'pending',
+    status VARCHAR(50) NOT NULL DEFAULT 'draft',
     documents_submitted BOOLEAN DEFAULT FALSE,
+    comments TEXT,
+    -- Персональные данные
+    passport_series VARCHAR(10),
+    passport_number VARCHAR(20),
+    passport_issued_by TEXT,
+    passport_date TIMESTAMP WITH TIME ZONE,
+    birth_date TIMESTAMP WITH TIME ZONE,
+    birth_place VARCHAR(255),
+    address TEXT,
+    -- Данные об образовании
+    education_type VARCHAR(100),
+    institution VARCHAR(255),
+    graduation_year INTEGER,
+    document_number VARCHAR(50),
+    document_date VARCHAR(50),
+    average_grade REAL,
+    has_original_documents BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -233,3 +254,29 @@ ON CONFLICT DO NOTHING;
 INSERT INTO performance.debts (student_id, subject_id, description, deadline, is_resolved)
 VALUES (1, 1, 'Не сдал курсовую', '2024-06-01', false)
 ON CONFLICT DO NOTHING; 
+
+-- Вставка тестового абитуриента
+INSERT INTO applicant.applicants (id, first_name, last_name, middle_name, email, password_hash, phone)
+VALUES (1, 'Test', 'Abiturient', 'Testovich', 'test@abiturient.com', 'testhash', '1234567890')
+ON CONFLICT DO NOTHING;
+
+-- Вставка тестовой заявки абитуриента
+INSERT INTO applicant.applications (
+    id, applicant_id, faculty, program, status, documents_submitted,
+    passport_series, passport_number, passport_issued_by, passport_date,
+    birth_date, birth_place, address,
+    education_type, institution, graduation_year, document_number,
+    document_date, average_grade, has_original_documents
+)
+VALUES (
+    1, 1, 'Факультет информатики', 'Программная инженерия', 'submitted', true,
+    '1234', '567890', 'МВД России', '2015-01-15',
+    '2000-05-20', 'Москва', 'ул. Примерная, д. 1, кв. 1',
+    'Среднее общее', 'Школа №123', 2022, 'A-123456',
+    '15.06.2022', 4.5, true
+)
+ON CONFLICT DO NOTHING;
+
+
+
+

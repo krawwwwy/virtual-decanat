@@ -2,7 +2,7 @@ package handler
 
 import (
 	"bytes"
-	"club-service/internal/repository"
+	"club-service/internal/model"
 	"club-service/internal/service"
 	"encoding/json"
 	"net/http"
@@ -14,18 +14,18 @@ import (
 )
 
 type mockClubService struct {
-	clubs []repository.Club
+	clubs []model.Club
 }
 
-func (m *mockClubService) CreateClub(club *repository.Club) error {
+func (m *mockClubService) CreateClub(club *model.Club) error {
 	club.ID = len(m.clubs) + 1
 	m.clubs = append(m.clubs, *club)
 	return nil
 }
-func (m *mockClubService) GetAllClubs() ([]repository.Club, error) {
+func (m *mockClubService) GetAllClubs() ([]model.Club, error) {
 	return m.clubs, nil
 }
-func (m *mockClubService) GetClubByID(id int) (*repository.Club, error) {
+func (m *mockClubService) GetClubByID(id int) (*model.Club, error) {
 	for _, c := range m.clubs {
 		if c.ID == id {
 			return &c, nil
@@ -33,7 +33,7 @@ func (m *mockClubService) GetClubByID(id int) (*repository.Club, error) {
 	}
 	return nil, service.ErrNotFound
 }
-func (m *mockClubService) UpdateClub(club *repository.Club) error {
+func (m *mockClubService) UpdateClub(club *model.Club) error {
 	for i, c := range m.clubs {
 		if c.ID == club.ID {
 			m.clubs[i] = *club
@@ -78,7 +78,7 @@ func TestCreateClubHandler(t *testing.T) {
 
 func TestGetAllClubsHandler(t *testing.T) {
 	r, mock := setupRouterClub()
-	mock.clubs = []repository.Club{{ID: 1, Name: "A"}}
+	mock.clubs = []model.Club{{ID: 1, Name: "A"}}
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/clubs/", nil)
 	r.ServeHTTP(w, req)

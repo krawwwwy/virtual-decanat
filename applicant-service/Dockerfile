@@ -2,6 +2,9 @@ FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
 
+# Установка git для загрузки зависимостей
+RUN apk add --no-cache git
+
 COPY go.mod go.sum ./
 RUN go mod download
 
@@ -15,6 +18,7 @@ WORKDIR /app
 
 COPY --from=builder /app/applicant-service .
 COPY --from=builder /app/configs ./configs
+COPY --from=builder /app/frontend.html ./frontend.html
 
 EXPOSE 8085
 

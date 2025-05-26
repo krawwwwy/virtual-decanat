@@ -1,6 +1,7 @@
 package service
 
 import (
+	"club-service/internal/model"
 	"club-service/internal/repository"
 )
 
@@ -12,11 +13,11 @@ func NewMemberService(repo repository.MemberRepositoryInterface) *MemberService 
 	return &MemberService{repo: repo}
 }
 
-func (s *MemberService) AddMember(member *repository.Member) error {
+func (s *MemberService) AddMember(member *model.Member) error {
 	return s.repo.Add(member)
 }
 
-func (s *MemberService) GetClubMembers(clubID int) ([]repository.Member, error) {
+func (s *MemberService) GetClubMembers(clubID int) ([]model.Member, error) {
 	return s.repo.GetByClubID(clubID)
 }
 
@@ -24,6 +25,6 @@ func (s *MemberService) RemoveMember(id int) error {
 	return s.repo.Remove(id)
 }
 
-func (s *MemberService) GetUserClubs(userID int) ([]repository.Member, error) {
+func (s *MemberService) GetUserClubs(userID int) ([]model.Member, error) {
 	return s.repo.GetByUserID(userID)
 } 

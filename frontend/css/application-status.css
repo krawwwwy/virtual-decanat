@@ -1,0 +1,439 @@
+/* Стили для страницы просмотра статуса заявления */
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.status-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.status-header h2 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.status-description {
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* Форма поиска заявления */
+.search-form-container {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    max-width: 700px;
+    margin: 0 auto 3rem;
+}
+
+.search-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.search-form .form-group:last-of-type {
+    grid-column: 1 / -1;
+}
+
+.search-form .form-buttons {
+    grid-column: 1 / -1;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.login-prompt {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.login-prompt a {
+    color: var(--primary-color);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.login-prompt a:hover {
+    text-decoration: underline;
+}
+
+/* Результаты статуса заявления */
+.status-results,
+.status-not-found {
+    margin-bottom: 3rem;
+}
+
+.status-card,
+.not-found-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+}
+
+.status-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.status-header-section h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin: 0;
+}
+
+.status-tag {
+    border-radius: 50px;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: white;
+}
+
+.status-tag.pending {
+    background-color: #f0b429;
+}
+
+.status-tag.approved {
+    background-color: #34c759;
+}
+
+.status-tag.rejected {
+    background-color: #ff3b30;
+}
+
+/* Детали заявителя */
+.applicant-details {
+    margin-bottom: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.2rem;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.detail-row:last-child {
+    margin-bottom: 0;
+}
+
+.detail-label {
+    flex: 0 0 30%;
+    font-weight: 500;
+    color: #555;
+}
+
+.detail-value {
+    flex: 1;
+    color: #333;
+}
+
+/* Таймлайн статуса */
+.status-timeline {
+    margin-bottom: 2rem;
+}
+
+.status-timeline h4,
+.status-comments h4 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8px;
+    height: 100%;
+    width: 2px;
+    background-color: #e0e0e0;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.timeline-item:hover {
+    transform: translateX(5px);
+}
+
+.timeline-point {
+    position: absolute;
+    left: -2rem;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    border: 4px solid white;
+    box-shadow: 0 0 0 2px #e0e0e0;
+    z-index: 1;
+}
+
+.timeline-item.completed .timeline-point {
+    background-color: #34c759;
+    box-shadow: 0 0 0 2px rgba(52, 199, 89, 0.3);
+}
+
+.timeline-item.active .timeline-point {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+}
+
+.timeline-date {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.3rem;
+}
+
+.timeline-title {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.3rem;
+}
+
+.timeline-item.active .timeline-title {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.timeline-description {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.timeline-item.expanded .timeline-description {
+    max-height: 100px;
+    opacity: 1;
+}
+
+/* Комментарии */
+.status-comments {
+    margin-bottom: 2rem;
+}
+
+.comment {
+    background-color: #f9f9f9;
+    border-left: 3px solid var(--primary-color);
+    padding: 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 1rem;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+}
+
+.comment-author {
+    font-weight: 500;
+    color: #333;
+}
+
+.comment-date {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.comment-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Действия */
+.status-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.status-actions button {
+    display: flex;
+    align-items: center;
+}
+
+.status-actions i {
+    margin-right: 0.5rem;
+}
+
+/* Заявление не найдено */
+.not-found-card {
+    text-align: center;
+    padding: 3rem 2rem;
+}
+
+.not-found-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    color: #999;
+}
+
+.not-found-card h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.not-found-card p {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.not-found-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Раздел помощи */
+.help-section {
+    background-color: #f5f7ff;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.help-section h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.help-content {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.help-card {
+    flex: 1;
+    min-width: 250px;
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.help-card h4 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.help-card p {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+.help-card ul {
+    padding-left: 1.2rem;
+}
+
+.help-card li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.help-card a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.help-card a:hover {
+    text-decoration: underline;
+}
+
+/* Утилитарные классы */
+.hidden {
+    display: none;
+}
+
+/* Адаптивная верстка */
+@media (max-width: 768px) {
+    .search-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .status-header-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .status-actions {
+        flex-direction: column;
+    }
+    
+    .status-tag {
+        align-self: flex-start;
+    }
+    
+    .detail-row {
+        flex-direction: column;
+        margin-bottom: 1rem;
+    }
+    
+    .detail-label {
+        margin-bottom: 0.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .status-card,
+    .not-found-card,
+    .search-form-container {
+        padding: 1.5rem;
+    }
+    
+    .status-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .help-section {
+        padding: 1.5rem;
+    }
+} 
