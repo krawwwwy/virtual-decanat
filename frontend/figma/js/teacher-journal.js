@@ -1,5 +1,85 @@
 // Функции для работы с журналом успеваемости
 document.addEventListener('DOMContentLoaded', function() {
+    // Данные студентов для разных групп и предметов
+    const studentsData = {
+        math: {
+            mt101: [
+                { name: 'Иванов Иван Иванович', grades: [5, 4, 5, 4, 5, 4, 5], exam: 5, final: 5 },
+                { name: 'Петров Петр Петрович', grades: [4, 4, 3, 4, 5, 4, 4], exam: 4, final: 4 },
+                { name: 'Сидорова Мария Александровна', grades: [5, 5, 5, 5, 5, 5, 5], exam: 5, final: 5 },
+                { name: 'Кузнецов Алексей Дмитриевич', grades: [3, 3, 2, 4, 3, 3, 4], exam: 3, final: 3 },
+                { name: 'Новиков Дмитрий Сергеевич', grades: [4, 4, 4, 4, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Морозова Елена Игоревна', grades: [5, 4, 5, 5, 5, 4, 5], exam: 5, final: 5 },
+                { name: 'Волков Артем Витальевич', grades: [4, 3, 4, 3, 4, 3, 4], exam: 4, final: 4 },
+                { name: 'Соколова Анна Михайловна', grades: [5, 5, 4, 5, 5, 5, 5], exam: 5, final: 5 }
+            ],
+            mt102: [
+                { name: 'Смирнов Кирилл Андреевич', grades: [4, 4, 4, 3, 4, 3, 4], exam: 4, final: 4 },
+                { name: 'Козлова Юлия Павловна', grades: [5, 4, 5, 5, 4, 5, 4], exam: 4, final: 4 },
+                { name: 'Никитин Максим Викторович', grades: [3, 3, 3, 3, 2, 3, 3], exam: 3, final: 3 },
+                { name: 'Васильева Ольга Сергеевна', grades: [5, 5, 5, 5, 5, 5, 5], exam: 5, final: 5 },
+                { name: 'Павлов Александр Дмитриевич', grades: [4, 'н', 4, 3, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Семенова Валерия Алексеевна', grades: [4, 3, 4, 4, 3, 4, 4], exam: 4, final: 4 }
+            ],
+            mt201: [
+                { name: 'Орлова Светлана Игоревна', grades: [5, 5, 5, 5, 5, 5, 4], exam: 5, final: 5 },
+                { name: 'Федоров Николай Владимирович', grades: [3, 'н', 3, 'н', 3, 3, 3], exam: 3, final: 3 },
+                { name: 'Михайлова Татьяна Степановна', grades: [4, 4, 4, 5, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Зайцев Виктор Антонович', grades: [4, 4, 4, 4, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Соловьева Екатерина Ильинична', grades: [5, 5, 5, 5, 'н', 5, 5], exam: 5, final: 5 },
+                { name: 'Лебедева Дарья Михайловна', grades: [4, 3, 3, 4, 4, 4, 3], exam: 4, final: 4 },
+                { name: 'Титов Роман Никитич', grades: [3, 3, 2, 3, 2, 3, 3], exam: 3, final: 3 }
+            ]
+        },
+        geometry: {
+            mt101: [
+                { name: 'Иванов Иван Иванович', grades: [4, 3, 4, 3, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Петров Петр Петрович', grades: [3, 3, 2, 3, 3, 3, 3], exam: 3, final: 3 },
+                { name: 'Сидорова Мария Александровна', grades: [5, 5, 5, 5, 5, 5, 5], exam: 5, final: 5 },
+                { name: 'Кузнецов Алексей Дмитриевич', grades: [4, 3, 4, 3, 3, 4, 4], exam: 4, final: 4 },
+                { name: 'Новиков Дмитрий Сергеевич', grades: [3, 4, 3, 3, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Морозова Елена Игоревна', grades: [5, 4, 5, 5, 4, 5, 5], exam: 5, final: 5 },
+                { name: 'Волков Артем Витальевич', grades: [3, 3, 3, 3, 3, 3, 3], exam: 3, final: 3 },
+                { name: 'Соколова Анна Михайловна', grades: [4, 5, 4, 4, 5, 5, 5], exam: 5, final: 5 }
+            ],
+            mt102: [
+                { name: 'Смирнов Кирилл Андреевич', grades: [5, 4, 4, 5, 4, 5, 4], exam: 5, final: 5 },
+                { name: 'Козлова Юлия Павловна', grades: [4, 'н', 'н', 4, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Никитин Максим Викторович', grades: [4, 4, 4, 4, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Васильева Ольга Сергеевна', grades: [5, 5, 5, 5, 5, 5, 5], exam: 5, final: 5 },
+                { name: 'Павлов Александр Дмитриевич', grades: [3, 3, 3, 3, 4, 3, 3], exam: 3, final: 3 },
+                { name: 'Семенова Валерия Алексеевна', grades: [4, 4, 3, 4, 4, 4, 4], exam: 4, final: 4 }
+            ],
+            mt201: []
+        },
+        algebra: {
+            mt101: [
+                { name: 'Иванов Иван Иванович', grades: [3, 3, 4, 3, 3, 3, 3], exam: 3, final: 3 },
+                { name: 'Петров Петр Петрович', grades: [4, 4, 4, 4, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Сидорова Мария Александровна', grades: [5, 5, 5, 4, 5, 5, 5], exam: 5, final: 5 },
+                { name: 'Кузнецов Алексей Дмитриевич', grades: [3, 2, 3, 3, 2, 3, 3], exam: 3, final: 3 },
+                { name: 'Новиков Дмитрий Сергеевич', grades: [4, 4, 3, 3, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Морозова Елена Игоревна', grades: [5, 5, 4, 5, 5, 5, 5], exam: 5, final: 5 },
+                { name: 'Волков Артем Витальевич', grades: [3, 3, 3, 3, 3, 3, 3], exam: 3, final: 3 },
+                { name: 'Соколова Анна Михайловна', grades: [4, 4, 4, 5, 4, 4, 4], exam: 4, final: 4 }
+            ],
+            mt102: [],
+            mt201: [
+                { name: 'Орлова Светлана Игоревна', grades: [5, 5, 5, 5, 5, 5, 5], exam: 5, final: 5 },
+                { name: 'Федоров Николай Владимирович', grades: [3, 3, 'н', 3, 3, 'н', 3], exam: 3, final: 3 },
+                { name: 'Михайлова Татьяна Степановна', grades: [4, 4, 4, 4, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Зайцев Виктор Антонович', grades: [3, 4, 3, 3, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Соловьева Екатерина Ильинична', grades: [5, 5, 5, 5, 5, 5, 5], exam: 5, final: 5 },
+                { name: 'Лебедева Дарья Михайловна', grades: [4, 3, 3, 3, 4, 4, 4], exam: 4, final: 4 },
+                { name: 'Титов Роман Никитич', grades: [2, 3, 2, 3, 3, 2, 3], exam: 3, final: 3 }
+            ]
+        }
+    };
+    
+    // Текущий выбранный предмет и группа
+    let currentSubject = 'math';
+    let currentGroup = 'mt101';
+    
     // Проверка авторизации
     function checkAuth() {
         const token = localStorage.getItem('accessToken');
@@ -30,6 +110,111 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         } catch (error) {
             console.error('Ошибка при загрузке профиля:', error);
+        }
+    }
+
+    // Создание HTML для строки студента
+    function createStudentRow(student, index) {
+        let gradesHTML = '';
+        let gradeSum = 0;
+        let gradeCount = 0;
+        
+        // Генерируем HTML для ячеек с оценками
+        student.grades.forEach(grade => {
+            const isAbsent = grade === 'н';
+            const gradeClass = isAbsent ? 'grade-absent' : '';
+            
+            gradesHTML += `
+                <td>
+                    <input type="text" class="grade-input ${gradeClass}" value="${grade}" maxlength="1">
+                </td>
+            `;
+            
+            // Подсчет среднего балла (исключая пропуски)
+            if (!isAbsent) {
+                gradeSum += parseInt(grade);
+                gradeCount++;
+            }
+        });
+        
+        // Вычисляем средний балл
+        const avgGrade = gradeCount > 0 ? (gradeSum / gradeCount).toFixed(1) : '-';
+        
+        return `
+            <tr data-student-id="${index}">
+                <td class="student-name-column">
+                    <div class="student-name">
+                        <div class="student-avatar"></div>
+                        <span>${student.name}</span>
+                    </div>
+                </td>
+                ${gradesHTML}
+                <td class="avg-grade">${avgGrade}</td>
+                <td>
+                    <input type="text" class="grade-input" value="${student.exam}" maxlength="1">
+                </td>
+                <td>
+                    <input type="text" class="grade-input" value="${student.final}" maxlength="1">
+                </td>
+            </tr>
+        `;
+    }
+
+    // Обновление таблицы студентов для выбранных предмета и группы
+    function renderStudentList() {
+        const tableBody = document.querySelector('.journal-table tbody');
+        if (!tableBody) return;
+        
+        // Проверяем наличие данных для группы и предмета
+        const students = studentsData[currentSubject]?.[currentGroup];
+        if (!students || students.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="11" class="no-data">Нет данных для выбранной группы и предмета</td></tr>';
+            return;
+        }
+        
+        // Формируем строки таблицы с данными студентов
+        let tableHTML = '';
+        students.forEach((student, index) => {
+            tableHTML += createStudentRow(student, index);
+        });
+        
+        // Обновляем содержимое таблицы
+        tableBody.innerHTML = tableHTML;
+        
+        // Обновляем информацию о предмете и группе
+        updateJournalInfo();
+        
+        // Повторно настраиваем обработчики для новых элементов
+        setupGradeInputs();
+    }
+    
+    // Обновление информации о предмете и группе в заголовке
+    function updateJournalInfo() {
+        const journalTitle = document.querySelector('.journal-info .journal-title');
+        const journalGroupInfo = document.querySelector('.journal-info > div:last-child > div');
+        const subjectIcon = document.querySelector('.journal-info .subject-icon img');
+        
+        if (journalTitle && journalGroupInfo) {
+            // Устанавливаем название предмета
+            let subjectName = 'Прикладная математика';
+            if (currentSubject === 'geometry') {
+                subjectName = 'Начертательная геометрия';
+            } else if (currentSubject === 'algebra') {
+                subjectName = 'Линейная алгебра';
+            }
+            journalTitle.textContent = subjectName;
+            
+            // Устанавливаем группу
+            journalGroupInfo.textContent = `Группа: ${currentGroup.toUpperCase()} | Семестр: Весенний 2025`;
+            
+            // Устанавливаем иконку предмета
+            if (subjectIcon) {
+                if (currentSubject === 'math' || currentSubject === 'algebra') {
+                    subjectIcon.src = '../../assets/images/teacher/math_icon.svg';
+                } else if (currentSubject === 'geometry') {
+                    subjectIcon.src = '../../assets/images/teacher/geometry_icon.svg';
+                }
+            }
         }
     }
     
@@ -315,109 +500,94 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Настройка фильтров
     function setupFilters() {
-        // Обработчик выбора предмета
+        // Обработчики выбора предмета и группы
         const subjectFilter = document.getElementById('subjectFilter');
+        const groupFilter = document.getElementById('groupFilter');
+        
         if (subjectFilter) {
             subjectFilter.addEventListener('change', function() {
-                const selectedSubject = this.value;
-                showLoading(true);
+                currentSubject = this.value;
+                console.log('Выбран предмет:', currentSubject);
                 
+                showLoading(true);
                 setTimeout(() => {
-                    // Обновляем информацию о предмете
-                    const subjectTitle = document.querySelector('.journal-title');
-                    
-                    if (selectedSubject === 'math') {
-                        subjectTitle.textContent = 'Прикладная математика';
-                        document.querySelector('.subject-icon img').src = '../../assets/images/teacher/math_icon.svg';
-                    } else if (selectedSubject === 'geometry') {
-                        subjectTitle.textContent = 'Начертательная геометрия';
-                        document.querySelector('.subject-icon img').src = '../../assets/images/teacher/geometry_icon.svg';
-                    } else if (selectedSubject === 'algebra') {
-                        subjectTitle.textContent = 'Линейная алгебра';
-                        document.querySelector('.subject-icon img').src = '../../assets/images/teacher/math_icon.svg';
-                    }
-                    
-                    // Здесь могла бы быть загрузка оценок для выбранного предмета
+                    renderStudentList();
                     showLoading(false);
-                }, 500);
+                }, 300);
             });
         }
         
-        // Обработчик выбора группы
-        const groupFilter = document.getElementById('groupFilter');
         if (groupFilter) {
             groupFilter.addEventListener('change', function() {
-                const selectedGroup = this.value;
-                showLoading(true);
+                currentGroup = this.value;
+                console.log('Выбрана группа:', currentGroup);
                 
+                showLoading(true);
                 setTimeout(() => {
-                    // Обновляем информацию о группе
-                    const groupInfo = document.querySelector('.journal-info > div:last-child > div:last-child');
-                    groupInfo.textContent = `Группа: ${selectedGroup.toUpperCase()} | Семестр: Весенний 2025`;
-                    
-                    // Здесь могла бы быть загрузка оценок для выбранной группы
+                    renderStudentList();
                     showLoading(false);
-                }, 500);
+                }, 300);
             });
         }
     }
     
-    // Обработка ввода оценок
+    // Настройка ячеек с оценками
     function setupGradeInputs() {
-        const inputs = document.querySelectorAll('.grade-input');
-        inputs.forEach(input => {
-            // Сохраняем исходное значение для определения изменений
-            input.setAttribute('data-original', input.value);
+        const gradeInputs = document.querySelectorAll('.grade-input');
+        if (!gradeInputs.length) return;
+        
+        gradeInputs.forEach(input => {
+            // При фокусе сохраняем предыдущее значение
+            input.addEventListener('focus', function() {
+                this.setAttribute('data-previous-value', this.value);
+            });
             
+            // При изменении проводим валидацию
             input.addEventListener('input', function() {
-                // Если ввели "н" или "Н", сделать красным (пропуск)
-                if (this.value.toLowerCase() === 'н') {
-                    this.classList.add('grade-absent');
+                const value = this.value.trim();
+                // Проверяем, что значение - это число от 2 до 5 или "н" (отсутствие)
+                if (value && value !== 'н' && (isNaN(value) || parseInt(value) < 2 || parseInt(value) > 5)) {
+                    const prevValue = this.getAttribute('data-previous-value') || '';
+                    this.value = prevValue;
                 } else {
-                    this.classList.remove('grade-absent');
-                }
-                
-                // Визуальная отметка измененных значений
-                if (this.value !== this.getAttribute('data-original')) {
-                    this.style.backgroundColor = 'rgba(255, 255, 0, 0.1)';
-                } else {
-                    this.style.backgroundColor = '';
-                }
-                
-                // Автоматический расчет среднего балла, если это не ячейка среднего балла или экзамена
-                if (!this.closest('td').classList.contains('avg-grade') && 
-                    !this.closest('td').classList.contains('exam-grade')) {
-                    updateAverageGrade(this.closest('tr'));
+                    // Если значение является отсутствием (н), добавляем класс
+                    if (value === 'н') {
+                        this.classList.add('grade-absent');
+                    } else {
+                        this.classList.remove('grade-absent');
+                    }
+                    
+                    // Обновляем средний балл для строки
+                    const row = this.closest('tr');
+                    if (row) {
+                        updateAverageGrade(row);
+                    }
                 }
             });
         });
     }
     
-    // Расчет среднего балла для строки
+    // Обновление среднего балла для строки
     function updateAverageGrade(row) {
-        // Находим все обычные ячейки с оценками (не средний балл и не экзамен)
-        const gradeInputs = Array.from(row.querySelectorAll('td:not(.avg-grade):not(.exam-grade) .grade-input'));
+        // Собираем все оценки (кроме экзамена и итоговой)
+        const gradeInputs = row.querySelectorAll('td:not(.avg-grade):not(:last-child):not(:last-child):not(:first-child) .grade-input');
         
-        // Вычисляем средний балл
-        let totalGrade = 0;
-        let validGradesCount = 0;
+        let sum = 0;
+        let count = 0;
         
         gradeInputs.forEach(input => {
-            // Проверяем, является ли значение числом
-            if (!isNaN(input.value) && input.value.trim() !== '') {
-                totalGrade += parseInt(input.value);
-                validGradesCount++;
+            const value = input.value.trim();
+            // Учитываем только числовые оценки
+            if (value !== 'н' && !isNaN(value) && value !== '') {
+                sum += parseInt(value);
+                count++;
             }
         });
         
-        // Обновляем средний балл
-        if (validGradesCount > 0) {
-            const avgGrade = totalGrade / validGradesCount;
-            const avgCell = row.querySelector('td.avg-grade:nth-of-type(9)');
-            if (avgCell) {
-                avgCell.textContent = avgGrade.toFixed(1);
-                avgCell.style.backgroundColor = 'rgba(26, 26, 229, 0.1)';
-            }
+        // Обновляем ячейку со средним баллом
+        const avgCell = row.querySelector('.avg-grade');
+        if (avgCell) {
+            avgCell.textContent = count > 0 ? (sum / count).toFixed(1) : '-';
         }
     }
     
@@ -430,36 +600,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Имитируем сохранение данных
                 setTimeout(() => {
-                    // Сбор данных об оценках
+                    showLoading(false);
+                    
+                    // Сбор данных из таблицы
                     const gradesData = [];
                     const rows = document.querySelectorAll('.journal-table tbody tr');
                     
                     rows.forEach(row => {
+                        // Пропускаем строки с сообщением об отсутствии данных
+                        if (row.classList.contains('no-data')) return;
+                        
+                        const studentId = row.getAttribute('data-student-id');
                         const studentName = row.querySelector('.student-name span').textContent;
-                        const grades = Array.from(row.querySelectorAll('.grade-input')).map(input => {
-                            return {
-                                value: input.value,
-                                wasChanged: input.value !== input.getAttribute('data-original')
-                            };
+                        
+                        // Собираем оценки
+                        const grades = [];
+                        const gradeInputs = row.querySelectorAll('td:not(.avg-grade):not(:last-child):not(:last-child):not(:first-child) .grade-input');
+                        gradeInputs.forEach(input => {
+                            grades.push(input.value.trim());
                         });
                         
+                        // Получаем экзаменационную и итоговую оценки
+                        const examGrade = row.querySelector('td:nth-last-child(2) .grade-input').value;
+                        const finalGrade = row.querySelector('td:last-child .grade-input').value;
+                        
+                        // Добавляем в массив
                         gradesData.push({
+                            studentId,
                             studentName,
-                            grades
-                        });
-                        
-                        // Сбрасываем фон у измененных ячеек
-                        row.querySelectorAll('.grade-input').forEach(input => {
-                            input.style.backgroundColor = '';
-                            input.setAttribute('data-original', input.value);
+                            grades,
+                            examGrade,
+                            finalGrade
                         });
                     });
                     
-                    console.log('Данные оценок сохранены:', gradesData);
-                    showLoading(false);
-                    alert('Оценки успешно сохранены!');
-                    
-                    // В реальном проекте здесь был бы API-запрос для сохранения данных
+                    console.log('Данные журнала сохранены:', gradesData);
+                    alert('Данные успешно сохранены!');
                 }, 800);
             });
         }
@@ -467,33 +643,124 @@ document.addEventListener('DOMContentLoaded', function() {
         const cancelButton = document.querySelector('.cancel-button');
         if (cancelButton) {
             cancelButton.addEventListener('click', function() {
-                if (confirm('Вы уверены, что хотите отменить все изменения оценок?')) {
-                    // Восстанавливаем оригинальные значения
-                    document.querySelectorAll('.grade-input').forEach(input => {
-                        input.value = input.getAttribute('data-original');
-                        input.style.backgroundColor = '';
-                        
-                        // Если восстановилось значение "н", добавляем класс
-                        if (input.value.toLowerCase() === 'н') {
-                            input.classList.add('grade-absent');
-                        } else {
-                            input.classList.remove('grade-absent');
-                        }
-                    });
-                    
-                    // Восстанавливаем средние баллы
-                    document.querySelectorAll('.journal-table tbody tr').forEach(row => {
-                        updateAverageGrade(row);
-                    });
+                if (confirm('Вы уверены, что хотите отменить все изменения?')) {
+                    // Восстановление данных с сервера (имитация)
+                    showLoading(true);
+                    setTimeout(() => {
+                        // Восстанавливаем исходное состояние для текущей группы и предмета
+                        renderStudentList();
+                        showLoading(false);
+                    }, 500);
                 }
             });
         }
     }
-    
-    // Инициализация всех функций
+
+    // Настройка функции экспорта в CSV
+    function setupExport() {
+        const exportButton = document.querySelector('.export-button');
+        if (exportButton) {
+            exportButton.addEventListener('click', function() {
+                exportToCSV();
+            });
+        }
+    }
+
+    // Функция экспорта данных журнала в CSV-файл
+    function exportToCSV() {
+        // Получаем заголовки таблицы
+        const headerRow = document.querySelector('.journal-table thead tr:first-child');
+        const subHeaderRow = document.querySelector('.journal-table thead tr:last-child');
+        
+        if (!headerRow || !subHeaderRow) return;
+        
+        // Массив для заголовков
+        const headers = ['Студент'];
+        
+        // Добавляем заголовки для оценок
+        const lessonCells = subHeaderRow.querySelectorAll('th');
+        lessonCells.forEach(cell => {
+            if (cell.textContent.trim()) {  // Пропускаем пустые ячейки
+                const date = cell.querySelector('.journal-date')?.textContent || '';
+                const type = cell.querySelector('.journal-notes')?.textContent || '';
+                headers.push(`${date} ${type}`.trim());
+            }
+        });
+        
+        // Получаем данные студентов
+        const rows = document.querySelectorAll('.journal-table tbody tr');
+        const data = [];
+        
+        rows.forEach(row => {
+            // Пропускаем строки с сообщением об отсутствии данных
+            if (row.classList.contains('no-data')) return;
+            
+            const rowData = [];
+            
+            // Имя студента
+            const studentName = row.querySelector('.student-name span').textContent;
+            rowData.push(studentName);
+            
+            // Оценки
+            const cells = row.querySelectorAll('td');
+            cells.forEach((cell, index) => {
+                if (index === 0) return; // Пропускаем первую ячейку с именем
+                
+                const input = cell.querySelector('.grade-input');
+                if (input) {
+                    rowData.push(input.value);
+                } else {
+                    rowData.push(cell.textContent.trim());
+                }
+            });
+            
+            data.push(rowData);
+        });
+        
+        // Создаем содержимое CSV
+        let csvContent = "\uFEFF"; // BOM для поддержки кириллицы
+        
+        // Добавляем заголовки
+        csvContent += headers.join(";") + "\r\n";
+        
+        // Добавляем данные
+        data.forEach(row => {
+            csvContent += row.join(";") + "\r\n";
+        });
+        
+        // Создаем Blob и ссылку для скачивания
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        
+        // Определяем имя предмета для имени файла
+        let subjectName = 'Математика';
+        if (currentSubject === 'geometry') {
+            subjectName = 'Геометрия';
+        } else if (currentSubject === 'algebra') {
+            subjectName = 'Алгебра';
+        }
+        
+        // Создаем имя файла с датой
+        const date = new Date();
+        const fileName = `Журнал_${subjectName}_${currentGroup.toUpperCase()}_${date.toLocaleDateString()}.csv`;
+        
+        // Создаем ссылку и эмулируем клик для скачивания
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", fileName);
+        link.style.display = "none";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Инициализация
     loadTeacherProfile();
     setupTabs();
     setupFilters();
-    setupGradeInputs();
     setupActionButtons();
+    setupExport();
+    
+    // Инициализация с данными первой группы и предмета по умолчанию
+    renderStudentList();
 }); 
