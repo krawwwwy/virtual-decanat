@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Социальная поддержка</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link rel="stylesheet" href="../../assets/support.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400;500;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Загрузка...</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Меню</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="../../assets/icons/home.svg" alt="Главная" class="nav-icon">
+                        Главная
+                    </a>
+                    <a href="performance.html" class="nav-item">
+                        <img src="../../assets/icons/performance.svg" alt="Успеваемость" class="nav-icon">
+                        Успеваемость
+                    </a>
+                    <a href="schedule.html" class="nav-item">
+                        <img src="../../assets/icons/schedule.svg" alt="Расписание" class="nav-icon">
+                        Расписание
+                    </a>
+                    <a href="clubs.html" class="nav-item">
+                        <img src="../../assets/icons/clubs.svg" alt="Студенческие объединения" class="nav-icon">
+                        Студенческие объединения
+                    </a>
+                    <a href="support.html" class="nav-item active">
+                        <img src="../../assets/icons/support.svg" alt="Социальная поддержка" class="nav-icon">
+                        Социальная поддержка
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Социальная поддержка</h1>
+                    <div class="student-tag">/СТУДЕНТ</div>
+                </div>
+                
+                <div class="support-content">
+                    <!-- Информация о соц. поддержке -->
+                    <section class="info-section">
+                        <h2 class="section-title">Информация о социальной поддержке</h2>
+                        <p class="info-text">
+                            Вы можете подать заявление на получение социальной поддержки, если находитесь в затруднительном финансовом положении. 
+                            Размер поддержки зависит от вашего дохода и ваших расходов. Вы можете подать заявление на получение социальной поддержки, 
+                            если вы являетесь студентом среднего профессионального образования или высшего учебного заведения. 
+                            Если вы получаете социальную поддержку, вы должны сообщать о любых изменениях в вашей личной или финансовой ситуации 
+                            в Центр обслуживания клиентов социальной поддержки.
+                        </p>
+                    </section>
+                    
+                    <!-- Таблица с типами поддержки -->
+                    <section class="support-types-section">
+                        <h2 class="section-title">Выберите тип поддержки, который вам нужен</h2>
+                        
+                        <div class="search-container">
+                            <div class="search-icon">
+                                <img src="../../assets/images/support/search_icon.svg" alt="Поиск">
+                            </div>
+                            <input type="text" class="search-input" placeholder="Поиск типов поддержки">
+                        </div>
+                        
+                        <div class="support-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                        <th>Крайний срок</th>
+                                        <th>Статус заявки</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Финансовая помощь</td>
+                                        <td>Финансовая помощь студентам</td>
+                                        <td>01-01-2025</td>
+                                        <td>
+                                            <div class="status pending">на рассмотрении</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Стипендия</td>
+                                        <td>Стипендия для студентов</td>
+                                        <td>15-12-2025</td>
+                                        <td>
+                                            <div class="status approved">одобрена</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Поддержка инвалидов</td>
+                                        <td>Поддержка студентов с ограниченными возможностями</td>
+                                        <td>15-12-2025</td>
+                                        <td>
+                                            <div class="status rejected">отклонена</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Льготы на питание/жилье/транспорт</td>
+                                        <td>Льготы для студентов</td>
+                                        <td>15-12-2025</td>
+                                        <td>
+                                            <div class="status withdrawn">отозвана</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    
+                    <!-- Форма подачи заявки -->
+                    <section class="application-section">
+                        <h2 class="section-title">Подать заявку на поддержку</h2>
+                        
+                        <form class="support-form" id="supportForm">
+                            <div class="form-group">
+                                <label for="support-type">Тип поддержки</label>
+                                <div class="select-wrapper">
+                                    <select id="support-type" name="supportType">
+                                        <option value="" disabled selected>Выберите тип поддержки</option>
+                                        <option value="financial">Финансовая помощь</option>
+                                        <option value="scholarship">Стипендия</option>
+                                        <option value="disability">Поддержка инвалидов</option>
+                                        <option value="concessions">Льготы на питание/жилье/транспорт</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="reason">Причина подачи заявления</label>
+                                <textarea id="reason" name="reason" rows="5" placeholder="Введите причину заявки"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="documents">Загрузить документы</label>
+                                <div class="file-upload">
+                                    <input type="file" id="documents" name="documents" class="file-input" multiple>
+                                    <div class="file-label">
+                                        <span class="file-name">Выберите документ</span>
+                                    </div>
+                                    <button type="button" class="file-button">
+                                        <img src="../../assets/images/support/upload_icon.svg" alt="Загрузить">
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group form-submit">
+                                <button type="submit" class="submit-button">Подать заявку</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат. Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/auth-api.js"></script>
+    <script src="../../js/dashboard.js"></script>
+    <script src="../../js/support.js"></script>
+</body>
+</html> 

@@ -1,0 +1,381 @@
+/* Стили для страницы социальной поддержки */
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    color: #121417;
+    letter-spacing: -0.027em;
+    margin: 0;
+}
+
+.support-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+section {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #111118;
+    margin: 0 0 24px 0;
+    letter-spacing: -0.01em;
+}
+
+/* Стили для секции с информацией */
+.info-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: #111118;
+    line-height: 1.25;
+    text-align: justify;
+    margin: 0;
+}
+
+/* Стили для строки поиска */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #F0F0F4;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    height: 68px;
+}
+
+.search-icon {
+    width: 40px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.search-input {
+    flex: 1;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    color: #111118;
+    padding: 0 16px;
+}
+
+.search-input::placeholder {
+    color: #636388;
+}
+
+.search-input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Стили для таблицы поддержки */
+.support-table {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+}
+
+thead {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #DCDCE5;
+}
+
+th {
+    padding: 20px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 20px;
+    color: #111118;
+}
+
+tbody tr {
+    border-bottom: 1px solid #DCDCE5;
+}
+
+td {
+    padding: 20px;
+    font-size: 16px;
+    color: #111118;
+    vertical-align: middle;
+    line-height: 1.5;
+}
+
+td:first-child {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+/* Стили для статусов заявок */
+.status {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 24px;
+    background-color: #F0F0F4;
+    color: #111118;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.status.pending {
+    background-color: #FFF8E6;
+    color: #B58500;
+}
+
+.status.approved {
+    background-color: #E6F7ED;
+    color: #0D8A3E;
+}
+
+.status.rejected {
+    background-color: #FFE6E6;
+    color: #D90000;
+}
+
+.status.withdrawn {
+    background-color: #F0F0F4;
+    color: #111118;
+}
+
+/* Стили для формы заявки */
+.support-form {
+    max-width: 100%;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #111118;
+    margin-bottom: 10px;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+select, textarea {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #DCDCE5;
+    background-color: #E7EDF3;
+    color: #111118;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select {
+    padding-right: 40px;
+}
+
+select:focus, textarea:focus {
+    outline: none;
+    border-color: #3B19E6;
+    background-color: #FFFFFF;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #636388;
+    pointer-events: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 144px;
+}
+
+/* Стили для загрузки файлов */
+.file-upload {
+    display: flex;
+    border: 1px solid #DCDCE5;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.file-input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.file-label {
+    flex: 1;
+    padding: 16px;
+    background-color: #E7EDF3;
+    display: flex;
+    align-items: center;
+}
+
+.file-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    color: #636388;
+}
+
+.file-button {
+    width: 71px;
+    height: 56px;
+    border: none;
+    border-left: 1px solid #DCDCE5;
+    background-color: #E7EDF3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.file-button:hover {
+    background-color: #D9E2EC;
+}
+
+/* Стили для кнопки отправки */
+.form-submit {
+    text-align: center;
+    margin-top: 32px;
+}
+
+.submit-button {
+    padding: 20px 40px;
+    background: linear-gradient(to bottom, #A2AAF4, #0019FF);
+    color: #FFFFFF;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: 2.5%;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    width: 100%;
+    max-width: 519px;
+}
+
+.submit-button:hover {
+    background: linear-gradient(to bottom, #B3BBF5, #0018E6);
+    transform: translateY(-2px);
+}
+
+.submit-button:active {
+    transform: translateY(1px);
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .student-tag {
+        margin-top: 8px;
+    }
+    
+    .section-title {
+        font-size: 24px;
+    }
+    
+    .info-text {
+        font-size: 18px;
+    }
+    
+    .search-container {
+        height: 56px;
+    }
+    
+    .search-input {
+        font-size: 16px;
+    }
+    
+    th, td {
+        padding: 12px 8px;
+    }
+    
+    th {
+        font-size: 16px;
+    }
+    
+    td {
+        font-size: 14px;
+    }
+    
+    td:first-child {
+        font-size: 16px;
+    }
+    
+    .status {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .form-group label {
+        font-size: 16px;
+    }
+    
+    select, textarea, .file-name {
+        font-size: 16px;
+        padding: 12px;
+    }
+    
+    .file-button {
+        width: 56px;
+        height: 48px;
+    }
+    
+    .submit-button {
+        font-size: 24px;
+        padding: 16px 32px;
+    }
+} 
