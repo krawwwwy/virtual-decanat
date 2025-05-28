@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Выполняем запрос на вход
                 const response = await window.authApi.login(email, password);
                 
-                // Сохраняем токены
+                // Сохраняем токены - используем функцию из auth-api.js
                 window.authApi.saveTokens(response);
                 
                 // Если пользователь выбрал "Запомнить меня", устанавливаем флаг

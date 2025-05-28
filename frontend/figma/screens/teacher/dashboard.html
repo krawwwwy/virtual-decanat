@@ -6,259 +6,229 @@
     <title>МГТУ Станкин - Виртуальный деканат - Личный кабинет преподавателя</title>
     <link rel="stylesheet" href="../../assets/dashboard.css">
     <link rel="stylesheet" href="../../assets/teacher.css">
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Prosto+One&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/teacher-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400;500;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Стили для страницы дашборда преподавателя */
+        .dashboard-content {
+            padding: 20px 0;
+        }
+        
+        .welcome-message {
+            background-color: var(--secondary-color);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .welcome-message h2 {
+            font-weight: 700;
+            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .welcome-message p {
+            font-size: 18px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .dashboard-card {
+            background-color: #FFFFFF;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dashboard-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .card-title {
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .card-icon img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .dashboard-card p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        .card-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-button {
+            padding: 8px 16px;
+            border-radius: 16px;
+            background-color: var(--secondary-color);
+            color: var(--text-primary);
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <!-- Верхняя панель -->
+        <!-- Навигационная панель -->
         <header class="header">
             <div class="header-left">
                 <div class="logo">
-                    <img src="../../assets/logo.svg" alt="Логотип">
-                    <span class="logo-text">МГТУ Станкин</span>
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
                 </div>
             </div>
             <div class="header-right">
-                <div class="profile">
-                    <div class="profile-info">
-                        <span class="profile-name">Загрузка...</span>
-                        <span class="profile-role">Преподаватель</span>
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Новикова Алина Сергеевна</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
                     </div>
-                    <div class="profile-avatar">...</div>
                 </div>
             </div>
         </header>
 
         <!-- Основной контент -->
         <main class="main-content">
-            <!-- Боковое меню -->
-            <aside class="sidebar">
+            <div class="sidebar">
                 <nav class="sidebar-nav">
+                    <div class="menu-title">Главное меню</div>
                     <a href="dashboard.html" class="nav-item active">
-                        <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Иконка дашборда">
-                        <span>Дашборд</span>
+                        <img src="../../assets/icons/home.svg" alt="Домой" class="nav-icon">
+                        Домой
                     </a>
-                    <a href="subjects.html" class="nav-item">
-                        <span>Мои дисциплины</span>
+                    <a href="schedule.html" class="nav-item">
+                        <img src="../../assets/icons/schedule.svg" alt="Расписание" class="nav-icon">
+                        Расписание
+                    </a>
+                    <a href="#" class="nav-item">
+                        <img src="../../assets/icons/performance.svg" alt="Посещаемость" class="nav-icon">
+                        Посещаемость
+                    </a>
+                    <a href="#" class="nav-item">
+                        <img src="../../assets/icons/performance.svg" alt="Журнал" class="nav-icon">
+                        Журнал
                     </a>
                     <a href="groups.html" class="nav-item">
-                        <span>Группы</span>
+                        <img src="../../assets/icons/groups.svg" alt="Студенты" class="nav-icon">
+                        Студенты
                     </a>
-                    <a href="students.html" class="nav-item">
-                        <span>Студенты</span>
+                    <a href="#" class="nav-item">
+                        <img src="../../assets/icons/settings.svg" alt="Настройки" class="nav-icon">
+                        Настройки
                     </a>
                 </nav>
-                <div class="sidebar-actions">
-                    <button class="btn btn-primary">Добавить</button>
-                    <div class="user-avatar"></div>
+                <div class="sidebar-button">
+                    <button class="primary-button">Добавить</button>
                 </div>
-            </aside>
-
-            <!-- Контент страницы -->
-            <div class="content-wrapper">
-                <div class="content">
-                    <div class="content-header">
-                        <h1 class="content-title">Мои дисциплины</h1>
-                        <div class="search-container">
-                            <div class="search-icon">
-                                <img src="../../assets/images/teacher/search-icon.svg" alt="Поиск">
-                            </div>
-                            <input type="text" class="search-input" placeholder="Поиск дисциплин">
-                        </div>
-                    </div>
-
-                    <!-- Категории вкладок -->
-                    <div class="tabs-container">
-                        <div class="tab active">Группы</div>
-                        <div class="tab">Студенты</div>
-                        <div class="tab">Оценки</div>
-                    </div>
-
-                    <!-- Список дисциплин -->
-                    <div class="subjects-grid">
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="Математика">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">Математика</h3>
-                                <p class="subject-lecturer">Преподаватель: к.н. Михаил Джонсон</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="Физика">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">Физика</h3>
-                                <p class="subject-lecturer">Преподаватель: к.н. Сьюзен Дэвис</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="Литература">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">Литература</h3>
-                                <p class="subject-lecturer">Преподаватель: д.н. Роберт Смит</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="Биология">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">Биология</h3>
-                                <p class="subject-lecturer">Преподаватель: проф. Дженнифер Браун</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="Философия">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">Философия</h3>
-                                <p class="subject-lecturer">Преподаватель: д.н. Анна Иванова</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="История">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">История</h3>
-                                <p class="subject-lecturer">Преподаватель: к.н. Петр Сидоров</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="Химия">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">Химия</h3>
-                                <p class="subject-lecturer">Преподаватель: д.н. Сергей Николаев</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="Экономика">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">Экономика</h3>
-                                <p class="subject-lecturer">Преподаватель: к.н. Елена Павлова</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="Искусство">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">Искусство</h3>
-                                <p class="subject-lecturer">Преподаватель: доц. Мария Федорова</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="subject-card">
-                            <div class="subject-icon">
-                                <img src="../../assets/images/teacher/subject-icon.svg" alt="Информатика">
-                            </div>
-                            <div class="subject-info">
-                                <h3 class="subject-title">Информатика</h3>
-                                <p class="subject-lecturer">Преподаватель: д.т.н. Алексей Морозов</p>
-                            </div>
-                            <div class="subject-actions">
-                                <button class="btn-icon">
-                                    <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                                </button>
-                            </div>
-                        </div>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Личный кабинет</h1>
+                    <div class="date-selector">
+                        <button class="date-button">26.05.2025</button>
                     </div>
                 </div>
-
-                <!-- Боковая панель для студентов -->
-                <div class="students-sidebar">
-                    <h2 class="sidebar-title">Мои студенты</h2>
+                
+                <div class="dashboard-content">
+                    <div class="welcome-message">
+                        <h2>Добро пожаловать в виртуальный деканат!</h2>
+                        <p>Здесь вы можете просматривать своё расписание, отмечать посещаемость, вести журнал успеваемости и управлять списком ваших студентов.</p>
+                    </div>
                     
-                    <div class="student-card">
-                        <div class="student-avatar">
-                            <img src="../../assets/images/teacher/profile-pic-1.jpg" alt="Студент">
+                    <div class="dashboard-cards">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <h3 class="card-title">Расписание</h3>
+                                <div class="card-icon">
+                                    <img src="../../assets/icons/schedule.svg" alt="Расписание">
+                                </div>
+                            </div>
+                            <p>Просмотр вашего расписания занятий на день, неделю или месяц</p>
+                            <div class="card-action">
+                                <a href="schedule.html" class="card-button">Перейти</a>
+                                <span>5 занятий сегодня</span>
+                            </div>
                         </div>
-                        <div class="student-info">
-                            <h3 class="student-name">Эмили Вильямс</h3>
-                            <p class="student-grade">Оценка: A</p>
+                        
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <h3 class="card-title">Посещаемость</h3>
+                                <div class="card-icon">
+                                    <img src="../../assets/icons/performance.svg" alt="Посещаемость">
+                                </div>
+                            </div>
+                            <p>Отметка присутствия студентов на занятиях</p>
+                            <div class="card-action">
+                                <a href="#" class="card-button">Перейти</a>
+                                <span>3 группы</span>
+                            </div>
                         </div>
-                        <div class="student-actions">
-                            <button class="btn-icon">
-                                <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                            </button>
+                        
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <h3 class="card-title">Журнал</h3>
+                                <div class="card-icon">
+                                    <img src="../../assets/icons/performance.svg" alt="Журнал">
+                                </div>
+                            </div>
+                            <p>Ведение журнала успеваемости ваших студентов</p>
+                            <div class="card-action">
+                                <a href="#" class="card-button">Перейти</a>
+                                <span>Доступно</span>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="student-card">
-                        <div class="student-avatar">
-                            <img src="../../assets/images/teacher/profile-pic-2.jpg" alt="Студент">
-                        </div>
-                        <div class="student-info">
-                            <h3 class="student-name">Андрей Давыдов</h3>
-                            <p class="student-grade">Оценка: B</p>
-                        </div>
-                        <div class="student-actions">
-                            <button class="btn-icon">
-                                <img src="../../assets/images/teacher/dashboard-icon.svg" alt="Опции">
-                            </button>
+                        
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <h3 class="card-title">Студенты</h3>
+                                <div class="card-icon">
+                                    <img src="../../assets/icons/groups.svg" alt="Студенты">
+                                </div>
+                            </div>
+                            <p>Список студентов и управление группами</p>
+                            <div class="card-action">
+                                <a href="groups.html" class="card-button">Перейти</a>
+                                <span>72 студента</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -269,6 +239,30 @@
     <!-- Подключение JavaScript -->
     <script src="../../js/auth-api.js"></script>
     <script src="../../js/dashboard.js"></script>
-    <script src="../../js/teacher.js"></script>
+    <script>
+        // Проверяем, авторизован ли пользователь
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверка авторизации
+            const token = localStorage.getItem('accessToken');
+            if (!token) {
+                window.location.href = '../login-page.html';
+                return;
+            }
+            
+            // Получаем имя пользователя
+            const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+            document.getElementById('userName').textContent = userInfo.name || 'Преподаватель';
+            
+            // Обработчик для кнопки выхода
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+                localStorage.removeItem('tokenExpires');
+                localStorage.removeItem('userInfo');
+                localStorage.removeItem('userRole');
+                window.location.href = '../login-page.html';
+            });
+        });
+    </script>
 </body>
 </html> 

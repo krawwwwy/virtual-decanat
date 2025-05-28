@@ -1,0 +1,114 @@
+/* Стили для личного кабинета преподавателя на основе макета Figma */
+
+:root {
+    --primary-color: #1A1AE5;
+    --secondary-color: #F0F0F5;
+    --text-primary: #121217;
+    --text-secondary: #636387;
+    --border-color: #DBDBE5;
+    --white: #FFFFFF;
+    --hover-bg: #E8EDF2;
+}
+
+/* Стили для боковой панели */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--white);
+    padding: 16px;
+    box-sizing: border-box;
+    width: 320px;
+    border-right: 1px solid var(--border-color);
+}
+
+.menu-title {
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 18px;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.nav-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.nav-item.active {
+    background-color: var(--secondary-color);
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.sidebar-button {
+    margin-top: 20px;
+}
+
+.primary-button {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Стили для содержимого */
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.date-selector {
+    display: flex;
+}
+
+.date-button {
+    background-color: var(--secondary-color);
+    border: none;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text-primary);
+    cursor: pointer;
+} 

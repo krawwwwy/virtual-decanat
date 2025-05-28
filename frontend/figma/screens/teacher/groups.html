@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Группы преподавателя</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link rel="stylesheet" href="../../assets/teacher.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400;500;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+        
+        .group-card {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .group-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transform: translateY(-4px);
+        }
+        
+        .group-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .group-info {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .group-info span {
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .group-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+        
+        .group-button {
+            background-color: var(--secondary-color);
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: background-color 0.2s;
+        }
+        
+        .group-button:hover {
+            background-color: #e6e6f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Загрузка...</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Меню</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="../../assets/icons/home.svg" alt="Главная" class="nav-icon">
+                        Главная
+                    </a>
+                    <a href="schedule.html" class="nav-item">
+                        <img src="../../assets/icons/schedule.svg" alt="Расписание" class="nav-icon">
+                        Расписание
+                    </a>
+                    <a href="groups.html" class="nav-item active">
+                        <img src="../../assets/icons/groups.svg" alt="Группы" class="nav-icon">
+                        Группы
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Мои группы</h1>
+                    <div class="student-tag">/ПРЕПОДАВАТЕЛЬ</div>
+                </div>
+                
+                <div class="dashboard-content">
+                    <div class="search-container">
+                        <div class="search-icon">
+                            <img src="../../assets/images/teacher/search-icon.svg" alt="Поиск">
+                        </div>
+                        <input type="text" class="search-input" placeholder="Поиск по группам">
+                    </div>
+                    
+                    <div class="groups-grid">
+                        <div class="group-card">
+                            <h3 class="group-title">МТ-101</h3>
+                            <div class="group-info">
+                                <span>Кол-во студентов: 25</span>
+                                <span>Курс: 1</span>
+                                <span>Специальность: Информационные системы</span>
+                            </div>
+                            <div class="group-actions">
+                                <button class="group-button">Просмотр студентов</button>
+                                <button class="group-button">Успеваемость</button>
+                            </div>
+                        </div>
+                        
+                        <div class="group-card">
+                            <h3 class="group-title">МТ-102</h3>
+                            <div class="group-info">
+                                <span>Кол-во студентов: 23</span>
+                                <span>Курс: 1</span>
+                                <span>Специальность: Прикладная информатика</span>
+                            </div>
+                            <div class="group-actions">
+                                <button class="group-button">Просмотр студентов</button>
+                                <button class="group-button">Успеваемость</button>
+                            </div>
+                        </div>
+                        
+                        <div class="group-card">
+                            <h3 class="group-title">МТ-201</h3>
+                            <div class="group-info">
+                                <span>Кол-во студентов: 22</span>
+                                <span>Курс: 2</span>
+                                <span>Специальность: Информационные системы</span>
+                            </div>
+                            <div class="group-actions">
+                                <button class="group-button">Просмотр студентов</button>
+                                <button class="group-button">Успеваемость</button>
+                            </div>
+                        </div>
+                        
+                        <div class="group-card">
+                            <h3 class="group-title">МТ-202</h3>
+                            <div class="group-info">
+                                <span>Кол-во студентов: 21</span>
+                                <span>Курс: 2</span>
+                                <span>Специальность: Программная инженерия</span>
+                            </div>
+                            <div class="group-actions">
+                                <button class="group-button">Просмотр студентов</button>
+                                <button class="group-button">Успеваемость</button>
+                            </div>
+                        </div>
+                        
+                        <div class="group-card">
+                            <h3 class="group-title">МТ-301</h3>
+                            <div class="group-info">
+                                <span>Кол-во студентов: 20</span>
+                                <span>Курс: 3</span>
+                                <span>Специальность: Информационная безопасность</span>
+                            </div>
+                            <div class="group-actions">
+                                <button class="group-button">Просмотр студентов</button>
+                                <button class="group-button">Успеваемость</button>
+                            </div>
+                        </div>
+                        
+                        <div class="group-card">
+                            <h3 class="group-title">МТ-401</h3>
+                            <div class="group-info">
+                                <span>Кол-во студентов: 18</span>
+                                <span>Курс: 4</span>
+                                <span>Специальность: Информационные системы</span>
+                            </div>
+                            <div class="group-actions">
+                                <button class="group-button">Просмотр студентов</button>
+                                <button class="group-button">Успеваемость</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат. Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/auth-api.js"></script>
+    <script src="../../js/teacher.js"></script>
+</body>
+</html> 
