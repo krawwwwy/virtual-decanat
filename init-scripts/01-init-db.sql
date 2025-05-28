@@ -44,6 +44,8 @@ CREATE TABLE IF NOT EXISTS auth.students (
     user_id INTEGER REFERENCES auth.users(id),
     group_id INTEGER REFERENCES schedule.groups(id),
     student_id VARCHAR(20) NOT NULL UNIQUE,
+    birth_date DATE,
+    phone VARCHAR(20),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -54,6 +56,18 @@ CREATE TABLE IF NOT EXISTS auth.teachers (
     user_id INTEGER REFERENCES auth.users(id),
     department VARCHAR(100) NOT NULL,
     position VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Создание таблицы сотрудников деканата
+CREATE TABLE IF NOT EXISTS auth.staff (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES auth.users(id),
+    department VARCHAR(100) NOT NULL,
+    position VARCHAR(100) NOT NULL,
+    internal_phone VARCHAR(20),
+    gender VARCHAR(10),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

@@ -79,11 +79,7 @@ func main() {
 		router.Use(otelgin.Middleware(viper.GetString("telemetry.service_name")))
 	}
 
-	// Обслуживание статических файлов
-	router.StaticFile("/", "./frontend.html")
-	router.StaticFile("/test.html", "./frontend.html")
-
-	// Регистрация маршрутов
+	// Регистрация маршрутов API
 	v1 := router.Group("/api/v1")
 	{
 		auth := v1.Group("/auth")
@@ -91,6 +87,7 @@ func main() {
 			auth.POST("/register", authHandler.Register)
 			auth.POST("/login", authHandler.Login)
 			auth.POST("/refresh", authHandler.RefreshToken)
+			auth.POST("/complete-registration", authHandler.CompleteRegistration)
 		}
 
 		user := v1.Group("/users")
@@ -101,6 +98,14 @@ func main() {
 			user.POST("/change-password", authHandler.ChangePassword)
 		}
 	}
+	
+	// Обслуживание статических файлов
+	router.Static("/static", "./frontend/figma")
+	
+	// Маршрут для корневого URL
+	router.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/static/screens/registration-page.html")
+	})
 
 	// Запуск сервера
 	port := viper.GetString("server.port")

@@ -16,6 +16,7 @@ import (
 // AuthService интерфейс для аутентификации
 type AuthService interface {
 	Register(ctx context.Context, req model.RegisterRequest) (*model.UserResponse, error)
+	CompleteRegistration(ctx context.Context, req model.CompleteRegistrationRequest) (*model.UserResponse, error)
 	Login(ctx context.Context, req model.LoginRequest) (*model.TokenResponse, error)
 	RefreshToken(ctx context.Context, refreshToken string) (*model.TokenResponse, error)
 	GetUserByID(ctx context.Context, userID uint) (*model.UserResponse, error)
@@ -384,4 +385,179 @@ func (s *AuthServiceImpl) generateRefreshToken(user *model.User) (string, int64,
 	}
 
 	return tokenString, int64(expirationTime.Seconds()), nil
+}
+
+// CompleteRegistration завершает регистрацию пользователя в зависимости от роли
+func (s *AuthServiceImpl) CompleteRegistration(ctx context.Context, req model.CompleteRegistrationRequest) (*model.UserResponse, error) {
+	// Находим пользователя
+	user, err := s.userRepo.FindByID(ctx, req.UserID)
+	if err != nil {
+		s.logger.Error("Failed to find user", zap.Error(err))
+		return nil, fmt.Errorf("failed to find user: %w", err)
+	}
+	if user == nil {
+		return nil, errors.New("user not found")
+	}
+
+	// Обновляем основные данные пользователя
+	user.FirstName = req.FirstName
+	user.LastName = req.LastName
+	user.MiddleName = req.MiddleName
+
+	// Находим роль
+	role, err := s.userRepo.FindRoleByName(ctx, req.Role)
+	if err != nil {
+		s.logger.Error("Failed to find role", zap.Error(err))
+		return nil, fmt.Errorf("failed to find role: %w", err)
+	}
+	if role == nil {
+		return nil, errors.New("invalid role")
+	}
+
+	// Обновляем пользователя
+	if err := s.userRepo.Update(ctx, user); err != nil {
+		s.logger.Error("Failed to update user", zap.Error(err))
+		return nil, fmt.Errorf("failed to update user: %w", err)
+	}
+
+	// В зависимости от роли, создаем или обновляем соответствующие записи
+	switch role.Name {
+	case "student":
+		// Создаем или обновляем данные студента
+		student, err := s.userRepo.FindStudentByUserID(ctx, user.ID)
+		if err != nil {
+			s.logger.Error("Failed to find student", zap.Error(err))
+			return nil, fmt.Errorf("failed to find student: %w", err)
+		}
+
+		// Парсим дату рождения
+		var birthDate time.Time
+		if req.BirthDate != "" {
+			birthDate, err = time.Parse("2006-01-02", req.BirthDate)
+			if err != nil {
+				s.logger.Error("Failed to parse birth date", zap.Error(err))
+				return nil, fmt.Errorf("invalid birth date format: %w", err)
+			}
+		}
+
+		// Проверяем, существует ли группа по имени
+		group, err := s.userRepo.FindGroupByName(ctx, req.Group)
+		if err != nil {
+			s.logger.Error("Failed to find group", zap.Error(err))
+			return nil, fmt.Errorf("failed to find group: %w", err)
+		}
+
+		// Если группа не существует, используем дефолтную группу
+		var groupID uint = 1 // По умолчанию
+		if group != nil {
+			groupID = group.ID
+		}
+
+		// Логирование полученных данных для отладки
+		s.logger.Info("Received student data",
+			zap.String("fio", req.FirstName + " " + req.MiddleName + " " + req.LastName),
+			zap.String("birth_date", req.BirthDate),
+			zap.String("group", req.Group),
+			zap.String("student_id", req.StudentID),
+			zap.String("phone", req.Phone))
+
+		if student == nil {
+			// Создаем нового студента
+			student = &model.Student{
+				UserID:    user.ID,
+				GroupID:   groupID,
+				StudentID: req.StudentID,
+				BirthDate: birthDate,
+				Phone:     req.Phone,
+			}
+			if err := s.userRepo.CreateStudent(ctx, student); err != nil {
+				s.logger.Error("Failed to create student", zap.Error(err))
+				return nil, fmt.Errorf("failed to create student: %w", err)
+			}
+		} else {
+			// Обновляем существующего студента
+			student.StudentID = req.StudentID
+			student.GroupID = groupID
+			student.BirthDate = birthDate
+			student.Phone = req.Phone
+			
+			if err := s.userRepo.UpdateStudent(ctx, student); err != nil {
+				s.logger.Error("Failed to update student", zap.Error(err))
+				return nil, fmt.Errorf("failed to update student: %w", err)
+			}
+		}
+
+	case "teacher":
+		// Создаем или обновляем данные преподавателя
+		teacher, err := s.userRepo.FindTeacherByUserID(ctx, user.ID)
+		if err != nil {
+			s.logger.Error("Failed to find teacher", zap.Error(err))
+			return nil, fmt.Errorf("failed to find teacher: %w", err)
+		}
+
+		if teacher == nil {
+			// Создаем нового преподавателя
+			teacher = &model.Teacher{
+				UserID:     user.ID,
+				Department: req.Department,
+				Position:   req.Position,
+			}
+			if err := s.userRepo.CreateTeacher(ctx, teacher); err != nil {
+				s.logger.Error("Failed to create teacher", zap.Error(err))
+				return nil, fmt.Errorf("failed to create teacher: %w", err)
+			}
+		} else {
+			// Обновляем существующего преподавателя
+			teacher.Department = req.Department
+			teacher.Position = req.Position
+			if err := s.userRepo.UpdateTeacher(ctx, teacher); err != nil {
+				s.logger.Error("Failed to update teacher", zap.Error(err))
+				return nil, fmt.Errorf("failed to update teacher: %w", err)
+			}
+		}
+
+	case "dean_office":
+		// Создаем или обновляем данные сотрудника деканата
+		staff, err := s.userRepo.FindStaffByUserID(ctx, user.ID)
+		if err != nil {
+			s.logger.Error("Failed to find staff", zap.Error(err))
+			return nil, fmt.Errorf("failed to find staff: %w", err)
+		}
+
+		if staff == nil {
+			// Создаем нового сотрудника деканата
+			staff = &model.Staff{
+				UserID:        user.ID,
+				Department:    req.Department,
+				Position:      req.Position,
+				InternalPhone: req.InternalPhone,
+				Gender:        req.Gender,
+			}
+			if err := s.userRepo.CreateStaff(ctx, staff); err != nil {
+				s.logger.Error("Failed to create staff", zap.Error(err))
+				return nil, fmt.Errorf("failed to create staff: %w", err)
+			}
+		} else {
+			// Обновляем существующего сотрудника деканата
+			staff.Department = req.Department
+			staff.Position = req.Position
+			staff.InternalPhone = req.InternalPhone
+			staff.Gender = req.Gender
+			if err := s.userRepo.UpdateStaff(ctx, staff); err != nil {
+				s.logger.Error("Failed to update staff", zap.Error(err))
+				return nil, fmt.Errorf("failed to update staff: %w", err)
+			}
+		}
+	}
+
+	// Возвращаем информацию о пользователе
+	return &model.UserResponse{
+		ID:         user.ID,
+		Email:      user.Email,
+		FirstName:  user.FirstName,
+		LastName:   user.LastName,
+		MiddleName: user.MiddleName,
+		Role:       role.Name,
+		IsActive:   user.IsActive,
+	}, nil
 }

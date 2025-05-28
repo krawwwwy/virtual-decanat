@@ -16,6 +16,31 @@ type RegisterRequest struct {
 	Role       string `json:"role" binding:"required"`
 }
 
+// CompleteRegistrationRequest представляет запрос на завершение регистрации
+type CompleteRegistrationRequest struct {
+	UserID       uint   `json:"user_id" binding:"required"`
+	FirstName    string `json:"first_name" binding:"required"`
+	LastName     string `json:"last_name" binding:"required"`
+	MiddleName   string `json:"middle_name"`
+	Role         string `json:"role" binding:"required"`
+	BirthDate    string `json:"birth_date"`
+	Phone        string `json:"phone"`
+	
+	// Для студента
+	Group        string `json:"group"`
+	StudentID    string `json:"student_id"`
+	
+	// Для преподавателя
+	Department   string `json:"department"`
+	Position     string `json:"position"`
+	Degree       string `json:"degree"`
+	Title        string `json:"title"`
+	
+	// Для сотрудника деканата
+	InternalPhone string `json:"internal_phone"`
+	Gender        string `json:"gender"`
+}
+
 // TokenResponse представляет ответ с токенами
 type TokenResponse struct {
 	AccessToken  string `json:"access_token"`

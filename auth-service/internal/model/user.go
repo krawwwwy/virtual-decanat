@@ -62,6 +62,8 @@ type Student struct {
 	User      *User     `json:"user,omitempty" gorm:"foreignKey:UserID"`
 	GroupID   uint      `json:"group_id" gorm:"not null"`
 	StudentID string    `json:"student_id" gorm:"unique;not null"`
+	BirthDate time.Time `json:"birth_date"`
+	Phone     string    `json:"phone"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -85,4 +87,22 @@ type Teacher struct {
 // TableName указывает имя таблицы для модели Teacher
 func (Teacher) TableName() string {
 	return "auth.teachers"
+}
+
+// Staff представляет сотрудника деканата
+type Staff struct {
+	ID            uint      `json:"id" gorm:"primaryKey"`
+	UserID        uint      `json:"user_id" gorm:"not null"`
+	User          *User     `json:"user,omitempty" gorm:"foreignKey:UserID"`
+	Department    string    `json:"department" gorm:"not null"`
+	Position      string    `json:"position" gorm:"not null"`
+	InternalPhone string    `json:"internal_phone"`
+	Gender        string    `json:"gender"`
+	CreatedAt     time.Time `json:"created_at"`
+	UpdatedAt     time.Time `json:"updated_at"`
+}
+
+// TableName указывает имя таблицы для модели Staff
+func (Staff) TableName() string {
+	return "auth.staff"
 } 

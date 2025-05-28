@@ -70,6 +70,8 @@ services:
       - DB_PASSWORD=postgres
       - DB_NAME=decanat
       - JWT_SECRET=your-secret-key
+    volumes:
+      - ./frontend/figma:/app/frontend/figma
     depends_on:
       postgres:
         condition: service_healthy

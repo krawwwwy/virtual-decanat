@@ -22,14 +22,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 formDataObj[key] = value;
             });
             
-            // В будущем здесь будет отправка данных на сервер
-            console.log('Форма успешно отправлена:', formDataObj);
+            // Получение user_id из localStorage или URL
+            const userId = localStorage.getItem('userId') || getQueryParam('userId');
+            const role = getQueryParam('role') || localStorage.getItem('userRole');
             
-            // Показ сообщения об успешной регистрации
-            alert('Регистрация успешно завершена!');
+            if (!userId || !role) {
+                showError(form, 'Не удалось получить данные пользователя. Пожалуйста, вернитесь на страницу регистрации.');
+                return;
+            }
             
-            // Редирект на главную страницу (в будущем можно заменить на страницу личного кабинета)
-            window.location.href = '../main-page.html';
+            // Разбиваем ФИО на составляющие
+            const fullNameParts = formDataObj.fio ? formDataObj.fio.split(' ') : ['', '', ''];
+            const lastName = fullNameParts[0] || '';
+            const firstName = fullNameParts[1] || '';
+            const middleName = fullNameParts[2] || '';
+            
+            // Формирование данных для запроса
+            const requestData = {
+                user_id: parseInt(userId),
+                first_name: firstName,
+                last_name: lastName,
+                middle_name: middleName,
+                role: role,
+                birth_date: formDataObj.birth_date || "",
+                phone: formDataObj.phone || "",
+            };
+            
+            // Добавление специфичных полей в зависимости от роли
+            if (role === 'student') {
+                requestData.group = formDataObj.group || "";
+                requestData.student_id = formDataObj.student_id || "";
+                
+                // Лог для отладки
+                console.log('Отправляемые данные формы:', formDataObj);
+                console.log('Отправляемые данные запроса:', requestData);
+            }
+            
+            // Отправка данных на сервер
+            completeRegistration(requestData);
         });
     }
     
@@ -46,6 +76,128 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
+    // Отправка данных на сервер для завершения регистрации
+    async function completeRegistration(userData) {
+        try {
+            showLoading();
+            console.log('Отправляемые данные:', userData); // Для отладки
+            
+            // Вызов API для завершения регистрации
+            const response = await window.authApi.completeRegistration(userData);
+            
+            // Показ сообщения об успешной регистрации
+            hideLoading();
+            showSuccess('Регистрация успешно завершена!');
+            
+            // Редирект на страницу входа
+            setTimeout(() => {
+                window.location.href = '../login-page.html';
+            }, 2000);
+        } catch (error) {
+            hideLoading();
+            showError(form, error.message || 'Произошла ошибка при завершении регистрации.');
+            console.error('Registration error:', error);
+        }
+    }
+    
+    // Показать индикатор загрузки
+    function showLoading() {
+        // Находим или создаем элемент загрузки
+        let loadingElement = document.querySelector('.loading-overlay');
+        
+        if (!loadingElement) {
+            loadingElement = document.createElement('div');
+            loadingElement.className = 'loading-overlay';
+            loadingElement.innerHTML = '<div class="loading-spinner"></div>';
+            document.body.appendChild(loadingElement);
+            
+            // Добавляем стили для индикатора загрузки
+            const style = document.createElement('style');
+            style.textContent = `
+                .loading-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 9999;
+                }
+                .loading-spinner {
+                    width: 40px;
+                    height: 40px;
+                    border: 4px solid #f3f3f3;
+                    border-top: 4px solid #3498db;
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                }
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        loadingElement.style.display = 'flex';
+    }
+    
+    // Скрыть индикатор загрузки
+    function hideLoading() {
+        const loadingElement = document.querySelector('.loading-overlay');
+        if (loadingElement) {
+            loadingElement.style.display = 'none';
+        }
+    }
+    
+    // Показать сообщение об успехе
+    function showSuccess(message) {
+        // Находим или создаем элемент сообщения
+        let messageElement = document.querySelector('.success-message');
+        
+        if (!messageElement) {
+            messageElement = document.createElement('div');
+            messageElement.className = 'success-message';
+            document.body.appendChild(messageElement);
+            
+            // Добавляем стили для сообщения
+            const style = document.createElement('style');
+            style.textContent = `
+                .success-message {
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    z-index: 1000;
+                    text-align: center;
+                    font-weight: 500;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        messageElement.textContent = message;
+        messageElement.style.display = 'block';
+        
+        // Скрываем сообщение через 5 секунд
+        setTimeout(() => {
+            messageElement.style.display = 'none';
+        }, 5000);
+    }
+    
+    // Получение параметра из URL
+    function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
     
     // Функция для валидации формы
     function validateForm(form) {
@@ -84,6 +236,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Показать ошибку под полем ввода
     function showError(input, message) {
+        // Если input - это форма, показываем общую ошибку
+        if (input.tagName === 'FORM') {
+            // Создаем общее сообщение об ошибке
+            let errorContainer = document.querySelector('.form-error-container');
+            
+            if (!errorContainer) {
+                errorContainer = document.createElement('div');
+                errorContainer.className = 'form-error-container';
+                errorContainer.style.backgroundColor = '#f8d7da';
+                errorContainer.style.color = '#721c24';
+                errorContainer.style.padding = '10px';
+                errorContainer.style.borderRadius = '5px';
+                errorContainer.style.marginBottom = '20px';
+                errorContainer.style.textAlign = 'center';
+                
+                input.prepend(errorContainer);
+            }
+            
+            errorContainer.textContent = message;
+            errorContainer.style.display = 'block';
+            return;
+        }
+        
         // Удаление предыдущего сообщения об ошибке
         clearError(input);
         
@@ -103,6 +278,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Очистить ошибку
     function clearError(input) {
+        // Если input - это форма, очищаем общую ошибку
+        if (input.tagName === 'FORM') {
+            const errorContainer = document.querySelector('.form-error-container');
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+            }
+            return;
+        }
+        
         const parent = input.parentNode;
         const errorElement = parent.querySelector('.error-message');
         

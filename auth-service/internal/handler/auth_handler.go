@@ -43,6 +43,25 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	c.JSON(http.StatusCreated, user)
 }
 
+// CompleteRegistration обрабатывает запрос на завершение регистрации
+func (h *AuthHandler) CompleteRegistration(c *gin.Context) {
+	var req model.CompleteRegistrationRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		h.logger.Error("Invalid request body", zap.Error(err))
+		c.JSON(http.StatusBadRequest, model.ErrorResponse{Error: "Invalid request body"})
+		return
+	}
+
+	user, err := h.authService.CompleteRegistration(c.Request.Context(), req)
+	if err != nil {
+		h.logger.Error("Failed to complete registration", zap.Error(err))
+		c.JSON(http.StatusBadRequest, model.ErrorResponse{Error: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+}
+
 // Login обрабатывает запрос на вход
 func (h *AuthHandler) Login(c *gin.Context) {
 	var req model.LoginRequest

@@ -39,22 +39,19 @@
                 <div class="role-buttons">
                     <button class="role-btn role-btn-active" data-role="student">Студент</button>
                     <button class="role-btn" data-role="teacher">Преподаватель</button>
-                    <button class="role-btn" data-role="staff">Сотрудник деканата</button>
+                    <button class="role-btn" data-role="dean_office">Сотрудник деканата</button>
                 </div>
                 
                 <form class="registration-form" id="registrationForm">
                     <div class="form-group">
-                        <input type="email" placeholder="Email" required>
+                        <input type="email" name="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" placeholder="Логин" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Пароль" required>
+                        <input type="password" name="password" placeholder="Пароль" required>
                         <span class="show-password"></span>
                     </div>
                     <div class="form-group">
-                        <input type="password" placeholder="Подтвердите пароль" required>
+                        <input type="password" name="confirm_password" placeholder="Подтвердите пароль" required>
                         <span class="show-password"></span>
                     </div>
                     <button type="submit" class="btn-submit">Продолжить</button>
@@ -85,6 +82,9 @@
         </footer>
     </div>
 
+    <!-- Подключение API для взаимодействия с бэкендом -->
+    <script src="../js/auth-api.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Обработка выбора роли
@@ -107,22 +107,60 @@
             // Обработка отправки формы
             const form = document.getElementById('registrationForm');
             
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                // Редирект на соответствующую страницу завершения регистрации
-                switch(selectedRole) {
-                    case 'student':
-                        window.location.href = 'student/registration-complete.html';
-                        break;
-                    case 'teacher':
-                        window.location.href = 'teacher/registration-complete.html';
-                        break;
-                    case 'staff':
-                        window.location.href = 'staff/registration-complete.html';
-                        break;
-                    default:
-                        window.location.href = 'student/registration-complete.html';
+                // Валидация формы
+                if (!validateForm(form)) {
+                    return;
+                }
+                
+                // Сбор данных формы
+                const email = form.querySelector('input[name="email"]').value;
+                const password = form.querySelector('input[name="password"]').value;
+                
+                // Используем часть email до @ как first_name
+                const emailUserPart = email.split('@')[0];
+                
+                // Данные для регистрации
+                const userData = {
+                    email: email,
+                    password: password,
+                    first_name: emailUserPart,  // Используем часть email до @ как имя
+                    last_name: 'Пользователь',  // Временное значение, будет обновлено на следующем шаге
+                    role: selectedRole
+                };
+                
+                try {
+                    showLoading();
+                    
+                    // Вызов API для регистрации
+                    const response = await window.authApi.register(userData);
+                    
+                    // Сохраняем ID пользователя и роль
+                    localStorage.setItem('userId', response.id);
+                    localStorage.setItem('userRole', selectedRole);
+                    
+                    hideLoading();
+                    
+                    // Редирект на соответствующую страницу завершения регистрации
+                    switch(selectedRole) {
+                        case 'student':
+                            window.location.href = 'student/registration-complete.html?userId=' + response.id + '&role=' + selectedRole;
+                            break;
+                        case 'teacher':
+                            window.location.href = 'teacher/registration-complete.html?userId=' + response.id + '&role=' + selectedRole;
+                            break;
+                        case 'dean_office':
+                            window.location.href = 'staff/registration-complete.html?userId=' + response.id + '&role=' + selectedRole;
+                            break;
+                        default:
+                            window.location.href = 'student/registration-complete.html?userId=' + response.id + '&role=' + selectedRole;
+                    }
+                } catch (error) {
+                    hideLoading();
+                    showError(form, error.message || 'Произошла ошибка при регистрации.');
+                    console.error('Registration error:', error);
                 }
             });
             
@@ -142,6 +180,162 @@
                     }
                 });
             });
+            
+            // Функция для валидации формы
+            function validateForm(form) {
+                let isValid = true;
+                const email = form.querySelector('input[name="email"]');
+                const password = form.querySelector('input[name="password"]');
+                const confirmPassword = form.querySelector('input[name="confirm_password"]');
+                
+                // Проверка email
+                if (!validateEmail(email.value)) {
+                    isValid = false;
+                    showError(email, 'Введите корректный email');
+                } else {
+                    clearError(email);
+                }
+                
+                // Проверка пароля
+                if (password.value.length < 8) {
+                    isValid = false;
+                    showError(password, 'Пароль должен содержать не менее 8 символов');
+                } else {
+                    clearError(password);
+                }
+                
+                // Проверка совпадения паролей
+                if (password.value !== confirmPassword.value) {
+                    isValid = false;
+                    showError(confirmPassword, 'Пароли не совпадают');
+                } else {
+                    clearError(confirmPassword);
+                }
+                
+                return isValid;
+            }
+            
+            // Валидация email
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            
+            // Показать ошибку под полем ввода
+            function showError(input, message) {
+                // Если input - это форма, показываем общую ошибку
+                if (input.tagName === 'FORM') {
+                    // Создаем общее сообщение об ошибке
+                    let errorContainer = document.querySelector('.form-error-container');
+                    
+                    if (!errorContainer) {
+                        errorContainer = document.createElement('div');
+                        errorContainer.className = 'form-error-container';
+                        errorContainer.style.backgroundColor = '#f8d7da';
+                        errorContainer.style.color = '#721c24';
+                        errorContainer.style.padding = '10px';
+                        errorContainer.style.borderRadius = '5px';
+                        errorContainer.style.marginBottom = '20px';
+                        errorContainer.style.textAlign = 'center';
+                        
+                        input.prepend(errorContainer);
+                    }
+                    
+                    errorContainer.textContent = message;
+                    errorContainer.style.display = 'block';
+                    return;
+                }
+                
+                // Удаление предыдущего сообщения об ошибке
+                clearError(input);
+                
+                const errorElement = document.createElement('div');
+                errorElement.className = 'error-message';
+                errorElement.textContent = message;
+                errorElement.style.color = '#e74c3c';
+                errorElement.style.fontSize = '12px';
+                errorElement.style.marginTop = '5px';
+                
+                // Добавление стиля ошибки для поля ввода
+                input.style.borderColor = '#e74c3c';
+                
+                // Вставка сообщения об ошибке после поля ввода
+                input.parentNode.appendChild(errorElement);
+            }
+            
+            // Очистить ошибку
+            function clearError(input) {
+                // Если input - это форма, очищаем общую ошибку
+                if (input.tagName === 'FORM') {
+                    const errorContainer = document.querySelector('.form-error-container');
+                    if (errorContainer) {
+                        errorContainer.style.display = 'none';
+                    }
+                    return;
+                }
+                
+                const parent = input.parentNode;
+                const errorElement = parent.querySelector('.error-message');
+                
+                if (errorElement) {
+                    parent.removeChild(errorElement);
+                }
+                
+                input.style.borderColor = '';
+            }
+            
+            // Показать индикатор загрузки
+            function showLoading() {
+                // Находим или создаем элемент загрузки
+                let loadingElement = document.querySelector('.loading-overlay');
+                
+                if (!loadingElement) {
+                    loadingElement = document.createElement('div');
+                    loadingElement.className = 'loading-overlay';
+                    loadingElement.innerHTML = '<div class="loading-spinner"></div>';
+                    document.body.appendChild(loadingElement);
+                    
+                    // Добавляем стили для индикатора загрузки
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .loading-overlay {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(0, 0, 0, 0.5);
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            z-index: 9999;
+                        }
+                        .loading-spinner {
+                            width: 40px;
+                            height: 40px;
+                            border: 4px solid #f3f3f3;
+                            border-top: 4px solid #3498db;
+                            border-radius: 50%;
+                            animation: spin 1s linear infinite;
+                        }
+                        @keyframes spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                loadingElement.style.display = 'flex';
+            }
+            
+            // Скрыть индикатор загрузки
+            function hideLoading() {
+                const loadingElement = document.querySelector('.loading-overlay');
+                if (loadingElement) {
+                    loadingElement.style.display = 'none';
+                }
+            }
         });
     </script>
 </body>

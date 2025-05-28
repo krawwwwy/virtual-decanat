@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
+	"github.com/jinzhu/gorm"
 	"github.com/krawwwwy/virtual-decanat/auth-service/internal/model"
-	"gorm.io/gorm"
 )
 
 // UserRepository интерфейс для работы с пользователями
@@ -17,9 +17,15 @@ type UserRepository interface {
 	Delete(ctx context.Context, id uint) error
 	FindRoleByName(ctx context.Context, name string) (*model.Role, error)
 	CreateStudent(ctx context.Context, student *model.Student) error
-	CreateTeacher(ctx context.Context, teacher *model.Teacher) error
+	UpdateStudent(ctx context.Context, student *model.Student) error
 	FindStudentByUserID(ctx context.Context, userID uint) (*model.Student, error)
+	CreateTeacher(ctx context.Context, teacher *model.Teacher) error
+	UpdateTeacher(ctx context.Context, teacher *model.Teacher) error
 	FindTeacherByUserID(ctx context.Context, userID uint) (*model.Teacher, error)
+	CreateStaff(ctx context.Context, staff *model.Staff) error
+	UpdateStaff(ctx context.Context, staff *model.Staff) error
+	FindStaffByUserID(ctx context.Context, userID uint) (*model.Staff, error)
+	FindGroupByName(ctx context.Context, name string) (*model.Group, error)
 }
 
 // UserRepositoryImpl реализация UserRepository
@@ -88,9 +94,9 @@ func (r *UserRepositoryImpl) CreateStudent(ctx context.Context, student *model.S
 	return r.db.WithContext(ctx).Create(student).Error
 }
 
-// CreateTeacher создает нового преподавателя
-func (r *UserRepositoryImpl) CreateTeacher(ctx context.Context, teacher *model.Teacher) error {
-	return r.db.WithContext(ctx).Create(teacher).Error
+// UpdateStudent обновляет данные студента
+func (r *UserRepositoryImpl) UpdateStudent(ctx context.Context, student *model.Student) error {
+	return r.db.WithContext(ctx).Save(student).Error
 }
 
 // FindStudentByUserID находит студента по ID пользователя
@@ -105,6 +111,16 @@ func (r *UserRepositoryImpl) FindStudentByUserID(ctx context.Context, userID uin
 	return &student, nil
 }
 
+// CreateTeacher создает нового преподавателя
+func (r *UserRepositoryImpl) CreateTeacher(ctx context.Context, teacher *model.Teacher) error {
+	return r.db.WithContext(ctx).Create(teacher).Error
+}
+
+// UpdateTeacher обновляет данные преподавателя
+func (r *UserRepositoryImpl) UpdateTeacher(ctx context.Context, teacher *model.Teacher) error {
+	return r.db.WithContext(ctx).Save(teacher).Error
+}
+
 // FindTeacherByUserID находит преподавателя по ID пользователя
 func (r *UserRepositoryImpl) FindTeacherByUserID(ctx context.Context, userID uint) (*model.Teacher, error) {
 	var teacher model.Teacher
@@ -115,4 +131,42 @@ func (r *UserRepositoryImpl) FindTeacherByUserID(ctx context.Context, userID uin
 		return nil, err
 	}
 	return &teacher, nil
+}
+
+// CreateStaff создает нового сотрудника деканата
+func (r *UserRepositoryImpl) CreateStaff(ctx context.Context, staff *model.Staff) error {
+	return r.db.WithContext(ctx).Create(staff).Error
+}
+
+// UpdateStaff обновляет данные сотрудника деканата
+func (r *UserRepositoryImpl) UpdateStaff(ctx context.Context, staff *model.Staff) error {
+	return r.db.WithContext(ctx).Save(staff).Error
+}
+
+// FindStaffByUserID находит сотрудника деканата по ID пользователя
+func (r *UserRepositoryImpl) FindStaffByUserID(ctx context.Context, userID uint) (*model.Staff, error) {
+	var staff model.Staff
+	if err := r.db.WithContext(ctx).Where("user_id = ?", userID).First(&staff).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &staff, nil
+}
+
+// FindGroupByName находит группу по имени
+func (r *UserRepositoryImpl) FindGroupByName(ctx context.Context, name string) (*model.Group, error) {
+	if name == "" {
+		return nil, nil
+	}
+
+	var group model.Group
+	if err := r.db.WithContext(ctx).Where("name = ?", name).First(&group).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &group, nil
 } 
