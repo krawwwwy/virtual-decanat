@@ -64,6 +64,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Лог для отладки
                 console.log('Отправляемые данные формы преподавателя:', formDataObj);
                 console.log('Отправляемые данные запроса преподавателя:', requestData);
+            } else if (role === 'dean_office') {
+                requestData.department = formDataObj.department || "";
+                requestData.position = formDataObj.position || "";
+                requestData.internal_phone = formDataObj.internal_phone || "";
+                requestData.gender = formDataObj.gender || "";
+                requestData.birth_date = formDataObj.birth_date || "";
+                requestData.phone = formDataObj.phone || "";
+                
+                // Лог для отладки
+                console.log('Отправляемые данные формы сотрудника деканата:', formDataObj);
+                console.log('Отправляемые данные запроса сотрудника деканата:', requestData);
             }
             
             // Отправка данных на сервер

@@ -101,6 +101,8 @@ type Staff struct {
 	Position      string    `json:"position" gorm:"not null"`
 	InternalPhone string    `json:"internal_phone"`
 	Gender        string    `json:"gender"`
+	BirthDate     time.Time `json:"birth_date"`
+	Phone         string    `json:"phone"`
 	CreatedAt     time.Time `json:"created_at"`
 	UpdatedAt     time.Time `json:"updated_at"`
 }

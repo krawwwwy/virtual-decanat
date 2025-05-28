@@ -550,6 +550,26 @@ func (s *AuthServiceImpl) CompleteRegistration(ctx context.Context, req model.Co
 			return nil, fmt.Errorf("failed to find staff: %w", err)
 		}
 
+		// Парсим дату рождения
+		var birthDate time.Time
+		if req.BirthDate != "" {
+			birthDate, err = time.Parse("2006-01-02", req.BirthDate)
+			if err != nil {
+				s.logger.Error("Failed to parse birth date", zap.Error(err))
+				return nil, fmt.Errorf("invalid birth date format: %w", err)
+			}
+		}
+
+		// Логирование полученных данных для отладки
+		s.logger.Info("Received staff data",
+			zap.String("fio", req.FirstName + " " + req.MiddleName + " " + req.LastName),
+			zap.String("department", req.Department),
+			zap.String("position", req.Position),
+			zap.String("internal_phone", req.InternalPhone),
+			zap.String("gender", req.Gender),
+			zap.String("birth_date", req.BirthDate),
+			zap.String("phone", req.Phone))
+
 		if staff == nil {
 			// Создаем нового сотрудника деканата
 			staff = &model.Staff{
@@ -558,6 +578,8 @@ func (s *AuthServiceImpl) CompleteRegistration(ctx context.Context, req model.Co
 				Position:      req.Position,
 				InternalPhone: req.InternalPhone,
 				Gender:        req.Gender,
+				BirthDate:     birthDate,
+				Phone:         req.Phone,
 			}
 			if err := s.userRepo.CreateStaff(ctx, staff); err != nil {
 				s.logger.Error("Failed to create staff", zap.Error(err))
@@ -569,6 +591,8 @@ func (s *AuthServiceImpl) CompleteRegistration(ctx context.Context, req model.Co
 			staff.Position = req.Position
 			staff.InternalPhone = req.InternalPhone
 			staff.Gender = req.Gender
+			staff.BirthDate = birthDate
+			staff.Phone = req.Phone
 			if err := s.userRepo.UpdateStaff(ctx, staff); err != nil {
 				s.logger.Error("Failed to update staff", zap.Error(err))
 				return nil, fmt.Errorf("failed to update staff: %w", err)
