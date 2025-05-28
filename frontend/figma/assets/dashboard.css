@@ -198,6 +198,16 @@ body {
     padding: 6px 12px;
 }
 
+.staff-tag {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: #4E7397;
+    background-color: transparent;
+    padding: 6px 12px;
+    margin-left: auto;
+}
+
 .dashboard-content {
     background-color: #fff;
     border-radius: 8px;

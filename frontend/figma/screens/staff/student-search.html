@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Поиск студента</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400;500;700;900&family=Manrope:wght@500;700&family=Prosto+One&display=swap" rel="stylesheet">
+    <style>
+        /* Дополнительные стили для страницы поиска студента */
+        :root {
+            --primary-color: #3B19E6;
+            --secondary-color: #E7EDF3;
+            --text-primary: #100E1B;
+            --text-secondary: #5A4E97;
+            --border-color: #D4D0E7;
+            --bg-color: #F7FAFC;
+            --card-bg: #F9F8FC;
+        }
+        
+        .page-title {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 900;
+            font-size: 36px;
+            color: #121417;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        
+        .staff-tag {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+            color: #4E7397;
+            margin-left: auto;
+        }
+        
+        .search-section {
+            margin-bottom: 30px;
+        }
+        
+        .search-heading {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        
+        .search-input {
+            width: 100%;
+            max-width: 576px;
+            height: 70px;
+            background-color: var(--secondary-color);
+            border: none;
+            border-radius: 12px;
+            padding: 0 20px;
+            font-size: 20px;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        
+        .search-input::placeholder {
+            color: #4E7397;
+            opacity: 0.7;
+        }
+        
+        .search-button {
+            width: 70px;
+            height: 70px;
+            background-color: var(--secondary-color);
+            border: none;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        
+        .search-button img {
+            width: 46px;
+            height: 46px;
+        }
+        
+        .search-container {
+            display: flex;
+            margin-bottom: 30px;
+        }
+        
+        .student-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .student-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .student-name {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        
+        .student-group {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .student-rating {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 700;
+            font-size: 50px;
+            color: var(--primary-color);
+            line-height: 0.4em;
+        }
+        
+        .attendance-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .attendance-title {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        
+        .attendance-value {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 700;
+            font-size: 50px;
+            color: var(--primary-color);
+        }
+        
+        .attendance-status {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-top: 10px;
+        }
+        
+        .debts-section, .ratings-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        
+        .debts-table, .ratings-table {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            border-spacing: 0;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .debts-table th, .ratings-table th {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-primary);
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .debts-table td, .ratings-table td {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
+            font-size: 14px;
+            color: var(--text-primary);
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .debts-table td:not(:last-child), .ratings-table td:not(:last-child) {
+            color: var(--text-secondary);
+        }
+        
+        .ratings-table .progress-container {
+            width: 180px;
+            height: 4px;
+            background-color: var(--border-color);
+            border-radius: 2px;
+        }
+        
+        .ratings-table .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .ratings-table .progress-value {
+            margin-left: 10px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+        
+        .progress-cell {
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-edit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 15px;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+        
+        .btn-yes {
+            background-color: #E9E7F3;
+            color: var(--text-primary);
+            border: none;
+            border-radius: 12px;
+            padding: 8px 15px;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .btn-no {
+            background-color: #E9E7F3;
+            color: var(--text-primary);
+            border: none;
+            border-radius: 12px;
+            padding: 8px 15px;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Александрова Александра Александровна</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Меню</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="../../assets/icons/home.svg" alt="Главная" class="nav-icon">
+                        Главная
+                    </a>
+                    <a href="#" class="nav-item active">
+                        <img src="../../assets/icons/groups.svg" alt="Панель управления" class="nav-icon">
+                        Панель управления
+                    </a>
+                    <a href="#" class="nav-item">
+                        <img src="../../assets/icons/schedule.svg" alt="Расписание" class="nav-icon">
+                        Расписание
+                    </a>
+                    <a href="#" class="nav-item">
+                        <img src="../../assets/icons/clubs.svg" alt="Студенческие объединения" class="nav-icon">
+                        Студенческие объединения
+                    </a>
+                </nav>
+            </div>
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Панель управления</h1>
+                    <span class="staff-tag">/СОТРУДНИК ДЕКАНАТА</span>
+                </div>
+                
+                <section class="search-section">
+                    <h2 class="search-heading">Выбрать студента</h2>
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Номер студенческого билета">
+                        <button class="search-button">
+                            <img src="../../assets/images/search-icon.svg" alt="Поиск">
+                        </button>
+                    </div>
+                </section>
+
+                <div class="student-info" id="studentInfo">
+                    <div class="student-card">
+                        <div class="student-header">
+                            <div>
+                                <div class="student-name">Иван Иванов Иванович</div>
+                                <div class="student-group">Группа ИДБ-22-11</div>
+                            </div>
+                            <div class="student-rating">42.3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="attendance-card">
+                        <div class="attendance-title">Процент посещаемости</div>
+                        <div class="attendance-value">73.2%</div>
+                        <div class="attendance-status">Хорошая посещаемость</div>
+                    </div>
+
+                    <section class="debts-section">
+                        <h2 class="section-title">Задолженности студента</h2>
+                        <table class="debts-table">
+                            <thead>
+                                <tr>
+                                    <th>Предмет</th>
+                                    <th>Вид задолженности</th>
+                                    <th>Крайний срок</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Дискретная математика</td>
+                                    <td>Домашнее задание</td>
+                                    <td>15.02.2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Физика</td>
+                                    <td>Лабораторная работа</td>
+                                    <td>21.03.2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Машинное обучение</td>
+                                    <td>Реферат</td>
+                                    <td>01.04.2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn-edit">Редактировать задолженности</button>
+                    </section>
+
+                    <section class="ratings-section">
+                        <h2 class="section-title">Рейтинг по предметам студента</h2>
+                        <table class="ratings-table">
+                            <thead>
+                                <tr>
+                                    <th>Предмет</th>
+                                    <th>Рейтинг</th>
+                                    <th>Прогресс</th>
+                                    <th>Посещаемость</th>
+                                    <th>Сделано вовремя</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Дискретная математика</td>
+                                    <td>45.00</td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 100%;"></div>
+                                        </div>
+                                        <span class="progress-value">100</span>
+                                    </td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 100%;"></div>
+                                        </div>
+                                        <span class="progress-value">100</span>
+                                    </td>
+                                    <td><button class="btn-yes">Да</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Физика</td>
+                                    <td>45.00</td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 80%;"></div>
+                                        </div>
+                                        <span class="progress-value">80</span>
+                                    </td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 95%;"></div>
+                                        </div>
+                                        <span class="progress-value">95</span>
+                                    </td>
+                                    <td><button class="btn-yes">Да</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Начертательная геометрия</td>
+                                    <td>35.00</td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 60%;"></div>
+                                        </div>
+                                        <span class="progress-value">60</span>
+                                    </td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 90%;"></div>
+                                        </div>
+                                        <span class="progress-value">90</span>
+                                    </td>
+                                    <td><button class="btn-no">Нет</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Прикладная физкультура</td>
+                                    <td>54.00</td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 100%;"></div>
+                                        </div>
+                                        <span class="progress-value">100</span>
+                                    </td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 100%;"></div>
+                                        </div>
+                                        <span class="progress-value">100</span>
+                                    </td>
+                                    <td><button class="btn-yes">Да</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Машинное обучение</td>
+                                    <td>45.00</td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 80%;"></div>
+                                        </div>
+                                        <span class="progress-value">80</span>
+                                    </td>
+                                    <td class="progress-cell">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 95%;"></div>
+                                        </div>
+                                        <span class="progress-value">95</span>
+                                    </td>
+                                    <td><button class="btn-yes">Да</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn-edit">Редактировать рейтинг</button>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат. Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/auth-api.js"></script>
+    <script src="../../js/staff-student-search.js"></script>
+</body>
+</html> 
