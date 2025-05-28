@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Расписание</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link rel="stylesheet" href="../../assets/schedule.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400;500;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Загрузка...</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Меню</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="../../assets/icons/home.svg" alt="Главная" class="nav-icon">
+                        Главная
+                    </a>
+                    <a href="performance.html" class="nav-item">
+                        <img src="../../assets/icons/performance.svg" alt="Успеваемость" class="nav-icon">
+                        Успеваемость
+                    </a>
+                    <a href="schedule.html" class="nav-item active">
+                        <img src="../../assets/icons/schedule.svg" alt="Расписание" class="nav-icon">
+                        Расписание
+                    </a>
+                    <a href="clubs.html" class="nav-item">
+                        <img src="../../assets/icons/clubs.svg" alt="Студенческие объединения" class="nav-icon">
+                        Студенческие объединения
+                    </a>
+                    <a href="support.html" class="nav-item">
+                        <img src="../../assets/icons/support.svg" alt="Социальная поддержка" class="nav-icon">
+                        Социальная поддержка
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Расписание</h1>
+                    <div class="student-tag">/СТУДЕНТ</div>
+                </div>
+                
+                <div class="schedule-content">
+                    <!-- Переключатель видов расписания -->
+                    <div class="schedule-tabs">
+                        <div class="tab active">День</div>
+                        <div class="tab">Неделя</div>
+                        <div class="tab">Месяц</div>
+                    </div>
+
+                    <!-- Дата и кнопка "Сегодня" -->
+                    <div class="date-header">
+                        <h2 class="current-date">Понедельник, Февраль 21</h2>
+                        <button class="today-button">Сегодня</button>
+                    </div>
+
+                    <!-- Расписание на день -->
+                    <div class="schedule-list">
+                        <!-- Занятие 1 -->
+                        <div class="schedule-item">
+                            <div class="schedule-item-left">
+                                <div class="subject-icon math-icon">
+                                    <!-- Иконка будет задана через CSS -->
+                                </div>
+                                <div class="subject-info">
+                                    <h3 class="subject-title">Дискретная математика</h3>
+                                    <span class="subject-time">9:00 AM - 10:30 AM</span>
+                                </div>
+                            </div>
+                            <div class="schedule-actions">
+                                <button class="details-button">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Занятие 2 -->
+                        <div class="schedule-item">
+                            <div class="schedule-item-left">
+                                <div class="subject-icon geometry-icon">
+                                    <!-- Иконка будет задана через CSS -->
+                                </div>
+                                <div class="subject-info">
+                                    <h3 class="subject-title">Начертательная геометрия</h3>
+                                    <span class="subject-time">11:00 AM - 12:30 PM</span>
+                                </div>
+                            </div>
+                            <div class="schedule-actions">
+                                <button class="details-button">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Занятие 3 -->
+                        <div class="schedule-item">
+                            <div class="schedule-item-left">
+                                <div class="subject-icon ml-icon">
+                                    <!-- Иконка будет задана через CSS -->
+                                </div>
+                                <div class="subject-info">
+                                    <h3 class="subject-title">Машинное обучение</h3>
+                                    <span class="subject-time">1:00 PM - 2:30 PM</span>
+                                </div>
+                            </div>
+                            <div class="schedule-actions">
+                                <button class="details-button">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Занятие 4 -->
+                        <div class="schedule-item">
+                            <div class="schedule-item-left">
+                                <div class="subject-icon physics-icon">
+                                    <!-- Иконка будет задана через CSS -->
+                                </div>
+                                <div class="subject-info">
+                                    <h3 class="subject-title">Лабораторная работа Физика</h3>
+                                    <span class="subject-time">3:00 PM - 4:30 PM</span>
+                                </div>
+                            </div>
+                            <div class="schedule-actions">
+                                <button class="details-button">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Следующий день -->
+                    <div class="date-header next-day">
+                        <h2 class="current-date">Вторник, Февраль 22</h2>
+                        <button class="tomorrow-button">Завтра</button>
+                    </div>
+                    
+                    <!-- Пустое расписание на следующий день -->
+                    <div class="empty-schedule">
+                        <p>Нет занятий на этот день</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат. Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/auth-api.js"></script>
+    <script src="../../js/dashboard.js"></script>
+    <script src="../../js/schedule.js"></script>
+</body>
+</html> 

@@ -1,0 +1,272 @@
+/* Стили для страницы расписания */
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    color: #121417;
+    letter-spacing: -0.027em;
+    margin: 0;
+}
+
+.schedule-content {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Переключатель видов расписания */
+.schedule-tabs {
+    display: flex;
+    border: 1px solid #DBDBE5;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    width: fit-content;
+}
+
+.tab {
+    padding: 16px 24px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #636387;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border-right: 1px solid #E5E8EB;
+}
+
+.tab:last-child {
+    border-right: none;
+}
+
+.tab.active {
+    color: #121217;
+    border-bottom: 3px solid #3B19E6;
+}
+
+.tab:hover:not(.active) {
+    background-color: #F0F0F5;
+}
+
+/* Дата и кнопка "Сегодня" */
+.date-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 16px 0;
+}
+
+.next-day {
+    margin-top: 32px;
+}
+
+.current-date {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #121217;
+    margin: 0;
+}
+
+.today-button, .tomorrow-button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #121217;
+    background-color: #F0F0F5;
+    border: none;
+    border-radius: 24px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.today-button:hover, .tomorrow-button:hover {
+    background-color: #E4E4F0;
+}
+
+/* Элементы расписания */
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.schedule-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.schedule-item:hover {
+    background-color: #F9F9FF;
+}
+
+.schedule-item-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.subject-icon {
+    width: 66px;
+    height: 66px;
+    border-radius: 8px;
+    background-color: #F0F0F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Иконки предметов */
+.math-icon::before {
+    content: "";
+    background: url("../assets/icons/subjects/math.svg") no-repeat center;
+    width: 44px;
+    height: 44px;
+    display: block;
+    position: absolute;
+}
+
+.geometry-icon::before {
+    content: "";
+    background: url("../assets/icons/subjects/geometry.svg") no-repeat center;
+    width: 44px;
+    height: 44px;
+    display: block;
+    position: absolute;
+}
+
+.ml-icon::before {
+    content: "";
+    background: url("../assets/icons/subjects/ml.svg") no-repeat center;
+    width: 44px;
+    height: 44px;
+    display: block;
+    position: absolute;
+}
+
+.physics-icon::before {
+    content: "";
+    background: url("../assets/icons/subjects/physics.svg") no-repeat center;
+    width: 44px;
+    height: 44px;
+    display: block;
+    position: absolute;
+}
+
+.subject-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.subject-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #121217;
+    margin: 0;
+}
+
+.subject-time {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: #636387;
+}
+
+.schedule-actions {
+    display: flex;
+    align-items: center;
+}
+
+.details-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details-button:hover svg path {
+    stroke: #3B19E6;
+}
+
+/* Пустое расписание */
+.empty-schedule {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    background-color: #F9F9FF;
+    border-radius: 8px;
+    border: 1px dashed #DBDBE5;
+}
+
+.empty-schedule p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #636387;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .student-tag {
+        margin-top: 8px;
+    }
+    
+    .schedule-tabs {
+        width: 100%;
+    }
+    
+    .tab {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+        font-size: 16px;
+    }
+    
+    .date-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .schedule-item-left {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .subject-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .subject-title, .subject-time {
+        font-size: 18px;
+    }
+} 
