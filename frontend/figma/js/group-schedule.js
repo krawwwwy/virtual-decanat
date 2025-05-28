@@ -327,7 +327,10 @@ function updateDaySchedule(day, dayIndex) {
           <span class="subject-time">${subject.time}</span>
         </div>
       </div>
-      <a href="#" class="edit-link">редактировать</a>
+      <div class="schedule-item-actions" style="display: flex; gap: 10px;">
+        <a href="#" class="edit-link">редактировать</a>
+        <a href="#" class="delete-link" style="color: #ff3b30;">удалить</a>
+      </div>
     `;
     
     scheduleList.appendChild(scheduleItem);
@@ -389,6 +392,142 @@ function updateDaySchedule(day, dayIndex) {
         
         showNotification('Изменения сохранены!');
       });
+    });
+    
+    // Добавляем обработчик для удаления предмета
+    const deleteLink = scheduleItem.querySelector('.delete-link');
+    deleteLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (confirm('Вы уверены, что хотите удалить этот предмет из расписания?')) {
+        scheduleItem.style.height = scheduleItem.offsetHeight + 'px';
+        scheduleItem.style.transition = 'all 0.3s ease-in-out';
+        setTimeout(() => {
+          scheduleItem.style.height = '0px';
+          scheduleItem.style.opacity = '0';
+          scheduleItem.style.padding = '0';
+          scheduleItem.style.margin = '0';
+          scheduleItem.style.overflow = 'hidden';
+        }, 10);
+        
+        setTimeout(() => {
+          scheduleItem.remove();
+          showNotification('Предмет удален из расписания');
+          
+          // Удаляем из данных
+          const index = dayData.findIndex(item => 
+            item.title === scheduleItem.querySelector('.subject-title').textContent &&
+            item.time === scheduleItem.querySelector('.subject-time').textContent
+          );
+          
+          if (index !== -1) {
+            dayData.splice(index, 1);
+          }
+        }, 300);
+      }
+    });
+  });
+  
+  // Добавляем кнопку "Добавить предмет" в конец списка
+  const addButton = document.createElement('div');
+  addButton.className = 'add-subject-button';
+  addButton.style.padding = '15px';
+  addButton.style.marginTop = '10px';
+  addButton.style.backgroundColor = '#F0F0F5';
+  addButton.style.borderRadius = '8px';
+  addButton.style.textAlign = 'center';
+  addButton.style.cursor = 'pointer';
+  addButton.style.display = 'flex';
+  addButton.style.alignItems = 'center';
+  addButton.style.justifyContent = 'center';
+  addButton.innerHTML = `
+    <div style="width: 24px; height: 24px; background-color: #3B19E6; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; margin-right: 10px; font-weight: bold;">+</div>
+    <span style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 18px;">Добавить предмет</span>
+  `;
+  
+  scheduleList.appendChild(addButton);
+  
+  // Обработчик для кнопки добавления
+  addButton.addEventListener('click', function() {
+    // Создаем форму для добавления нового предмета
+    const addForm = document.createElement('div');
+    addForm.className = 'add-form';
+    addForm.style.backgroundColor = '#F0F0F5';
+    addForm.style.padding = '15px';
+    addForm.style.borderRadius = '8px';
+    addForm.style.marginTop = '10px';
+    
+    // Иконки предметов для выбора
+    const icons = [
+      { name: 'Математика', value: '../../assets/images/subjects/math-icon.svg' },
+      { name: 'Геометрия', value: '../../assets/images/subjects/geometry-icon.svg' },
+      { name: 'Машинное обучение', value: '../../assets/images/subjects/ml-icon.svg' },
+      { name: 'Физика', value: '../../assets/images/subjects/physics-icon.svg' },
+      { name: 'Информационные системы', value: '../../assets/images/subjects/systems-icon.svg' },
+      { name: 'Web-разработка', value: '../../assets/images/subjects/web-icon.svg' },
+      { name: 'Интеллектуальные активы', value: '../../assets/images/subjects/assets-icon.svg' },
+      { name: 'ИТ', value: '../../assets/images/subjects/it-icon.svg' }
+    ];
+    
+    // Генерируем опции для выбора иконки
+    const iconOptions = icons.map(icon => 
+      `<option value="${icon.value}">${icon.name}</option>`
+    ).join('');
+    
+    // Форма для добавления предмета
+    addForm.innerHTML = `
+      <h3 style="margin-top: 0; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 20px;">Добавить новый предмет</h3>
+      <div style="margin-bottom: 10px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 500;">Название предмета:</label>
+        <input type="text" class="new-subject-title" style="width: 100%; padding: 8px; border: 1px solid #D4D0E7; border-radius: 4px;">
+      </div>
+      <div style="margin-bottom: 10px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 500;">Время:</label>
+        <input type="text" class="new-subject-time" style="width: 100%; padding: 8px; border: 1px solid #D4D0E7; border-radius: 4px;">
+      </div>
+      <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 500;">Иконка предмета:</label>
+        <select class="new-subject-icon" style="width: 100%; padding: 8px; border: 1px solid #D4D0E7; border-radius: 4px;">
+          ${iconOptions}
+        </select>
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button class="cancel-add" style="padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; background-color: #E7EDF3;">Отмена</button>
+        <button class="save-add" style="padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; background-color: #3B19E6; color: white;">Добавить</button>
+      </div>
+    `;
+    
+    // Вставляем форму после кнопки добавления
+    addButton.insertAdjacentElement('afterend', addForm);
+    
+    // Скрываем кнопку добавления
+    addButton.style.display = 'none';
+    
+    // Обработчики для кнопок формы
+    addForm.querySelector('.cancel-add').addEventListener('click', function() {
+      addButton.style.display = 'flex';
+      addForm.remove();
+    });
+    
+    addForm.querySelector('.save-add').addEventListener('click', function() {
+      const newTitle = addForm.querySelector('.new-subject-title').value;
+      const newTime = addForm.querySelector('.new-subject-time').value;
+      const newIcon = addForm.querySelector('.new-subject-icon').value;
+      
+      if (newTitle && newTime) {
+        // Добавляем новый предмет в данные
+        dayData.push({
+          title: newTitle,
+          time: newTime,
+          icon: newIcon || '../../assets/images/subjects/it-icon.svg' // Значение по умолчанию
+        });
+        
+        // Перерисовываем расписание
+        updateDaySchedule(day, dayIndex);
+        
+        showNotification('Новый предмет добавлен в расписание');
+      } else {
+        alert('Пожалуйста, заполните все поля!');
+      }
     });
   });
 }
