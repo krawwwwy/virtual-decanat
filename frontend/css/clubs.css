@@ -1,0 +1,192 @@
+/* Стили для страницы студенческих объединений */
+
+.clubs-container {
+    padding: 20px;
+}
+
+.clubs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.clubs-filter {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-button {
+    background-color: #f0f2f5;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-button.active, .filter-button:hover {
+    background-color: #2c5fc6;
+    color: white;
+}
+
+.clubs-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    padding: 8px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    width: 250px;
+    font-size: 14px;
+}
+
+.search-button {
+    background-color: #2c5fc6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #1e4da8;
+}
+
+.add-club-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+.add-club-button:hover {
+    background-color: #218838;
+}
+
+.clubs-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+.club-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 20px;
+}
+
+.club-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.club-info {
+    flex: 1;
+}
+
+.club-name {
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.club-details {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.club-category {
+    background-color: #e9f2ff;
+    color: #2c5fc6;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.club-description {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.club-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.club-button {
+    background-color: #f0f2f5;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+.club-button:hover {
+    background-color: #e0e0e0;
+}
+
+.club-button:first-child {
+    background-color: #2c5fc6;
+    color: white;
+}
+
+.club-button:first-child:hover {
+    background-color: #1e4da8;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .clubs-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .clubs-filter {
+        justify-content: center;
+    }
+    
+    .clubs-search {
+        width: 100%;
+    }
+    
+    .search-input {
+        width: 100%;
+    }
+    
+    .add-club-button {
+        width: 100%;
+    }
+    
+    .clubs-list {
+        grid-template-columns: 1fr;
+    }
+} 
