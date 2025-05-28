@@ -1,5 +1,39 @@
 // Функции для работы с посещаемостью
 document.addEventListener('DOMContentLoaded', function() {
+    // Данные студентов для разных групп
+    const studentsData = {
+        'mt101': [
+            { name: 'Иванов Иван Иванович', status: 'present', comment: '' },
+            { name: 'Петров Петр Петрович', status: 'present', comment: '' },
+            { name: 'Сидорова Мария Александровна', status: 'absent', comment: 'Сообщила о болезни' },
+            { name: 'Кузнецов Алексей Дмитриевич', status: 'excused', comment: 'Справка из медпункта' },
+            { name: 'Новиков Дмитрий Сергеевич', status: 'present', comment: '' },
+            { name: 'Морозова Елена Игоревна', status: 'absent', comment: '' },
+            { name: 'Волков Артем Витальевич', status: 'present', comment: '' },
+            { name: 'Соколова Анна Михайловна', status: 'present', comment: '' }
+        ],
+        'mt102': [
+            { name: 'Смирнов Кирилл Андреевич', status: 'present', comment: '' },
+            { name: 'Козлова Юлия Павловна', status: 'absent', comment: 'Отсутствует по семейным обстоятельствам' },
+            { name: 'Никитин Максим Викторович', status: 'present', comment: '' },
+            { name: 'Васильева Ольга Сергеевна', status: 'present', comment: '' },
+            { name: 'Павлов Александр Дмитриевич', status: 'excused', comment: 'Справка' },
+            { name: 'Семенова Валерия Алексеевна', status: 'present', comment: '' }
+        ],
+        'mt201': [
+            { name: 'Орлова Светлана Игоревна', status: 'present', comment: '' },
+            { name: 'Федоров Николай Владимирович', status: 'absent', comment: '' },
+            { name: 'Михайлова Татьяна Степановна', status: 'present', comment: '' },
+            { name: 'Зайцев Виктор Антонович', status: 'present', comment: '' },
+            { name: 'Соловьева Екатерина Ильинична', status: 'excused', comment: 'Участие в олимпиаде' },
+            { name: 'Лебедева Дарья Михайловна', status: 'absent', comment: 'Болеет' },
+            { name: 'Титов Роман Никитич', status: 'present', comment: '' }
+        ]
+    };
+    
+    // Текущая выбранная группа
+    let currentGroup = 'mt101';
+    
     // Проверка авторизации
     function checkAuth() {
         const token = localStorage.getItem('accessToken');
@@ -31,6 +65,70 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Ошибка при загрузке профиля:', error);
         }
+    }
+
+    // Создание HTML для строки студента
+    function createStudentRow(student, index) {
+        // Определяем статус для установки правильного выбора радио-кнопок
+        const isPresentChecked = student.status === 'present' ? 'checked' : '';
+        const isAbsentChecked = student.status === 'absent' ? 'checked' : '';
+        const isExcusedChecked = student.status === 'excused' ? 'checked' : '';
+        
+        // Определяем CSS-класс для строки в зависимости от статуса
+        const rowStyle = student.status === 'absent' ? 'style="background-color: rgba(255, 200, 200, 0.1);"' : 
+                        student.status === 'excused' ? 'style="background-color: rgba(200, 255, 200, 0.1);"' : '';
+        
+        return `
+            <tr ${rowStyle}>
+                <td>
+                    <div class="student-name">
+                        <div class="student-avatar"></div>
+                        <span>${student.name}</span>
+                    </div>
+                </td>
+                <td class="check-column">
+                    <input type="radio" name="student_${index}" class="attendance-checkbox" ${isPresentChecked}>
+                </td>
+                <td class="check-column">
+                    <input type="radio" name="student_${index}" class="attendance-checkbox" ${isAbsentChecked}>
+                </td>
+                <td class="check-column">
+                    <input type="radio" name="student_${index}" class="attendance-checkbox" ${isExcusedChecked}>
+                </td>
+                <td>
+                    <input type="text" placeholder="Комментарий" value="${student.comment}">
+                </td>
+            </tr>
+        `;
+    }
+
+    // Обновление таблицы студентов для выбранной группы
+    function renderStudentList(groupCode) {
+        const tableBody = document.querySelector('.attendance-table tbody');
+        if (!tableBody) return;
+        
+        if (groupCode === 'all') {
+            groupCode = 'mt101'; // По умолчанию показываем первую группу при выборе "Все группы"
+        }
+        
+        // Проверяем наличие данных для группы
+        const students = studentsData[groupCode];
+        if (!students || students.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="5">Нет данных для выбранной группы</td></tr>';
+            return;
+        }
+        
+        // Формируем строки таблицы с данными студентов
+        let tableHTML = '';
+        students.forEach((student, index) => {
+            tableHTML += createStudentRow(student, index + 1);
+        });
+        
+        // Обновляем содержимое таблицы
+        tableBody.innerHTML = tableHTML;
+        
+        // Повторно настраиваем обработчики для новых элементов
+        setupTableInteractions();
     }
     
     // Настройка переключения вкладок
@@ -90,32 +188,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 const selectedGroup = this.value;
                 console.log('Выбрана группа:', selectedGroup);
                 
+                // Сохраняем текущую выбранную группу
+                currentGroup = selectedGroup === 'all' ? 'mt101' : selectedGroup;
+                
                 // Эмуляция загрузки данных выбранной группы
-                if (selectedGroup !== 'all') {
-                    showLoading(true);
+                showLoading(true);
+                
+                setTimeout(() => {
+                    // Обновляем информацию о предмете
+                    const groupInfoText = document.querySelector('.attendance-subject > div:last-child > div:nth-child(2)');
+                    if (groupInfoText) {
+                        groupInfoText.textContent = `10:00 - 11:00 | Группа: ${selectedGroup === 'all' ? 'МТ-101' : selectedGroup.toUpperCase()}`;
+                    }
                     
-                    setTimeout(() => {
-                        // Обновляем информацию о предмете
-                        const groupInfoText = document.querySelector('.attendance-subject > div:last-child > div:nth-child(2)');
-                        if (groupInfoText) {
-                            groupInfoText.textContent = `10:00 - 11:00 | Группа: ${selectedGroup.toUpperCase()}`;
+                    // Обновляем заголовок предмета в зависимости от группы
+                    const subjectTitle = document.querySelector('.attendance-date');
+                    if (subjectTitle) {
+                        if (selectedGroup === 'all' || selectedGroup === 'mt101') {
+                            subjectTitle.textContent = 'Прикладная математика (кабинет 102)';
+                        } else if (selectedGroup === 'mt102') {
+                            subjectTitle.textContent = 'Начертательная геометрия (кабинет 103)';
+                        } else if (selectedGroup === 'mt201') {
+                            subjectTitle.textContent = 'Линейная алгебра (кабинет 104)';
                         }
-                        
-                        // Обновляем заголовок предмета в зависимости от группы
-                        const subjectTitle = document.querySelector('.attendance-date');
-                        if (subjectTitle) {
-                            if (selectedGroup === 'mt101') {
-                                subjectTitle.textContent = 'Прикладная математика (кабинет 102)';
-                            } else if (selectedGroup === 'mt102') {
-                                subjectTitle.textContent = 'Начертательная геометрия (кабинет 103)';
-                            } else if (selectedGroup === 'mt201') {
-                                subjectTitle.textContent = 'Линейная алгебра (кабинет 104)';
-                            }
-                        }
-                        
-                        showLoading(false);
-                    }, 500);
-                }
+                    }
+                    
+                    // Обновляем список студентов
+                    renderStudentList(selectedGroup);
+                    
+                    showLoading(false);
+                }, 500);
             });
         }
         
@@ -206,7 +308,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cancelButton) {
             cancelButton.addEventListener('click', function() {
                 if (confirm('Вы уверены, что хотите отменить все изменения?')) {
-                    window.location.reload();
+                    // Восстанавливаем исходное состояние для текущей группы
+                    renderStudentList(currentGroup);
                 }
             });
         }
@@ -244,4 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupFilters();
     setupActionButtons();
     setupTableInteractions();
+    
+    // Инициализация с данными первой группы по умолчанию
+    renderStudentList('mt101');
 }); 
