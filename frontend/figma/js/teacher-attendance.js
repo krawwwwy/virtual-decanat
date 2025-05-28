@@ -50,14 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.querySelector('.attendance-actions').style.display = 'flex';
                     document.querySelector('.attendance-filter').style.display = 'flex';
                     document.querySelector('.attendance-subject').style.display = 'flex';
-                } else if (tabType === 'history') {
-                    document.querySelector('.attendance-stats').style.display = 'none';
-                    document.querySelector('.attendance-table').style.display = 'table';
-                    document.querySelector('.attendance-actions').style.display = 'flex';
-                    document.querySelector('.attendance-filter').style.display = 'flex';
-                    document.querySelector('.attendance-subject').style.display = 'flex';
-                    // В реальной системе здесь бы загружались исторические данные
-                    loadHistoricalData();
+                    
+                    // Сбросить заголовок на текущий при возврате на вкладку "Сегодня"
+                    document.querySelector('.attendance-date').textContent = 'Прикладная математика (кабинет 102)';
                 } else if (tabType === 'stats') {
                     document.querySelector('.attendance-stats').style.display = 'flex';
                     document.querySelector('.attendance-table').style.display = 'none';
@@ -67,21 +62,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
-    }
-    
-    // Имитация загрузки исторических данных
-    function loadHistoricalData() {
-        // Эмуляция загрузки с задержкой для имитации сетевого запроса
-        showLoading(true);
         
-        setTimeout(() => {
-            // Обновляем заголовок с информацией о предмете
-            const subjectInfo = document.querySelector('.attendance-date');
-            subjectInfo.textContent = 'Прикладная математика (занятие от 19.05.2025)';
-            
-            // Здесь могла бы быть реальная загрузка данных по API
-            showLoading(false);
-        }, 700);
+        // Удаляем вкладку "История", если она есть
+        const historyTab = document.querySelector('.tab[data-tab="history"]');
+        if (historyTab) {
+            historyTab.style.display = 'none';
+        }
     }
     
     // Показать/скрыть индикатор загрузки
@@ -110,10 +96,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     setTimeout(() => {
                         // Обновляем информацию о предмете
-                        const subjectInfo = document.querySelector('.attendance-subject div:last-child div:last-child');
-                        subjectInfo.textContent = `10:00 - 11:00 | Группа: ${selectedGroup.toUpperCase()}`;
+                        const groupInfoText = document.querySelector('.attendance-subject > div:last-child > div:nth-child(2)');
+                        if (groupInfoText) {
+                            groupInfoText.textContent = `10:00 - 11:00 | Группа: ${selectedGroup.toUpperCase()}`;
+                        }
                         
-                        // Можно обновить весь список студентов для выбранной группы
+                        // Обновляем заголовок предмета в зависимости от группы
+                        const subjectTitle = document.querySelector('.attendance-date');
+                        if (subjectTitle) {
+                            if (selectedGroup === 'mt101') {
+                                subjectTitle.textContent = 'Прикладная математика (кабинет 102)';
+                            } else if (selectedGroup === 'mt102') {
+                                subjectTitle.textContent = 'Начертательная геометрия (кабинет 103)';
+                            } else if (selectedGroup === 'mt201') {
+                                subjectTitle.textContent = 'Линейная алгебра (кабинет 104)';
+                            }
+                        }
+                        
                         showLoading(false);
                     }, 500);
                 }
@@ -137,17 +136,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     rows.forEach(row => row.style.display = '');
                 } else if (filterType === 'Присутствует') {
                     rows.forEach(row => {
-                        const isPresentChecked = row.querySelector('input[type="radio"]:nth-of-type(1)').checked;
+                        // Проверяем первую радио-кнопку (Присутствует) в строке
+                        const cell = row.querySelector('td:nth-child(2)');
+                        const isPresentChecked = cell && cell.querySelector('input[type="radio"]').checked;
                         row.style.display = isPresentChecked ? '' : 'none';
                     });
                 } else if (filterType === 'Отсутствует') {
                     rows.forEach(row => {
-                        const isAbsentChecked = row.querySelector('input[type="radio"]:nth-of-type(2)').checked;
+                        // Проверяем вторую радио-кнопку (Отсутствует) в строке
+                        const cell = row.querySelector('td:nth-child(3)');
+                        const isAbsentChecked = cell && cell.querySelector('input[type="radio"]').checked;
                         row.style.display = isAbsentChecked ? '' : 'none';
                     });
                 } else if (filterType === 'По уважительной') {
                     rows.forEach(row => {
-                        const isExcusedChecked = row.querySelector('input[type="radio"]:nth-of-type(3)').checked;
+                        // Проверяем третью радио-кнопку (По уважительной) в строке
+                        const cell = row.querySelector('td:nth-child(4)');
+                        const isExcusedChecked = cell && cell.querySelector('input[type="radio"]').checked;
                         row.style.display = isExcusedChecked ? '' : 'none';
                     });
                 }
@@ -172,9 +177,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     rows.forEach((row, index) => {
                         const studentName = row.querySelector('.student-name span').textContent;
-                        const isPresentChecked = row.querySelector('input[type="radio"]:nth-of-type(1)').checked;
-                        const isAbsentChecked = row.querySelector('input[type="radio"]:nth-of-type(2)').checked;
-                        const isExcusedChecked = row.querySelector('input[type="radio"]:nth-of-type(3)').checked;
+                        const isPresentChecked = row.querySelector('td:nth-child(2) input[type="radio"]').checked;
+                        const isAbsentChecked = row.querySelector('td:nth-child(3) input[type="radio"]').checked;
+                        const isExcusedChecked = row.querySelector('td:nth-child(4) input[type="radio"]').checked;
                         const comment = row.querySelector('input[type="text"]').value;
                         
                         let status = 'unknown';
@@ -216,18 +221,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Можно добавить визуальную обратную связь
                 const row = this.closest('tr');
                 
-                if (this.parentNode.classList.contains('check-column') && 
-                    this.parentNode === row.querySelector('td:nth-child(2)')) {
-                    // Если отмечено "Присутствует"
-                    row.style.backgroundColor = '';
-                } else if (this.parentNode.classList.contains('check-column') && 
-                          this.parentNode === row.querySelector('td:nth-child(3)')) {
-                    // Если отмечено "Отсутствует"
-                    row.style.backgroundColor = 'rgba(255, 200, 200, 0.1)';
-                } else if (this.parentNode.classList.contains('check-column') && 
-                          this.parentNode === row.querySelector('td:nth-child(4)')) {
-                    // Если отмечено "По уважительной"
-                    row.style.backgroundColor = 'rgba(200, 255, 200, 0.1)';
+                if (this.parentNode.classList.contains('check-column')) {
+                    const td = this.parentNode;
+                    // Определяем столбец по индексу ячейки
+                    const cellIndex = Array.from(row.cells).indexOf(td);
+                    
+                    if (cellIndex === 1) { // Присутствует - первая ячейка с радио
+                        row.style.backgroundColor = '';
+                    } else if (cellIndex === 2) { // Отсутствует - вторая ячейка с радио
+                        row.style.backgroundColor = 'rgba(255, 200, 200, 0.1)';
+                    } else if (cellIndex === 3) { // По уважительной - третья ячейка с радио
+                        row.style.backgroundColor = 'rgba(200, 255, 200, 0.1)';
+                    }
                 }
             });
         });
