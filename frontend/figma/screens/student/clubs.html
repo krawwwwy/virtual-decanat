@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Студенческие объединения</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link rel="stylesheet" href="../../assets/clubs.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400;500;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Загрузка...</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Меню</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="../../assets/icons/home.svg" alt="Главная" class="nav-icon">
+                        Главная
+                    </a>
+                    <a href="performance.html" class="nav-item">
+                        <img src="../../assets/icons/performance.svg" alt="Успеваемость" class="nav-icon">
+                        Успеваемость
+                    </a>
+                    <a href="schedule.html" class="nav-item">
+                        <img src="../../assets/icons/schedule.svg" alt="Расписание" class="nav-icon">
+                        Расписание
+                    </a>
+                    <a href="clubs.html" class="nav-item active">
+                        <img src="../../assets/icons/clubs.svg" alt="Студенческие объединения" class="nav-icon">
+                        Студенческие объединения
+                    </a>
+                    <a href="support.html" class="nav-item">
+                        <img src="../../assets/icons/support.svg" alt="Социальная поддержка" class="nav-icon">
+                        Социальная поддержка
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Студенческие объединения</h1>
+                    <div class="student-tag">/СТУДЕНТ</div>
+                </div>
+                
+                <div class="clubs-content">
+                    <!-- Ваши клубы -->
+                    <section class="clubs-section">
+                        <h2 class="section-title">Клубы, в которые вы вступили</h2>
+                        
+                        <div class="clubs-grid">
+                            <!-- Клуб 1 -->
+                            <div class="club-card">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_kvn.jpg" alt="Клуб КВН">
+                                </div>
+                                <h3 class="club-title">Клуб КВН</h3>
+                                <p class="club-schedule">Еженедельные встречи по понедельникам в 7 вечера</p>
+                                <div class="club-status">
+                                    <span class="status joined">Участвую</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 2 -->
+                            <div class="club-card">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_business.jpg" alt="Клуб предпринимателей">
+                                </div>
+                                <h3 class="club-title">Клуб предпринимателей</h3>
+                                <p class="club-schedule">Встречи дважды в неделю по четвергам в 18:00</p>
+                                <div class="club-status">
+                                    <span class="status joined">Участвую</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 3 -->
+                            <div class="club-card">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_writing.jpg" alt="Клуб творческого письма">
+                                </div>
+                                <h3 class="club-title">Клуб творческого письма</h3>
+                                <p class="club-schedule">Ежемесячные семинары по субботам в 14:00</p>
+                                <div class="club-status">
+                                    <span class="status joined">Участвую</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 4 -->
+                            <div class="club-card">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_dance.jpg" alt="Танцевальная команда">
+                                </div>
+                                <h3 class="club-title">Танцевальная команда</h3>
+                                <p class="club-schedule">Ежедневные тренировки в спортзале в 17:00</p>
+                                <div class="club-status">
+                                    <span class="status joined">Участвую</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Заявки в клубы -->
+                    <section class="clubs-section">
+                        <h2 class="section-title">Клубы, в которые вы подали заявку</h2>
+                        
+                        <div class="clubs-grid">
+                            <!-- Клуб 1 -->
+                            <div class="club-card">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_investment.jpg" alt="Инвестиционное общество">
+                                </div>
+                                <h3 class="club-title">Инвестиционное общество</h3>
+                                <p class="club-schedule">Ожидает рассмотрения</p>
+                                <div class="club-status">
+                                    <span class="status pending">Ожидает рассмотрения</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 2 -->
+                            <div class="club-card">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_mentalhealth.jpg" alt="Защитники психического здоровья">
+                                </div>
+                                <h3 class="club-title">Защитники психического здоровья</h3>
+                                <p class="club-schedule">Принят</p>
+                                <div class="club-status">
+                                    <span class="status accepted">Принят</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 3 -->
+                            <div class="club-card">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_community.jpg" alt="Совет общественных работ">
+                                </div>
+                                <h3 class="club-title">Совет общественных работ</h3>
+                                <p class="club-schedule">Отклонено</p>
+                                <div class="club-status">
+                                    <span class="status rejected">Отклонено</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 4 -->
+                            <div class="club-card">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_cooking.jpg" alt="Международный кулинарный клуб">
+                                </div>
+                                <h3 class="club-title">Международный кулинарный клуб</h3>
+                                <p class="club-schedule">Ожидает рассмотрения</p>
+                                <div class="club-status">
+                                    <span class="status pending">Ожидает рассмотрения</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Поиск новых клубов -->
+                    <section class="clubs-section">
+                        <h2 class="section-title">Поиск клубов</h2>
+                        
+                        <div class="search-container">
+                            <div class="search-form">
+                                <label for="club-search" class="search-label">Поиск клубов</label>
+                                <input type="text" id="club-search" class="search-input" placeholder="Введите название клуба...">
+                            </div>
+                            
+                            <div class="filter-tags">
+                                <button class="filter-tag" data-filter="art">Искусство</button>
+                                <button class="filter-tag" data-filter="science">Наука</button>
+                                <button class="filter-tag" data-filter="sports">Спорт</button>
+                                <button class="filter-tag" data-filter="tech">Технологии</button>
+                                <button class="filter-tag" data-filter="music">Музыка</button>
+                                <button class="filter-tag" data-filter="business">Бизнес</button>
+                            </div>
+                        </div>
+                        
+                        <div class="clubs-grid">
+                            <!-- Клуб 1 -->
+                            <div class="club-card" data-category="art">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_art.jpg" alt="Арт-клуб">
+                                </div>
+                                <h3 class="club-title">Арт-клуб</h3>
+                                <p class="club-schedule">Еженедельные встречи по вторникам в 16:00</p>
+                                <div class="club-actions">
+                                    <button class="club-join-button">Вступить</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 2 -->
+                            <div class="club-card" data-category="science">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_astronomy.jpg" alt="Астрономическое общество">
+                                </div>
+                                <h3 class="club-title">Астрономическое общество</h3>
+                                <p class="club-schedule">Ежемесячные поездки для наблюдения за звездами</p>
+                                <div class="club-actions">
+                                    <button class="club-join-button">Вступить</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 3 -->
+                            <div class="club-card" data-category="sports">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_badminton.jpg" alt="Команда по бадминтону">
+                                </div>
+                                <h3 class="club-title">Команда по бадминтону</h3>
+                                <p class="club-schedule">Тренировка каждый четверг в 8 вечера</p>
+                                <div class="club-actions">
+                                    <button class="club-join-button">Вступить</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 4 -->
+                            <div class="club-card" data-category="tech">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_coding.jpg" alt="Коллектив кодировщиков">
+                                </div>
+                                <h3 class="club-title">Коллектив кодировщиков</h3>
+                                <p class="club-schedule">Хакатоны и семинары</p>
+                                <div class="club-actions">
+                                    <button class="club-join-button">Вступить</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 5 -->
+                            <div class="club-card" data-category="music">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_jazz.jpg" alt="Джаз-бэнд">
+                                </div>
+                                <h3 class="club-title">Джаз-бэнд</h3>
+                                <p class="club-schedule">Концерты и мероприятия</p>
+                                <div class="club-actions">
+                                    <button class="club-join-button">Вступить</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Клуб 6 -->
+                            <div class="club-card" data-category="business">
+                                <div class="club-image">
+                                    <img src="../../assets/images/clubs/club_marketing.jpg" alt="Маркетинговая гильдия">
+                                </div>
+                                <h3 class="club-title">Маркетинговая гильдия</h3>
+                                <p class="club-schedule">Поддержка стажировки и нетворкинг</p>
+                                <div class="club-actions">
+                                    <button class="club-join-button">Вступить</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-actions">
+                            <button class="button button-secondary">Отмена</button>
+                            <button class="button button-primary">Применить</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат. Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/auth-api.js"></script>
+    <script src="../../js/dashboard.js"></script>
+    <script src="../../js/clubs.js"></script>
+</body>
+</html> 
