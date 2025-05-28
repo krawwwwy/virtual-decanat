@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Подать заявление</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link rel="stylesheet" href="../../assets/applicant.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@300;400;500;600;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Гость</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="../login-page.html" id="loginBtn">Вход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Абитуриентам</div>
+                    <a href="apply.html" class="nav-item active">
+                        <img src="../../assets/icons/document.svg" alt="Подать заявление" class="nav-icon">
+                        Подать заявление
+                    </a>
+                    <a href="status.html" class="nav-item">
+                        <img src="../../assets/icons/status.svg" alt="Статус заявления" class="nav-icon">
+                        Статус заявления
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Подать заявление</h1>
+                    <div class="applicant-tag">/АБИТУРИЕНТ</div>
+                </div>
+                
+                <div class="apply-form-container">
+                    <form id="applicationForm" class="apply-form">
+                        <div class="form-group">
+                            <label for="fullname">ФИО</label>
+                            <input type="text" id="fullname" name="fullname" placeholder="Введите полное имя" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birthdate">Дата рождения</label>
+                            <input type="date" id="birthdate" name="birthdate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="passport">Серия и номер паспорта</label>
+                            <input type="text" id="passport" name="passport" placeholder="0000 000000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gender">Пол</label>
+                            <select id="gender" name="gender" required>
+                                <option value="" disabled selected>Выберите пол</option>
+                                <option value="male">Мужской</option>
+                                <option value="female">Женский</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Контактный телефон</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+7 (000) 000-00-00" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="faculty">Факультет</label>
+                            <select id="faculty" name="faculty" required>
+                                <option value="" disabled selected>Выберите факультет</option>
+                                <option value="it">Информационные технологии и вычислительные системы</option>
+                                <option value="engineering">Машиностроительные технологии</option>
+                                <option value="robotics">Робототехника и комплексная автоматизация</option>
+                                <option value="economics">Экономика и менеджмент</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="education-level">Уровень обучения</label>
+                            <select id="education-level" name="education_level" required>
+                                <option value="" disabled selected>Выберите уровень</option>
+                                <option value="bachelor">Бакалавриат</option>
+                                <option value="master">Магистратура</option>
+                                <option value="specialist">Специалитет</option>
+                                <option value="postgraduate">Аспирантура</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="admission-type">Целевое обучение или общий конкурс</label>
+                            <select id="admission-type" name="admission_type" required>
+                                <option value="" disabled selected>Выберите тип поступления</option>
+                                <option value="general">Общий конкурс</option>
+                                <option value="targeted">Целевое обучение</option>
+                                <option value="special">Особая квота</option>
+                                <option value="privileged">Льготное поступление</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="benefits">Льгота*</label>
+                            <select id="benefits" name="benefits">
+                                <option value="" selected>Нет</option>
+                                <option value="disabled">Инвалидность</option>
+                                <option value="orphan">Сирота или без попечения родителей</option>
+                                <option value="chernobyl">Ликвидатор аварии на ЧАЭС</option>
+                                <option value="veteran">Ветеран боевых действий</option>
+                            </select>
+                        </div>
+                        
+                        <div class="document-upload-container">
+                            <div class="document-label">Сканы документов (СНИЛС, Паспорт, полис страхования)</div>
+                            
+                            <div class="document-upload">
+                                <div class="document-input">
+                                    <input type="file" id="documents" name="documents" multiple class="file-input" accept=".pdf,.jpg,.jpeg,.png">
+                                    <span class="file-name">Загрузить документы</span>
+                                </div>
+                                
+                                <button type="button" class="file-button">
+                                    <img src="../../assets/images/applicant/upload_file_icon.svg" alt="Загрузить">
+                                </button>
+                            </div>
+                            
+                            <div id="file-list" class="file-list"></div>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Подать</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат. Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <div class="background-decoration">
+        <div class="university-title">Виртуальный деканат</div>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/applicant.js"></script>
+</body>
+</html> 

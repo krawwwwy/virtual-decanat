@@ -223,6 +223,25 @@ body {
     color: #4F7396;
 }
 
+.news-link {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #0019FF;
+    text-decoration: none;
+    padding: 6px 12px;
+    background-color: #E8EDF2;
+    border-radius: 8px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.news-link:hover {
+    background-color: #D1DBE8;
+    transform: translateY(-2px);
+}
+
 /* Медиа запросы для адаптивности */
 @media (max-width: 1400px) {
     .hero-section {

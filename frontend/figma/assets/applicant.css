@@ -1,0 +1,414 @@
+/* Стили для страниц абитуриента */
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #0E141B;
+    margin: 0;
+}
+
+.applicant-tag {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: #4E7397;
+    line-height: 1.2;
+}
+
+/* Стили для формы подачи заявления */
+.apply-form-container {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.apply-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #111118;
+    margin-bottom: 8px;
+}
+
+input, select {
+    background-color: #E7EDF3;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #111118;
+    height: 56px;
+}
+
+input::placeholder {
+    color: #4E7397;
+    opacity: 0.7;
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1.41 0.840027L6 5.42003L10.59 0.840027L12 2.25003L6 8.25003L0 2.25003L1.41 0.840027Z' fill='%23636388'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+}
+
+/* Стили для загрузки документов */
+.document-upload-container {
+    grid-column: 1 / -1;
+    margin-top: 16px;
+}
+
+.document-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #111118;
+    margin-bottom: 16px;
+}
+
+.document-upload {
+    display: flex;
+    align-items: center;
+    border: 1px solid #DCDCE5;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.document-input {
+    flex: 1;
+    position: relative;
+    padding: 16px;
+    background-color: #E7EDF3;
+}
+
+.file-input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.file-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #4E7397;
+    opacity: 0.7;
+}
+
+.file-button {
+    width: 64px;
+    height: 56px;
+    border: none;
+    border-left: 1px solid #DCDCE5;
+    background-color: #E7EDF3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.file-list {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.file-item {
+    background-color: #F0F0F4;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #111118;
+    display: flex;
+    align-items: center;
+}
+
+.file-item-name {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-remove {
+    margin-left: 8px;
+    cursor: pointer;
+    color: #D90000;
+}
+
+/* Стили для кнопки отправки */
+.submit-button {
+    grid-column: 1 / -1;
+    margin-top: 24px;
+    background: linear-gradient(to bottom, #A2AAF4, #0019FF);
+    color: #FFFFFF;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: 2.5px;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 32px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+    height: auto;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 25, 255, 0.2);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 25, 255, 0.3);
+}
+
+/* Стили для проверки статуса заявления */
+.check-status-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.status-form {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 24px;
+}
+
+.status-form .submit-button {
+    grid-column: 2 / 3;
+    margin-top: 16px;
+}
+
+.status-result {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.status-result.hidden {
+    display: none;
+}
+
+.status-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #111118;
+    margin: 0 0 24px 0;
+}
+
+.status-value {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #100E1B;
+    margin-bottom: 16px;
+}
+
+.status-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #D4D0E7;
+    border-radius: 4px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+}
+
+.status-progress {
+    position: absolute;
+    height: 100%;
+    width: 85%; /* Статус "Передано в деканат" - 85% прогресса */
+    left: 0;
+    top: 0;
+    background-color: #3B19E6;
+    border-radius: 4px;
+}
+
+.status-info {
+    margin-top: 32px;
+}
+
+.status-info h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    color: #100E1B;
+    margin: 0 0 16px 0;
+}
+
+.status-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px 0;
+}
+
+.status-info li {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #100E1B;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.support-info {
+    margin-top: 48px;
+}
+
+.contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.contact-info p {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: #000000;
+    margin: 0;
+}
+
+.contact-info a {
+    color: #6A78F8;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Фоновые элементы и декорация */
+.background-decoration {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.background-decoration::before {
+    content: '';
+    position: absolute;
+    left: -10%;
+    top: -10%;
+    width: 120%;
+    height: 120%;
+    background: linear-gradient(to bottom, rgba(103, 114, 214, 0.57), rgba(0, 0, 0, 1));
+    opacity: 0.1;
+    z-index: -2;
+}
+
+.university-title {
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+    font-family: 'Prosto One', cursive;
+    font-weight: 400;
+    font-size: 64px;
+    color: #0019FF;
+    opacity: 0.1;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .apply-form, .status-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .status-form .submit-button {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .page-title {
+        font-size: 28px;
+    }
+    
+    .applicant-tag {
+        font-size: 18px;
+    }
+    
+    .status-title {
+        font-size: 28px;
+    }
+    
+    .status-value {
+        font-size: 20px;
+    }
+    
+    .status-info h3 {
+        font-size: 20px;
+    }
+    
+    .status-info li {
+        font-size: 16px;
+    }
+    
+    .support-info {
+        margin-top: 32px;
+    }
+    
+    .contact-info p {
+        font-size: 16px;
+    }
+    
+    .submit-button {
+        font-size: 24px;
+    }
+    
+    .university-title {
+        font-size: 40px;
+    }
+} 

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Статус заявления</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link rel="stylesheet" href="../../assets/applicant.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@300;400;500;600;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Гость</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="../login-page.html" id="loginBtn">Вход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Абитуриентам</div>
+                    <a href="apply.html" class="nav-item">
+                        <img src="../../assets/icons/document.svg" alt="Подать заявление" class="nav-icon">
+                        Подать заявление
+                    </a>
+                    <a href="status.html" class="nav-item active">
+                        <img src="../../assets/icons/status.svg" alt="Статус заявления" class="nav-icon">
+                        Статус заявления
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Статус заявления</h1>
+                    <div class="applicant-tag">/АБИТУРИЕНТ</div>
+                </div>
+                
+                <div class="check-status-container">
+                    <form id="statusForm" class="status-form">
+                        <div class="form-group">
+                            <label for="fullname">ФИО</label>
+                            <input type="text" id="fullname" name="fullname" placeholder="Введите полное имя" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birthdate">Дата рождения</label>
+                            <input type="date" id="birthdate" name="birthdate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="passport">Номер и серия паспорта</label>
+                            <input type="text" id="passport" name="passport" placeholder="0000 000000" required>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Посмотреть статус</button>
+                    </form>
+                    
+                    <div id="statusResult" class="status-result hidden">
+                        <h2 class="status-title">Статус заявления</h2>
+                        <div class="status-value">Передано в деканат</div>
+                        
+                        <div class="status-bar">
+                            <div class="status-progress"></div>
+                        </div>
+                        
+                        <div class="status-info">
+                            <h3>Расшифровка статусов:</h3>
+                            <ul>
+                                <li>Принято к рассмотрению - заявление принято и передано на проверку</li>
+                                <li>В обработке - заявление проверяется</li>
+                                <li>Передано в деканат - заявление прошло проверку и передано в деканат</li>
+                                <li>Принято - заявление принято, далее вы увидите себя в конкурсных списках</li>
+                            </ul>
+                            
+                            <div class="support-info">
+                                <h3>Появились вопросы? Свяжитесь с приемной комиссией!</h3>
+                                <div class="contact-info">
+                                    <p>Почта: <a href="mailto:help@superuniver.com">help@superuniver.com</a></p>
+                                    <p>Телефон: <a href="tel:+74952223333">+7 (495) 222-33-33</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат. Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <div class="background-decoration">
+        <div class="university-title">Виртуальный деканат</div>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/applicant.js"></script>
+</body>
+</html> 
