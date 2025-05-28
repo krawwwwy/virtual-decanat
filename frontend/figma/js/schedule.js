@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Переключение между видами расписания (день/неделя/месяц)
+    // Переключение между видами расписания (день/неделя/календарь)
     const tabs = document.querySelectorAll('.tab');
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
@@ -18,12 +18,20 @@ document.addEventListener('DOMContentLoaded', function() {
             // Добавляем активный класс текущему табу
             this.classList.add('active');
             
-            // В реальном приложении здесь был бы запрос к API для загрузки соответствующего вида расписания
-            showNotification(`Переключено на вид: ${this.textContent}`);
+            // Получаем вид расписания
+            const view = this.dataset.view;
+            
+            // Скрываем все виды и показываем выбранный
+            document.querySelectorAll('.schedule-view').forEach(v => {
+                v.classList.remove('active-view');
+            });
+            document.querySelector(`.${view}-view`).classList.add('active-view');
+            
+            showNotification(`Вид расписания: ${this.textContent}`);
         });
     });
 
-    // Обработка кнопки "Сегодня"
+    // Обработка кнопки "Сегодня" в дневном виде
     const todayButton = document.querySelector('.today-button');
     if (todayButton) {
         todayButton.addEventListener('click', function() {
@@ -33,22 +41,208 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 hideLoading();
                 showNotification('Расписание на сегодня загружено');
+                
+                // Переключаем на сегодняшний день (28 мая)
+                document.querySelector('.day-view .current-date').textContent = 'Вторник, 28 мая';
             }, 800);
         });
     }
 
-    // Обработка кнопки "Завтра"
-    const tomorrowButton = document.querySelector('.tomorrow-button');
-    if (tomorrowButton) {
-        tomorrowButton.addEventListener('click', function() {
+    // Обработка кнопки "Текущая неделя" в недельном виде
+    const thisWeekButton = document.querySelector('.this-week-button');
+    if (thisWeekButton) {
+        thisWeekButton.addEventListener('click', function() {
             showLoading();
             
             // Имитация запроса к API
             setTimeout(() => {
                 hideLoading();
-                showNotification('Расписание на завтра загружено');
+                showNotification('Расписание на текущую неделю загружено');
+                
+                // Переключаем на текущую неделю
+                document.querySelector('.week-title').textContent = '27 мая - 2 июня';
+                
+                // Подсвечиваем активный день (28 мая - вторник)
+                document.querySelectorAll('.week-day').forEach(day => {
+                    day.classList.remove('active');
+                    day.querySelector('.day-indicator').classList.remove('active');
+                });
+                const activeDay = document.querySelector('.week-day[data-date="28.05"]');
+                activeDay.classList.add('active');
+                activeDay.querySelector('.day-indicator').classList.add('active');
+                
+                // Показываем расписание на активный день
+                showDaySchedule('28.05');
             }, 800);
         });
+    }
+
+    // Обработка выбора дня в недельном виде
+    const weekDays = document.querySelectorAll('.week-day');
+    weekDays.forEach(day => {
+        day.addEventListener('click', function() {
+            // Убираем активный класс у всех дней
+            weekDays.forEach(d => {
+                d.classList.remove('active');
+                d.querySelector('.day-indicator').classList.remove('active');
+            });
+            
+            // Добавляем активный класс текущему дню
+            this.classList.add('active');
+            this.querySelector('.day-indicator').classList.add('active');
+            
+            // Показываем расписание на выбранный день
+            const dateStr = this.dataset.date;
+            showDaySchedule(dateStr);
+        });
+    });
+
+    /**
+     * Показать расписание для выбранного дня в недельном виде
+     */
+    function showDaySchedule(dateStr) {
+        showLoading();
+        
+        // Имитация загрузки
+        setTimeout(() => {
+            hideLoading();
+            
+            // Скрываем все расписания
+            document.querySelectorAll('.week-schedule .schedule-list').forEach(list => {
+                list.style.display = 'none';
+            });
+            
+            // Скрываем сообщение о пустом дне
+            document.querySelector('.empty-day-message').style.display = 'none';
+            
+            // Если есть расписание на этот день, показываем его
+            const scheduleList = document.querySelector(`.week-schedule .schedule-list[data-date="${dateStr}"]`);
+            if (scheduleList) {
+                scheduleList.style.display = 'flex';
+                showNotification(`Расписание на ${dateStr} загружено`);
+            } else {
+                // Если нет расписания, показываем сообщение
+                document.querySelector('.empty-day-message').style.display = 'flex';
+                showNotification(`На ${dateStr} занятия отсутствуют`);
+            }
+        }, 400);
+    }
+
+    // Обработка кнопок в календарном виде
+    const calendarToday = document.querySelector('.calendar-today');
+    if (calendarToday) {
+        calendarToday.addEventListener('click', function() {
+            showLoading();
+            
+            // Имитация запроса к API
+            setTimeout(() => {
+                hideLoading();
+                
+                // Переключаем на сегодняшний день (28 мая)
+                showCalendarDate('28');
+                showNotification('Календарь на текущий месяц загружен');
+            }, 800);
+        });
+    }
+
+    // Обработка кнопок навигации по календарю
+    const calendarPrev = document.querySelector('.calendar-prev');
+    const calendarNext = document.querySelector('.calendar-next');
+    
+    if (calendarPrev) {
+        calendarPrev.addEventListener('click', function() {
+            showLoading();
+            
+            // Имитация запроса к API
+            setTimeout(() => {
+                hideLoading();
+                document.querySelector('.calendar-title').textContent = 'Апрель 2025';
+                showNotification('Загружен предыдущий месяц');
+            }, 800);
+        });
+    }
+    
+    if (calendarNext) {
+        calendarNext.addEventListener('click', function() {
+            showLoading();
+            
+            // Имитация запроса к API
+            setTimeout(() => {
+                hideLoading();
+                document.querySelector('.calendar-title').textContent = 'Июнь 2025';
+                showNotification('Загружен следующий месяц');
+            }, 800);
+        });
+    }
+
+    // Обработка выбора дня в календаре
+    const calendarDays = document.querySelectorAll('.calendar-day');
+    calendarDays.forEach(day => {
+        day.addEventListener('click', function() {
+            // Проверяем, не принадлежит ли день к другому месяцу
+            if (this.classList.contains('prev-month') || this.classList.contains('next-month')) {
+                showNotification('Выберите день текущего месяца');
+                return;
+            }
+            
+            // Убираем активный класс у всех дней
+            calendarDays.forEach(d => d.classList.remove('active-day'));
+            
+            // Добавляем активный класс текущему дню
+            this.classList.add('active-day');
+            
+            // Показываем расписание на выбранный день
+            const day = this.textContent;
+            showCalendarDate(day);
+        });
+    });
+
+    /**
+     * Показать расписание на выбранную дату в календаре
+     */
+    function showCalendarDate(day) {
+        showLoading();
+        
+        // Имитация загрузки
+        setTimeout(() => {
+            hideLoading();
+            
+            // Выделяем активный день
+            calendarDays.forEach(d => d.classList.remove('active-day'));
+            const selectedDay = Array.from(calendarDays).find(d => 
+                !d.classList.contains('prev-month') && 
+                !d.classList.contains('next-month') && 
+                d.textContent === day
+            );
+            
+            if (selectedDay) {
+                selectedDay.classList.add('active-day');
+            }
+            
+            // Если день содержит занятия (16, 24, 30 мая и 28 мая)
+            if (['16', '24', '28', '30'].includes(day)) {
+                // Обновляем заголовок для выбранного дня
+                let dayName = 'день';
+                
+                if (day === '16') dayName = 'Четверг, 16 мая';
+                else if (day === '24') dayName = 'Пятница, 24 мая';
+                else if (day === '28') dayName = 'Вторник, 28 мая';
+                else if (day === '30') dayName = 'Четверг, 30 мая';
+                
+                document.querySelector('.selected-day-title').textContent = dayName;
+                
+                // Показываем занятия (для демо всегда показываем одни и те же)
+                document.querySelector('.selected-day .schedule-list').style.display = 'flex';
+                
+                if (day === '30') {
+                    showNotification('На этот день есть только одно занятие: Физика');
+                }
+            } else {
+                // Если нет занятий на этот день
+                document.querySelector('.selected-day-title').textContent = `${day} мая - занятия отсутствуют`;
+                document.querySelector('.selected-day .schedule-list').style.display = 'none';
+            }
+        }, 400);
     }
 
     // Обработка кнопок деталей занятия
@@ -235,11 +429,4 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingOverlay.remove();
         }
     }
-
-    // Инициализация датапикера для выбора даты (заглушка)
-    document.querySelectorAll('.current-date').forEach(dateElement => {
-        dateElement.addEventListener('click', function() {
-            showNotification('Выберите дату (функциональность в разработке)');
-        });
-    });
 }); 

@@ -57,7 +57,16 @@
     background-color: #F0F0F5;
 }
 
-/* Дата и кнопка "Сегодня" */
+/* Общие стили для разных представлений расписания */
+.schedule-view {
+    display: none;
+}
+
+.schedule-view.active-view {
+    display: block;
+}
+
+/* Дата и кнопка "Сегодня" для дневного вида */
 .date-header {
     display: flex;
     justify-content: space-between;
@@ -78,7 +87,7 @@
     margin: 0;
 }
 
-.today-button, .tomorrow-button {
+.today-button, .tomorrow-button, .this-week-button, .calendar-today {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-size: 24px;
@@ -91,7 +100,7 @@
     transition: background-color 0.3s;
 }
 
-.today-button:hover, .tomorrow-button:hover {
+.today-button:hover, .tomorrow-button:hover, .this-week-button:hover, .calendar-today:hover {
     background-color: #E4E4F0;
 }
 
@@ -211,7 +220,7 @@
 }
 
 /* Пустое расписание */
-.empty-schedule {
+.empty-schedule, .empty-day-message {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -221,11 +230,218 @@
     border: 1px dashed #DBDBE5;
 }
 
-.empty-schedule p {
+.empty-schedule p, .empty-day-message p {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 20px;
     color: #636387;
+}
+
+/* Недельное представление */
+.week-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.week-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #121217;
+    margin: 0;
+}
+
+.week-days {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 8px;
+}
+
+.week-day {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #F0F0F5;
+}
+
+.week-day:hover {
+    background-color: #E8EDF2;
+}
+
+.week-day.active {
+    background-color: #E8EDF2;
+    border: 2px solid #3B19E6;
+}
+
+.week-day.weekend {
+    background-color: #F9F9FF;
+}
+
+.day-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #636387;
+    margin-bottom: 8px;
+}
+
+.day-number {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #121217;
+    margin-bottom: 8px;
+}
+
+.day-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.day-indicator.active {
+    background-color: #3B19E6;
+}
+
+/* Календарное представление */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.calendar-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #121217;
+    margin: 0;
+}
+
+.calendar-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.calendar-prev, .calendar-next {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.calendar-prev:hover, .calendar-next:hover {
+    background-color: #F0F0F5;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.calendar-weekday {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #636387;
+    text-align: center;
+    padding: 8px;
+}
+
+.calendar-day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #121217;
+    cursor: pointer;
+    position: relative;
+    background-color: #F0F0F5;
+    transition: background-color 0.3s;
+}
+
+.calendar-day:hover {
+    background-color: #E8EDF2;
+}
+
+.calendar-day.active-day {
+    background-color: #E8EDF2;
+    border: 2px solid #3B19E6;
+    font-weight: 700;
+}
+
+.calendar-day.prev-month, .calendar-day.next-month {
+    color: #C5C5D3;
+    background-color: #F9F9FF;
+}
+
+.calendar-day.weekend {
+    background-color: #F9F9FF;
+    color: #636387;
+}
+
+.calendar-day.with-classes::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #3B19E6;
+    border-radius: 50%;
+    bottom: 5px;
+}
+
+.calendar-legend {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #636387;
+}
+
+.legend-mark {
+    width: 6px;
+    height: 6px;
+    background-color: #3B19E6;
+    border-radius: 50%;
+}
+
+.selected-day {
+    margin-top: 24px;
+}
+
+.selected-day-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #121217;
+    margin-bottom: 16px;
 }
 
 /* Адаптивные стили */
@@ -250,7 +466,7 @@
         font-size: 16px;
     }
     
-    .date-header {
+    .date-header, .week-header, .calendar-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
@@ -268,5 +484,23 @@
     
     .subject-title, .subject-time {
         font-size: 18px;
+    }
+    
+    .week-days {
+        overflow-x: auto;
+        padding-bottom: 16px;
+    }
+    
+    .week-day {
+        min-width: 70px;
+    }
+    
+    .calendar-grid {
+        gap: 4px;
+    }
+    
+    .calendar-day {
+        height: 40px;
+        font-size: 16px;
     }
 } 

@@ -68,109 +68,326 @@
                 <div class="schedule-content">
                     <!-- Переключатель видов расписания -->
                     <div class="schedule-tabs">
-                        <div class="tab active">День</div>
-                        <div class="tab">Неделя</div>
-                        <div class="tab">Месяц</div>
+                        <div class="tab active" data-view="day">День</div>
+                        <div class="tab" data-view="week">Неделя</div>
+                        <div class="tab" data-view="calendar">Календарь</div>
                     </div>
 
-                    <!-- Дата и кнопка "Сегодня" -->
-                    <div class="date-header">
-                        <h2 class="current-date">Понедельник, Февраль 21</h2>
-                        <button class="today-button">Сегодня</button>
+                    <!-- Вид расписания: День -->
+                    <div class="schedule-view day-view active-view">
+                        <!-- Дата и кнопка "Сегодня" -->
+                        <div class="date-header">
+                            <h2 class="current-date">Среда, 28 мая</h2>
+                            <button class="today-button">Сегодня</button>
+                        </div>
+
+                        <!-- Расписание на день -->
+                        <div class="schedule-list">
+                            <!-- Занятие 1 -->
+                            <div class="schedule-item">
+                                <div class="schedule-item-left">
+                                    <div class="subject-icon math-icon">
+                                        <!-- Иконка будет задана через CSS -->
+                                    </div>
+                                    <div class="subject-info">
+                                        <h3 class="subject-title">Дискретная математика</h3>
+                                        <span class="subject-time">9:00 - 10:30</span>
+                                    </div>
+                                </div>
+                                <div class="schedule-actions">
+                                    <button class="details-button">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Занятие 2 -->
+                            <div class="schedule-item">
+                                <div class="schedule-item-left">
+                                    <div class="subject-icon geometry-icon">
+                                        <!-- Иконка будет задана через CSS -->
+                                    </div>
+                                    <div class="subject-info">
+                                        <h3 class="subject-title">Начертательная геометрия</h3>
+                                        <span class="subject-time">11:00 - 12:30</span>
+                                    </div>
+                                </div>
+                                <div class="schedule-actions">
+                                    <button class="details-button">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Занятие 3 -->
+                            <div class="schedule-item">
+                                <div class="schedule-item-left">
+                                    <div class="subject-icon ml-icon">
+                                        <!-- Иконка будет задана через CSS -->
+                                    </div>
+                                    <div class="subject-info">
+                                        <h3 class="subject-title">Машинное обучение</h3>
+                                        <span class="subject-time">13:00 - 14:30</span>
+                                    </div>
+                                </div>
+                                <div class="schedule-actions">
+                                    <button class="details-button">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Занятие 4 -->
+                            <div class="schedule-item">
+                                <div class="schedule-item-left">
+                                    <div class="subject-icon physics-icon">
+                                        <!-- Иконка будет задана через CSS -->
+                                    </div>
+                                    <div class="subject-info">
+                                        <h3 class="subject-title">Лабораторная работа Физика</h3>
+                                        <span class="subject-time">15:00 - 16:30</span>
+                                    </div>
+                                </div>
+                                <div class="schedule-actions">
+                                    <button class="details-button">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Расписание на день -->
-                    <div class="schedule-list">
-                        <!-- Занятие 1 -->
-                        <div class="schedule-item">
-                            <div class="schedule-item-left">
-                                <div class="subject-icon math-icon">
-                                    <!-- Иконка будет задана через CSS -->
-                                </div>
-                                <div class="subject-info">
-                                    <h3 class="subject-title">Дискретная математика</h3>
-                                    <span class="subject-time">9:00 AM - 10:30 AM</span>
-                                </div>
+                    <!-- Вид расписания: Неделя -->
+                    <div class="schedule-view week-view">
+                        <div class="week-header">
+                            <h2 class="week-title">27 мая - 2 июня</h2>
+                            <button class="this-week-button">Текущая неделя</button>
+                        </div>
+                        
+                        <div class="week-days">
+                            <div class="week-day" data-date="27.05">
+                                <div class="day-name">Пн</div>
+                                <div class="day-number">27</div>
+                                <div class="day-indicator"></div>
                             </div>
-                            <div class="schedule-actions">
-                                <button class="details-button">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
+                            <div class="week-day active" data-date="28.05">
+                                <div class="day-name">Вт</div>
+                                <div class="day-number">28</div>
+                                <div class="day-indicator active"></div>
+                            </div>
+                            <div class="week-day" data-date="29.05">
+                                <div class="day-name">Ср</div>
+                                <div class="day-number">29</div>
+                                <div class="day-indicator"></div>
+                            </div>
+                            <div class="week-day" data-date="30.05">
+                                <div class="day-name">Чт</div>
+                                <div class="day-number">30</div>
+                                <div class="day-indicator"></div>
+                            </div>
+                            <div class="week-day" data-date="31.05">
+                                <div class="day-name">Пт</div>
+                                <div class="day-number">31</div>
+                                <div class="day-indicator"></div>
+                            </div>
+                            <div class="week-day weekend" data-date="01.06">
+                                <div class="day-name">Сб</div>
+                                <div class="day-number">1</div>
+                                <div class="day-indicator"></div>
+                            </div>
+                            <div class="week-day weekend" data-date="02.06">
+                                <div class="day-name">Вс</div>
+                                <div class="day-number">2</div>
+                                <div class="day-indicator"></div>
                             </div>
                         </div>
-
-                        <!-- Занятие 2 -->
-                        <div class="schedule-item">
-                            <div class="schedule-item-left">
-                                <div class="subject-icon geometry-icon">
-                                    <!-- Иконка будет задана через CSS -->
+                        
+                        <div class="week-schedule">
+                            <div class="schedule-list" data-date="28.05">
+                                <!-- Занятие 1 -->
+                                <div class="schedule-item">
+                                    <div class="schedule-item-left">
+                                        <div class="subject-icon math-icon">
+                                            <!-- Иконка будет задана через CSS -->
+                                        </div>
+                                        <div class="subject-info">
+                                            <h3 class="subject-title">Дискретная математика</h3>
+                                            <span class="subject-time">9:00 - 10:30</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-actions">
+                                        <button class="details-button">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="subject-info">
-                                    <h3 class="subject-title">Начертательная геометрия</h3>
-                                    <span class="subject-time">11:00 AM - 12:30 PM</span>
+                                
+                                <!-- Другие занятия вторника, такие же как в дневном виде -->
+                                <div class="schedule-item">
+                                    <div class="schedule-item-left">
+                                        <div class="subject-icon geometry-icon"></div>
+                                        <div class="subject-info">
+                                            <h3 class="subject-title">Начертательная геометрия</h3>
+                                            <span class="subject-time">11:00 - 12:30</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-actions">
+                                        <button class="details-button">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="schedule-actions">
-                                <button class="details-button">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
+                            
+                            <div class="schedule-list" data-date="30.05" style="display: none;">
+                                <!-- Занятие четверга -->
+                                <div class="schedule-item">
+                                    <div class="schedule-item-left">
+                                        <div class="subject-icon physics-icon"></div>
+                                        <div class="subject-info">
+                                            <h3 class="subject-title">Физика</h3>
+                                            <span class="subject-time">9:00 - 10:30</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-actions">
+                                        <button class="details-button">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Пустые расписания для других дней недели будут показываться по клику -->
+                            <div class="empty-day-message" style="display: none;">
+                                <p>На выбранный день расписание отсутствует</p>
                             </div>
                         </div>
-
-                        <!-- Занятие 3 -->
-                        <div class="schedule-item">
-                            <div class="schedule-item-left">
-                                <div class="subject-icon ml-icon">
-                                    <!-- Иконка будет задана через CSS -->
-                                </div>
-                                <div class="subject-info">
-                                    <h3 class="subject-title">Машинное обучение</h3>
-                                    <span class="subject-time">1:00 PM - 2:30 PM</span>
-                                </div>
-                            </div>
-                            <div class="schedule-actions">
-                                <button class="details-button">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Занятие 4 -->
-                        <div class="schedule-item">
-                            <div class="schedule-item-left">
-                                <div class="subject-icon physics-icon">
-                                    <!-- Иконка будет задана через CSS -->
-                                </div>
-                                <div class="subject-info">
-                                    <h3 class="subject-title">Лабораторная работа Физика</h3>
-                                    <span class="subject-time">3:00 PM - 4:30 PM</span>
-                                </div>
-                            </div>
-                            <div class="schedule-actions">
-                                <button class="details-button">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Следующий день -->
-                    <div class="date-header next-day">
-                        <h2 class="current-date">Вторник, Февраль 22</h2>
-                        <button class="tomorrow-button">Завтра</button>
                     </div>
                     
-                    <!-- Пустое расписание на следующий день -->
-                    <div class="empty-schedule">
-                        <p>Нет занятий на этот день</p>
+                    <!-- Вид расписания: Календарь -->
+                    <div class="schedule-view calendar-view">
+                        <div class="calendar-header">
+                            <h2 class="calendar-title">Май 2025</h2>
+                            <div class="calendar-controls">
+                                <button class="calendar-prev" title="Предыдущий месяц">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15 18L9 12L15 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <button class="calendar-today" title="Сегодня">Сегодня</button>
+                                <button class="calendar-next" title="Следующий месяц">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="calendar-grid">
+                            <!-- Дни недели -->
+                            <div class="calendar-weekday">Пн</div>
+                            <div class="calendar-weekday">Вт</div>
+                            <div class="calendar-weekday">Ср</div>
+                            <div class="calendar-weekday">Чт</div>
+                            <div class="calendar-weekday">Пт</div>
+                            <div class="calendar-weekday">Сб</div>
+                            <div class="calendar-weekday">Вс</div>
+                            
+                            <!-- Первая неделя месяца -->
+                            <div class="calendar-day prev-month">29</div>
+                            <div class="calendar-day prev-month">30</div>
+                            <div class="calendar-day">1</div>
+                            <div class="calendar-day">2</div>
+                            <div class="calendar-day">3</div>
+                            <div class="calendar-day weekend">4</div>
+                            <div class="calendar-day weekend">5</div>
+                            
+                            <!-- Вторая неделя -->
+                            <div class="calendar-day">6</div>
+                            <div class="calendar-day">7</div>
+                            <div class="calendar-day">8</div>
+                            <div class="calendar-day">9</div>
+                            <div class="calendar-day">10</div>
+                            <div class="calendar-day weekend">11</div>
+                            <div class="calendar-day weekend">12</div>
+                            
+                            <!-- Третья неделя -->
+                            <div class="calendar-day">13</div>
+                            <div class="calendar-day">14</div>
+                            <div class="calendar-day">15</div>
+                            <div class="calendar-day with-classes">16</div>
+                            <div class="calendar-day">17</div>
+                            <div class="calendar-day weekend">18</div>
+                            <div class="calendar-day weekend">19</div>
+                            
+                            <!-- Четвертая неделя -->
+                            <div class="calendar-day">20</div>
+                            <div class="calendar-day">21</div>
+                            <div class="calendar-day">22</div>
+                            <div class="calendar-day">23</div>
+                            <div class="calendar-day with-classes">24</div>
+                            <div class="calendar-day weekend">25</div>
+                            <div class="calendar-day weekend">26</div>
+                            
+                            <!-- Пятая неделя -->
+                            <div class="calendar-day">27</div>
+                            <div class="calendar-day active-day">28</div>
+                            <div class="calendar-day">29</div>
+                            <div class="calendar-day with-classes">30</div>
+                            <div class="calendar-day">31</div>
+                            <div class="calendar-day next-month weekend">1</div>
+                            <div class="calendar-day next-month weekend">2</div>
+                        </div>
+                        
+                        <!-- Примечание что дни с занятиями отмечены -->
+                        <div class="calendar-legend">
+                            <div class="legend-item">
+                                <div class="legend-mark"></div>
+                                <span>Есть занятия</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Выбранный день из календаря -->
+                        <div class="selected-day">
+                            <h3 class="selected-day-title">Вторник, 28 мая</h3>
+                            
+                            <!-- Занятия на выбранный день -->
+                            <div class="schedule-list">
+                                <!-- Занятие 1 -->
+                                <div class="schedule-item">
+                                    <div class="schedule-item-left">
+                                        <div class="subject-icon math-icon"></div>
+                                        <div class="subject-info">
+                                            <h3 class="subject-title">Дискретная математика</h3>
+                                            <span class="subject-time">9:00 - 10:30</span>
+                                        </div>
+                                    </div>
+                                    <div class="schedule-actions">
+                                        <button class="details-button">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9 18L15 12L9 6" stroke="#121217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Остальные занятия аналогичны дневному виду -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
