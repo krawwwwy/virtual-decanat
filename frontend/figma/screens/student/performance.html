@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Моя успеваемость</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link rel="stylesheet" href="../../assets/performance.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400;500;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Загрузка...</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Меню</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="../../assets/icons/home.svg" alt="Главная" class="nav-icon">
+                        Главная
+                    </a>
+                    <a href="performance.html" class="nav-item active">
+                        <img src="../../assets/icons/performance.svg" alt="Успеваемость" class="nav-icon">
+                        Моя успеваемость
+                    </a>
+                    <a href="schedule.html" class="nav-item">
+                        <img src="../../assets/icons/schedule.svg" alt="Расписание" class="nav-icon">
+                        Расписание
+                    </a>
+                    <a href="clubs.html" class="nav-item">
+                        <img src="../../assets/icons/clubs.svg" alt="Студенческие объединения" class="nav-icon">
+                        Студенческие объединения
+                    </a>
+                    <a href="support.html" class="nav-item">
+                        <img src="../../assets/icons/support.svg" alt="Социальная поддержка" class="nav-icon">
+                        Социальная поддержка
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Моя успеваемость</h1>
+                    <div class="student-tag">/СТУДЕНТ</div>
+                </div>
+                
+                <div class="dashboard-content">
+                    <!-- Рейтинг по предметам -->
+                    <h2>Рейтинг по предметам</h2>
+                    <div class="card">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Предмет</th>
+                                    <th>Рейтинг</th>
+                                    <th>Прогресс</th>
+                                    <th>Посещаемость</th>
+                                    <th>Сделано вовремя</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Дискретная математика</td>
+                                    <td class="rating">45.00</td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 100%"></div>
+                                        </div>
+                                        <span>100</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 100%"></div>
+                                        </div>
+                                        <span>100</span>
+                                    </td>
+                                    <td>
+                                        <span class="tag-done">Да</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Физика</td>
+                                    <td class="rating">45.00</td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 80%"></div>
+                                        </div>
+                                        <span>80</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 95%"></div>
+                                        </div>
+                                        <span>95</span>
+                                    </td>
+                                    <td>
+                                        <span class="tag-done">Да</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Начертательная геометрия</td>
+                                    <td class="rating">35.00</td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 60%"></div>
+                                        </div>
+                                        <span>60</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 90%"></div>
+                                        </div>
+                                        <span>90</span>
+                                    </td>
+                                    <td>
+                                        <span class="tag-not-done">Нет</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Прикладная физкультура</td>
+                                    <td class="rating">54.00</td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 100%"></div>
+                                        </div>
+                                        <span>100</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 100%"></div>
+                                        </div>
+                                        <span>100</span>
+                                    </td>
+                                    <td>
+                                        <span class="tag-done">Да</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Машинное обучение</td>
+                                    <td class="rating">45.00</td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 80%"></div>
+                                        </div>
+                                        <span>80</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 95%"></div>
+                                        </div>
+                                        <span>95</span>
+                                    </td>
+                                    <td>
+                                        <span class="tag-done">Да</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Рейтинговая позиция в группе -->
+                    <div class="card rating-position">
+                        <h3>Ваша рейтинговая позиция в группе</h3>
+                        <p>Посмотреть место в группе по списку.</p>
+                        <button class="primary-button">Рассчитать рейтинг</button>
+                    </div>
+
+                    <!-- Посещаемость -->
+                    <h2>Посещаемость</h2>
+                    <h3>Хорошая посещаемость</h3>
+                    <div class="attendance-progress">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <p class="attendance-note">Вы отсутствовали 2 раза в этом семестре.</p>
+                    <button class="primary-button">Процент посещаемости</button>
+
+                    <!-- Оценки по предметам -->
+                    <h2>Оценки по предметам</h2>
+                    <div class="card">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Предмет</th>
+                                    <th>Промежуточные баллы</th>
+                                    <th>Итоговая оценка</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Дискретная математика</td>
+                                    <td class="grade">34.00</td>
+                                    <td class="grade">42.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Физика</td>
+                                    <td class="grade">45.00</td>
+                                    <td class="grade">45.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Начертательная геометрия</td>
+                                    <td class="grade">43.00</td>
+                                    <td class="grade">45.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Прикладная физкультура</td>
+                                    <td class="grade">54.00</td>
+                                    <td class="grade">54.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Машинное обучение</td>
+                                    <td class="grade">49.00</td>
+                                    <td class="grade">45.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="primary-button">Посмотреть оценки</button>
+
+                    <!-- Задолженности -->
+                    <h2>Задолженности</h2>
+                    <div class="card">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Предмет</th>
+                                    <th>Вид задолженности</th>
+                                    <th>Крайний срок</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Дискретная математика</td>
+                                    <td>Домашнее задание</td>
+                                    <td>15.02.2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Физика</td>
+                                    <td>Лабораторная работа</td>
+                                    <td>21.03.2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Машинное обучение</td>
+                                    <td>Реферат</td>
+                                    <td>01.04.2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="primary-button">Посмотреть задолженности</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат. Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/auth-api.js"></script>
+    <script src="../../js/dashboard.js"></script>
+    <script src="../../js/performance.js"></script>
+</body>
+</html> 

@@ -121,10 +121,10 @@ body {
 
 /* Стили для боковой панели */
 .sidebar {
-    width: 250px;
+    width: 280px;
     background-color: #fff;
     box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
-    padding: 20px 0;
+    padding: 20px;
 }
 
 .sidebar-nav {
@@ -132,12 +132,32 @@ body {
     flex-direction: column;
 }
 
+.menu-title {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #0D141C;
+    margin-bottom: 20px;
+}
+
 .nav-item {
-    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
     color: #333;
     text-decoration: none;
     transition: background-color 0.2s;
-    border-left: 3px solid transparent;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
 }
 
 .nav-item:hover {
@@ -145,8 +165,7 @@ body {
 }
 
 .nav-item.active {
-    background-color: #f0f0f0;
-    border-left-color: #3B82F6;
+    background-color: #E8EDF2;
     font-weight: 500;
 }
 
@@ -158,6 +177,9 @@ body {
 }
 
 .content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
 }
 
@@ -165,6 +187,15 @@ body {
     font-size: 24px;
     font-weight: 600;
     color: #1F2937;
+}
+
+.student-tag {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: #4E7397;
+    background-color: transparent;
+    padding: 6px 12px;
 }
 
 .dashboard-content {
@@ -219,7 +250,7 @@ body {
 .card-button {
     display: inline-block;
     padding: 8px 16px;
-    background-color: #3B82F6;
+    background-color: #3B19E6;
     color: #fff;
     border-radius: 4px;
     text-decoration: none;
@@ -254,7 +285,7 @@ body {
 }
 
 .footer-link:hover {
-    color: #3B82F6;
+    color: #3B19E6;
 }
 
 .copyright {
