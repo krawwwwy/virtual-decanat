@@ -56,6 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Лог для отладки
                 console.log('Отправляемые данные формы:', formDataObj);
                 console.log('Отправляемые данные запроса:', requestData);
+            } else if (role === 'teacher') {
+                requestData.department = formDataObj.department || "";
+                requestData.position = formDataObj.position || "";
+                requestData.degree = formDataObj.degree || "";
+                
+                // Лог для отладки
+                console.log('Отправляемые данные формы преподавателя:', formDataObj);
+                console.log('Отправляемые данные запроса преподавателя:', requestData);
             }
             
             // Отправка данных на сервер

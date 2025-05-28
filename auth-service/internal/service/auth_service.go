@@ -495,12 +495,34 @@ func (s *AuthServiceImpl) CompleteRegistration(ctx context.Context, req model.Co
 			return nil, fmt.Errorf("failed to find teacher: %w", err)
 		}
 
+		// Парсим дату рождения
+		var birthDate time.Time
+		if req.BirthDate != "" {
+			birthDate, err = time.Parse("2006-01-02", req.BirthDate)
+			if err != nil {
+				s.logger.Error("Failed to parse birth date", zap.Error(err))
+				return nil, fmt.Errorf("invalid birth date format: %w", err)
+			}
+		}
+
+		// Логирование полученных данных для отладки
+		s.logger.Info("Received teacher data",
+			zap.String("fio", req.FirstName + " " + req.MiddleName + " " + req.LastName),
+			zap.String("department", req.Department),
+			zap.String("position", req.Position),
+			zap.String("degree", req.Degree),
+			zap.String("birth_date", req.BirthDate),
+			zap.String("phone", req.Phone))
+
 		if teacher == nil {
 			// Создаем нового преподавателя
 			teacher = &model.Teacher{
 				UserID:     user.ID,
 				Department: req.Department,
 				Position:   req.Position,
+				Degree:     req.Degree,
+				BirthDate:  birthDate,
+				Phone:      req.Phone,
 			}
 			if err := s.userRepo.CreateTeacher(ctx, teacher); err != nil {
 				s.logger.Error("Failed to create teacher", zap.Error(err))
@@ -510,6 +532,10 @@ func (s *AuthServiceImpl) CompleteRegistration(ctx context.Context, req model.Co
 			// Обновляем существующего преподавателя
 			teacher.Department = req.Department
 			teacher.Position = req.Position
+			teacher.Degree = req.Degree
+			teacher.BirthDate = birthDate
+			teacher.Phone = req.Phone
+			
 			if err := s.userRepo.UpdateTeacher(ctx, teacher); err != nil {
 				s.logger.Error("Failed to update teacher", zap.Error(err))
 				return nil, fmt.Errorf("failed to update teacher: %w", err)

@@ -56,6 +56,9 @@ CREATE TABLE IF NOT EXISTS auth.teachers (
     user_id INTEGER REFERENCES auth.users(id),
     department VARCHAR(100) NOT NULL,
     position VARCHAR(100) NOT NULL,
+    degree VARCHAR(100),
+    birth_date DATE,
+    phone VARCHAR(20),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

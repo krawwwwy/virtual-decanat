@@ -80,6 +80,9 @@ type Teacher struct {
 	User       *User     `json:"user,omitempty" gorm:"foreignKey:UserID"`
 	Department string    `json:"department" gorm:"not null"`
 	Position   string    `json:"position" gorm:"not null"`
+	Degree     string    `json:"degree"`
+	BirthDate  time.Time `json:"birth_date"`
+	Phone      string    `json:"phone"`
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
 }

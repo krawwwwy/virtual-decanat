@@ -34,7 +34,6 @@ type CompleteRegistrationRequest struct {
 	Department   string `json:"department"`
 	Position     string `json:"position"`
 	Degree       string `json:"degree"`
-	Title        string `json:"title"`
 	
 	// Для сотрудника деканата
 	InternalPhone string `json:"internal_phone"`
