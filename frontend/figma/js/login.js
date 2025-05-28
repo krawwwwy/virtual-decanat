@@ -37,8 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Получаем информацию о пользователе
                 const userInfo = await window.authApi.getProfile(response.access_token);
                 
-                // Сохраняем роль пользователя
+                // Сохраняем данные пользователя
                 localStorage.setItem('userRole', userInfo.role);
+                localStorage.setItem('userInfo', JSON.stringify(userInfo));
                 
                 // Скрываем индикатор загрузки
                 hideLoading();
@@ -50,16 +51,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => {
                     switch (userInfo.role) {
                         case 'student':
-                            window.location.href = 'student/dashboard.html';
+                            window.location.href = '../screens/student/dashboard.html';
                             break;
                         case 'teacher':
-                            window.location.href = 'teacher/dashboard.html';
+                            window.location.href = '../screens/teacher/dashboard.html';
                             break;
                         case 'dean_office':
-                            window.location.href = 'staff/dashboard.html';
+                            window.location.href = '../screens/staff/dashboard.html';
                             break;
                         default:
-                            window.location.href = 'main-page.html';
+                            window.location.href = '../screens/main-page.html';
                     }
                 }, 1000);
             } catch (error) {

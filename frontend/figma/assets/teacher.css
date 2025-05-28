@@ -1,0 +1,414 @@
+/* Общие стили для личного кабинета преподавателя */
+:root {
+    --primary-color: #1A1AE5;
+    --secondary-color: #F0F0F5;
+    --text-primary: #121217;
+    --text-secondary: #636387;
+    --border-color: #DBDBE5;
+    --white: #FFFFFF;
+    --hover-bg: #E8EDF2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--white);
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Стили для верхней панели */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 40px;
+    border-bottom: 1px solid #E5E8EB;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.28;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.profile-name {
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+.profile-role {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    font-weight: 700;
+}
+
+/* Стили для основного контента */
+.main-content {
+    display: flex;
+    flex: 1;
+}
+
+/* Стили для бокового меню */
+.sidebar {
+    width: 280px;
+    border-right: 1px solid #E5E8EB;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 16px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+.nav-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.nav-item.active {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.sidebar-actions {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url('path_to_your_avatar');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Стили для контента страницы */
+.content-wrapper {
+    flex: 1;
+    display: flex;
+}
+
+.content {
+    flex: 1;
+    padding: 20px 24px;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+}
+
+.content-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.25;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    padding: 0 16px;
+    height: 48px;
+}
+
+.search-icon {
+    margin-right: 8px;
+}
+
+.search-input {
+    background: transparent;
+    border: none;
+    height: 48px;
+    width: 200px;
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+/* Стили для вкладок */
+.tabs-container {
+    display: flex;
+    gap: 32px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tab {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: 16px 0 13px;
+    cursor: pointer;
+}
+
+.tab.active {
+    color: var(--text-primary);
+    border-bottom: 3px solid var(--text-primary);
+}
+
+/* Стили для сетки дисциплин */
+.subjects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+}
+
+.subject-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.subject-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subject-info {
+    flex: 1;
+    padding-left: 16px;
+}
+
+.subject-title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
+.subject-lecturer {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.subject-actions {
+    display: flex;
+}
+
+.btn-icon {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Стили для боковой панели студентов */
+.students-sidebar {
+    width: 360px;
+    border-left: 1px solid #E5E8EB;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-title {
+    padding: 16px;
+    font-weight: 700;
+    font-size: 18px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.student-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.student-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    overflow: hidden;
+}
+
+.student-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.student-info {
+    flex: 1;
+    padding-left: 16px;
+}
+
+.student-name {
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+.student-grade {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Медиа запрос для адаптивности */
+@media (max-width: 1200px) {
+    .students-sidebar {
+        width: 300px;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #E5E8EB;
+    }
+    
+    .content-wrapper {
+        flex-direction: column;
+    }
+    
+    .students-sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #E5E8EB;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 12px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .header-right {
+        align-self: stretch;
+    }
+    
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .search-container {
+        width: 100%;
+    }
+    
+    .search-input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .subject-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .subject-actions {
+        align-self: flex-end;
+    }
+} 
