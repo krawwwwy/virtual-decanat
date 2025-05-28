@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Посещаемость</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link rel="stylesheet" href="../../assets/teacher.css">
+    <link rel="stylesheet" href="../../assets/teacher-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400;500;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Стили для страницы посещаемости */
+        .attendance-content {
+            padding: 20px 0;
+        }
+        
+        .attendance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .attendance-filter {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .filter-item {
+            padding: 8px 16px;
+            background-color: var(--secondary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .filter-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+        
+        .attendance-table th {
+            background-color: var(--secondary-color);
+            padding: 12px;
+            text-align: left;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+        }
+        
+        .attendance-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .attendance-table tr:hover {
+            background-color: rgba(240, 240, 245, 0.5);
+        }
+        
+        .check-column {
+            width: 60px;
+            text-align: center;
+        }
+        
+        .student-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .student-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .student-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .attendance-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .attendance-date {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .attendance-subject {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .subject-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .subject-icon img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .attendance-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .action-button {
+            padding: 8px 16px;
+            border-radius: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .save-button {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .cancel-button {
+            background-color: var(--secondary-color);
+        }
+        
+        .attendance-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background-color: #FFFFFF;
+            padding: 16px;
+            border-radius: 16px;
+            flex: 1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* Tabs */
+        .attendance-tabs {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tab {
+            padding: 12px 4px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        .tab.active {
+            color: var(--text-primary);
+            border-bottom: 3px solid var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Новикова Алина Сергеевна</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Главное меню</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="../../assets/icons/home.svg" alt="Домой" class="nav-icon">
+                        Домой
+                    </a>
+                    <a href="schedule.html" class="nav-item">
+                        <img src="../../assets/icons/schedule.svg" alt="Расписание" class="nav-icon">
+                        Расписание
+                    </a>
+                    <a href="attendance.html" class="nav-item active">
+                        <img src="../../assets/icons/performance.svg" alt="Посещаемость" class="nav-icon">
+                        Посещаемость
+                    </a>
+                    <a href="journal.html" class="nav-item">
+                        <img src="../../assets/icons/performance.svg" alt="Журнал" class="nav-icon">
+                        Журнал
+                    </a>
+                    <a href="groups.html" class="nav-item">
+                        <img src="../../assets/icons/groups.svg" alt="Студенты" class="nav-icon">
+                        Студенты
+                    </a>
+                    <a href="#" class="nav-item">
+                        <img src="../../assets/icons/settings.svg" alt="Настройки" class="nav-icon">
+                        Настройки
+                    </a>
+                </nav>
+                <div class="sidebar-button">
+                    <button class="primary-button">Добавить</button>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Посещаемость</h1>
+                    <div class="date-selector">
+                        <button class="date-button">26.05.2025</button>
+                    </div>
+                </div>
+                
+                <div class="attendance-content">
+                    <!-- Вкладки -->
+                    <div class="attendance-tabs">
+                        <div class="tab active" data-tab="today">Сегодня</div>
+                        <div class="tab" data-tab="history">История</div>
+                        <div class="tab" data-tab="stats">Статистика</div>
+                    </div>
+                    
+                    <!-- Фильтр групп -->
+                    <div class="attendance-header">
+                        <h2>Отметка посещаемости</h2>
+                        <div class="filter-selector">
+                            <select id="groupFilter" class="date-button">
+                                <option value="all">Все группы</option>
+                                <option value="mt101">МТ-101</option>
+                                <option value="mt102">МТ-102</option>
+                                <option value="mt201">МТ-201</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Фильтр по статусу -->
+                    <div class="attendance-filter">
+                        <div class="filter-item active">Все</div>
+                        <div class="filter-item">Присутствует</div>
+                        <div class="filter-item">Отсутствует</div>
+                        <div class="filter-item">По уважительной</div>
+                    </div>
+                    
+                    <!-- Информация о занятии -->
+                    <div class="attendance-subject">
+                        <div class="subject-icon">
+                            <img src="../../assets/images/teacher/math_icon.svg" alt="Математика">
+                        </div>
+                        <div>
+                            <div class="attendance-date">Прикладная математика (кабинет 102)</div>
+                            <div>10:00 - 11:00 | Группа: МТ-101</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Таблица посещаемости -->
+                    <table class="attendance-table">
+                        <thead>
+                            <tr>
+                                <th>Студент</th>
+                                <th class="check-column">Присутствует</th>
+                                <th class="check-column">Отсутствует</th>
+                                <th class="check-column">По уважительной</th>
+                                <th>Комментарий</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="student-name">
+                                        <div class="student-avatar"></div>
+                                        <span>Иванов Иван Иванович</span>
+                                    </div>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_1" class="attendance-checkbox" checked>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_1" class="attendance-checkbox">
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_1" class="attendance-checkbox">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Комментарий">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="student-name">
+                                        <div class="student-avatar"></div>
+                                        <span>Петров Петр Петрович</span>
+                                    </div>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_2" class="attendance-checkbox" checked>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_2" class="attendance-checkbox">
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_2" class="attendance-checkbox">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Комментарий">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="student-name">
+                                        <div class="student-avatar"></div>
+                                        <span>Сидорова Мария Александровна</span>
+                                    </div>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_3" class="attendance-checkbox">
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_3" class="attendance-checkbox" checked>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_3" class="attendance-checkbox">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Комментарий" value="Сообщила о болезни">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="student-name">
+                                        <div class="student-avatar"></div>
+                                        <span>Кузнецов Алексей Дмитриевич</span>
+                                    </div>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_4" class="attendance-checkbox">
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_4" class="attendance-checkbox">
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_4" class="attendance-checkbox" checked>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Комментарий" value="Справка из медпункта">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="student-name">
+                                        <div class="student-avatar"></div>
+                                        <span>Новиков Дмитрий Сергеевич</span>
+                                    </div>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_5" class="attendance-checkbox" checked>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_5" class="attendance-checkbox">
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_5" class="attendance-checkbox">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Комментарий">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="student-name">
+                                        <div class="student-avatar"></div>
+                                        <span>Морозова Елена Игоревна</span>
+                                    </div>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_6" class="attendance-checkbox">
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_6" class="attendance-checkbox" checked>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_6" class="attendance-checkbox">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Комментарий">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="student-name">
+                                        <div class="student-avatar"></div>
+                                        <span>Волков Артем Витальевич</span>
+                                    </div>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_7" class="attendance-checkbox" checked>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_7" class="attendance-checkbox">
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_7" class="attendance-checkbox">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Комментарий">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="student-name">
+                                        <div class="student-avatar"></div>
+                                        <span>Соколова Анна Михайловна</span>
+                                    </div>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_8" class="attendance-checkbox" checked>
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_8" class="attendance-checkbox">
+                                </td>
+                                <td class="check-column">
+                                    <input type="radio" name="student_8" class="attendance-checkbox">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Комментарий">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Кнопки сохранения -->
+                    <div class="attendance-actions">
+                        <button class="action-button cancel-button">Отмена</button>
+                        <button class="action-button save-button">Сохранить</button>
+                    </div>
+                    
+                    <!-- Статистика (скрыта по умолчанию) -->
+                    <div class="attendance-stats" style="display: none;">
+                        <div class="stat-card">
+                            <div class="stat-value">85%</div>
+                            <div class="stat-label">Средняя посещаемость за семестр</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">Посещаемость этой недели</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">76%</div>
+                            <div class="stat-label">Посещаемость за прошлую неделю</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/auth-api.js"></script>
+    <script src="../../js/teacher-attendance.js"></script>
+</body>
+</html> 

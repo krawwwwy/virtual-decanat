@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Журнал успеваемости</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link rel="stylesheet" href="../../assets/teacher.css">
+    <link rel="stylesheet" href="../../assets/teacher-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400;500;700;900&family=Prosto+One&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Стили для страницы журнала */
+        .journal-content {
+            padding: 20px 0;
+        }
+        
+        .journal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .journal-filter {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .filter-selector {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .journal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        .journal-table th, .journal-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            min-width: 80px;
+        }
+        
+        .journal-table th {
+            background-color: var(--secondary-color);
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+        }
+        
+        .journal-table td {
+            font-weight: 500;
+        }
+        
+        .student-name-column {
+            position: sticky;
+            left: 0;
+            background-color: white;
+            z-index: 1;
+            text-align: left;
+            min-width: 200px;
+            max-width: 250px;
+        }
+        
+        .student-name-column.header {
+            background-color: var(--secondary-color);
+            z-index: 2;
+        }
+        
+        .student-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .student-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .grade-input {
+            width: 50px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        
+        .journal-date {
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .journal-notes {
+            margin-top: 5px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .avg-grade {
+            font-weight: 700;
+            background-color: rgba(26, 26, 229, 0.1);
+        }
+        
+        .exam-grade {
+            font-weight: 700;
+            background-color: rgba(229, 92, 92, 0.1);
+        }
+        
+        .journal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .action-button {
+            padding: 8px 16px;
+            border-radius: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .save-button {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .cancel-button {
+            background-color: var(--secondary-color);
+        }
+        
+        .journal-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .subject-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .subject-icon img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .journal-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        
+        /* Tabs */
+        .journal-tabs {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tab {
+            padding: 12px 4px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        .tab.active {
+            color: var(--text-primary);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        /* Легенда оценок */
+        .grades-legend {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        
+        .legend-color.normal {
+            background-color: white;
+            border: 1px solid var(--border-color);
+        }
+        
+        .legend-color.avg {
+            background-color: rgba(26, 26, 229, 0.1);
+        }
+        
+        .legend-color.exam {
+            background-color: rgba(229, 92, 92, 0.1);
+        }
+        
+        .grade-absent {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Новикова Алина Сергеевна</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="menu-title">Главное меню</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <img src="../../assets/icons/home.svg" alt="Домой" class="nav-icon">
+                        Домой
+                    </a>
+                    <a href="schedule.html" class="nav-item">
+                        <img src="../../assets/icons/schedule.svg" alt="Расписание" class="nav-icon">
+                        Расписание
+                    </a>
+                    <a href="attendance.html" class="nav-item">
+                        <img src="../../assets/icons/performance.svg" alt="Посещаемость" class="nav-icon">
+                        Посещаемость
+                    </a>
+                    <a href="journal.html" class="nav-item active">
+                        <img src="../../assets/icons/performance.svg" alt="Журнал" class="nav-icon">
+                        Журнал
+                    </a>
+                    <a href="groups.html" class="nav-item">
+                        <img src="../../assets/icons/groups.svg" alt="Студенты" class="nav-icon">
+                        Студенты
+                    </a>
+                    <a href="#" class="nav-item">
+                        <img src="../../assets/icons/settings.svg" alt="Настройки" class="nav-icon">
+                        Настройки
+                    </a>
+                </nav>
+                <div class="sidebar-button">
+                    <button class="primary-button">Добавить</button>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="content-header">
+                    <h1 class="page-title">Журнал успеваемости</h1>
+                    <div class="date-selector">
+                        <button class="date-button">Весенний семестр 2025</button>
+                    </div>
+                </div>
+                
+                <div class="journal-content">
+                    <!-- Вкладки -->
+                    <div class="journal-tabs">
+                        <div class="tab active" data-tab="grades">Оценки</div>
+                        <div class="tab" data-tab="comments">Комментарии</div>
+                        <div class="tab" data-tab="analytics">Аналитика</div>
+                    </div>
+                    
+                    <!-- Фильтр предметов и групп -->
+                    <div class="journal-header">
+                        <div class="filter-selector">
+                            <select id="subjectFilter" class="date-button">
+                                <option value="math">Прикладная математика</option>
+                                <option value="geometry">Начертательная геометрия</option>
+                                <option value="algebra">Линейная алгебра</option>
+                            </select>
+                            
+                            <select id="groupFilter" class="date-button">
+                                <option value="mt101">МТ-101</option>
+                                <option value="mt102">МТ-102</option>
+                                <option value="mt201">МТ-201</option>
+                            </select>
+                        </div>
+                        
+                        <button class="date-button">Экспорт</button>
+                    </div>
+                    
+                    <!-- Информация о предмете -->
+                    <div class="journal-info">
+                        <div class="subject-icon">
+                            <img src="../../assets/images/teacher/math_icon.svg" alt="Математика">
+                        </div>
+                        <div>
+                            <div class="journal-title">Прикладная математика</div>
+                            <div>Группа: МТ-101 | Семестр: Весенний 2025</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Легенда оценок -->
+                    <div class="grades-legend">
+                        <div class="legend-item">
+                            <div class="legend-color normal"></div>
+                            <span>Обычная оценка</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color avg"></div>
+                            <span>Средняя оценка</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color exam"></div>
+                            <span>Экзамен/Зачет</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Таблица журнала -->
+                    <div style="overflow-x: auto;">
+                        <table class="journal-table">
+                            <thead>
+                                <tr>
+                                    <th class="student-name-column header">Студент</th>
+                                    <th>
+                                        <div class="journal-date">03.02</div>
+                                        <div class="journal-notes">Лекция</div>
+                                    </th>
+                                    <th>
+                                        <div class="journal-date">10.02</div>
+                                        <div class="journal-notes">Семинар</div>
+                                    </th>
+                                    <th>
+                                        <div class="journal-date">17.02</div>
+                                        <div class="journal-notes">К/Р</div>
+                                    </th>
+                                    <th>
+                                        <div class="journal-date">24.02</div>
+                                        <div class="journal-notes">Лекция</div>
+                                    </th>
+                                    <th>
+                                        <div class="journal-date">03.03</div>
+                                        <div class="journal-notes">Лаб.</div>
+                                    </th>
+                                    <th>
+                                        <div class="journal-date">10.03</div>
+                                        <div class="journal-notes">Семинар</div>
+                                    </th>
+                                    <th>
+                                        <div class="journal-date">17.03</div>
+                                        <div class="journal-notes">Семинар</div>
+                                    </th>
+                                    <th class="avg-grade">
+                                        <div class="journal-date">Средний балл</div>
+                                    </th>
+                                    <th class="exam-grade">
+                                        <div class="journal-date">Экзамен</div>
+                                    </th>
+                                    <th class="avg-grade">
+                                        <div class="journal-date">Итоговая</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="student-name-column">
+                                        <div class="student-name">
+                                            <div class="student-avatar"></div>
+                                            <span>Иванов Иван Иванович</span>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td class="avg-grade">4.3</td>
+                                    <td class="exam-grade"><input type="text" class="grade-input" value="4"></td>
+                                    <td class="avg-grade">4</td>
+                                </tr>
+                                <tr>
+                                    <td class="student-name-column">
+                                        <div class="student-name">
+                                            <div class="student-avatar"></div>
+                                            <span>Петров Петр Петрович</span>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input grade-absent" value="н"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td class="avg-grade">4.2</td>
+                                    <td class="exam-grade"><input type="text" class="grade-input" value="5"></td>
+                                    <td class="avg-grade">5</td>
+                                </tr>
+                                <tr>
+                                    <td class="student-name-column">
+                                        <div class="student-name">
+                                            <div class="student-avatar"></div>
+                                            <span>Сидорова Мария Александровна</span>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="grade-input grade-absent" value="н"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td class="avg-grade">4.7</td>
+                                    <td class="exam-grade"><input type="text" class="grade-input" value="5"></td>
+                                    <td class="avg-grade">5</td>
+                                </tr>
+                                <tr>
+                                    <td class="student-name-column">
+                                        <div class="student-name">
+                                            <div class="student-avatar"></div>
+                                            <span>Кузнецов Алексей Дмитриевич</span>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="grade-input" value="2"></td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td class="avg-grade">3.1</td>
+                                    <td class="exam-grade"><input type="text" class="grade-input" value="3"></td>
+                                    <td class="avg-grade">3</td>
+                                </tr>
+                                <tr>
+                                    <td class="student-name-column">
+                                        <div class="student-name">
+                                            <div class="student-avatar"></div>
+                                            <span>Новиков Дмитрий Сергеевич</span>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td class="avg-grade">3.9</td>
+                                    <td class="exam-grade"><input type="text" class="grade-input" value="4"></td>
+                                    <td class="avg-grade">4</td>
+                                </tr>
+                                <tr>
+                                    <td class="student-name-column">
+                                        <div class="student-name">
+                                            <div class="student-avatar"></div>
+                                            <span>Морозова Елена Игоревна</span>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td><input type="text" class="grade-input" value="5"></td>
+                                    <td class="avg-grade">5.0</td>
+                                    <td class="exam-grade"><input type="text" class="grade-input" value="5"></td>
+                                    <td class="avg-grade">5</td>
+                                </tr>
+                                <tr>
+                                    <td class="student-name-column">
+                                        <div class="student-name">
+                                            <div class="student-avatar"></div>
+                                            <span>Волков Артем Витальевич</span>
+                                        </div>
+                                    </td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input grade-absent" value="н"></td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td><input type="text" class="grade-input grade-absent" value="н"></td>
+                                    <td><input type="text" class="grade-input" value="4"></td>
+                                    <td><input type="text" class="grade-input" value="3"></td>
+                                    <td class="avg-grade">3.2</td>
+                                    <td class="exam-grade"><input type="text" class="grade-input" value="3"></td>
+                                    <td class="avg-grade">3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Кнопки сохранения -->
+                    <div class="journal-actions">
+                        <button class="action-button cancel-button">Отмена</button>
+                        <button class="action-button save-button">Сохранить изменения</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/auth-api.js"></script>
+    <script src="../../js/teacher-journal.js"></script>
+</body>
+</html> 
