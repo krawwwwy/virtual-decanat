@@ -1,0 +1,324 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FFFFFF;
+    color: #0E141B;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Стили для шапки */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    height: 50px;
+    background-color: #F7FAFC;
+    box-shadow: 0px 0px 4px 0px rgba(218, 218, 218, 1);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo img {
+    width: 16px;
+    height: 16px;
+    margin-right: 16px;
+}
+
+.logo-text {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #0D141C;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #DDDDDD;
+    border-radius: 16px;
+}
+
+/* Стили для основного контента */
+.main-content {
+    display: flex;
+    flex: 1;
+    height: auto;
+    max-height: 85vh;
+}
+
+.left-section {
+    position: relative;
+    width: 45%;
+    height: 100%;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('registration-bg-student.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+}
+
+.background-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(103, 114, 214, 0.57), rgba(0, 0, 0, 1));
+    border-radius: 20px;
+}
+
+.decanat-title {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    z-index: 2;
+}
+
+.decanat-title h1 {
+    font-family: 'Prosto One', cursive;
+    font-size: 42px;
+    color: #0019FF;
+    line-height: 1.09375em;
+    max-width: 400px;
+}
+
+.right-section {
+    flex: 1;
+    padding: 15px 20px;
+    position: relative;
+    max-width: 55%;
+    overflow-y: auto;
+}
+
+.main-title {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 5px;
+    color: #0E141B;
+    line-height: 1.4;
+}
+
+.subtitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #4E7397;
+    margin-bottom: 5px;
+    line-height: 1.2;
+}
+
+.student-tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: #4E7397;
+    line-height: 1.2;
+}
+
+/* Стили формы */
+.registration-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-group {
+    position: relative;
+    height: 50px;
+    background-color: #E7EDF3;
+    border-radius: 10px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 100%;
+    padding: 0 16px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #4E7397;
+    opacity: 0.7;
+    line-height: 1.2;
+}
+
+.btn-submit {
+    margin-top: 20px;
+    height: 60px;
+    background: linear-gradient(to bottom, #A2AAF4, #0019FF);
+    border: none;
+    border-radius: 10px;
+    color: #FFFFFF;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 2.5%;
+    cursor: pointer;
+    text-transform: uppercase;
+    line-height: 1.3;
+}
+
+/* Стили для футера */
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #FFFFFF;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.footer-link {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #808080;
+    text-decoration: none;
+    line-height: 1.5em;
+}
+
+.social-links {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 10px;
+}
+
+.social-icon {
+    width: 20px;
+    height: 20px;
+    background-color: #808080;
+    border-radius: 50%;
+    display: block;
+}
+
+.copyright {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #4C4C4C;
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 1200px) {
+    .left-section, .right-section {
+        width: 50%;
+        max-width: 50%;
+    }
+    
+    .registration-form {
+        width: 100%;
+    }
+}
+
+@media (max-width: 900px) {
+    .main-content {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .left-section {
+        width: 100%;
+        height: 200px;
+        max-width: 100%;
+    }
+    
+    .decanat-title h1 {
+        font-size: 36px;
+    }
+    
+    .right-section {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+    }
+    
+    .student-tag {
+        position: static;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 0 20px;
+    }
+    
+    .main-title {
+        font-size: 24px;
+    }
+    
+    .subtitle {
+        font-size: 14px;
+    }
+    
+    .btn-submit {
+        height: 50px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-group {
+        height: 45px;
+    }
+    
+    .form-group input {
+        font-size: 14px;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+} 

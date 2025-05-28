@@ -1,0 +1,350 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Public Sans', 'Inter', sans-serif;
+    background-color: #F5F7FA;
+    color: #0D141C;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+/* Стили для шапки */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 40px;
+    border-bottom: 1px solid #E5E8EB;
+    background-color: #FFFFFF;
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo-text {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.28;
+}
+
+.header-right {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+}
+
+.nav-link {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.05;
+    color: #0D141C;
+    text-decoration: none;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+    height: 63px;
+    border-radius: 12px;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.05;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(to bottom, #808DFF, #0019FF);
+    color: #F7FAFC;
+    width: 169px;
+}
+
+.btn-secondary {
+    background-color: #E8EDF2;
+    color: #0D141C;
+    width: 243px;
+}
+
+/* Основной контент */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0;
+}
+
+/* Секция авторизации */
+.auth-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 480px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+}
+
+.auth-title {
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #0D141C;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+/* Форма авторизации */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #4A5568;
+}
+
+.form-group input {
+    height: 56px;
+    padding: 0 16px;
+    border: 1px solid #CBD5E0;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #0019FF;
+}
+
+.form-group input::placeholder {
+    color: #A0AEC0;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #4A5568;
+    cursor: pointer;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    height: 20px;
+    width: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E0;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #0019FF;
+    border-color: #0019FF;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.forgot-password {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #0019FF;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.btn-submit {
+    background: linear-gradient(to bottom, #808DFF, #0019FF);
+    color: white;
+    height: 56px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(to bottom, #6B7EFF, #0014CC);
+}
+
+/* Разделитель */
+.auth-divider {
+    position: relative;
+    margin: 32px 0;
+    text-align: center;
+}
+
+.auth-divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #E2E8F0;
+    z-index: 1;
+}
+
+.auth-divider span {
+    position: relative;
+    z-index: 2;
+    background-color: white;
+    padding: 0 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #718096;
+}
+
+/* Социальные кнопки */
+.social-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.btn-social {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    color: #4A5568;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-social:hover {
+    background-color: #F7FAFC;
+}
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Футер формы */
+.auth-footer {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #4A5568;
+}
+
+.register-link {
+    color: #0019FF;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+/* Адаптивность */
+@media (max-width: 576px) {
+    .auth-container {
+        padding: 24px;
+    }
+    
+    .auth-title {
+        font-size: 28px;
+    }
+    
+    .header {
+        padding: 12px 20px;
+    }
+    
+    .header-right {
+        display: none;
+    }
+} 

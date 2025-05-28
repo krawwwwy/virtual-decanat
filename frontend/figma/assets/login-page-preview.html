@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Превью страницы авторизации</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .preview {
+            width: 800px;
+            height: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: #fff;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e8eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+        }
+        .logo-img {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+        }
+        .nav {
+            display: flex;
+            gap: 24px;
+        }
+        .nav-item {
+            color: #555;
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        .auth-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .auth-btn.primary {
+            background-color: #0019ff;
+            color: white;
+        }
+        .auth-btn.secondary {
+            background-color: #e8edf2;
+            color: #333;
+        }
+        .content {
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        .auth-form {
+            width: 360px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        .form-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 24px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+        .form-input {
+            width: 100%;
+            height: 48px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-bottom: 24px;
+        }
+        .submit-btn {
+            width: 100%;
+            height: 48px;
+            background-color: #0019ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+        .divider {
+            text-align: center;
+            position: relative;
+            margin: 24px 0;
+            color: #777;
+            font-size: 12px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: #e0e0e0;
+        }
+        .divider::before {
+            left: 0;
+        }
+        .divider::after {
+            right: 0;
+        }
+        .social-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .social-btn {
+            width: 100%;
+            height: 48px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+        }
+        .auth-footer {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+        .register-link {
+            color: #0019ff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-img"></div>
+                <span>МГТУ Станкин</span>
+            </div>
+            <div class="nav">
+                <div class="nav-item">Абитуриентам</div>
+            </div>
+            <div class="auth-buttons">
+                <div class="auth-btn primary">Вход</div>
+                <div class="auth-btn secondary">Регистрация</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="auth-form">
+                <div class="form-title">Вход в систему</div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <div class="form-input"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <div class="form-input"></div>
+                </div>
+                
+                <div class="form-options">
+                    <div>Запомнить меня</div>
+                    <div>Забыли пароль?</div>
+                </div>
+                
+                <div class="submit-btn">Войти</div>
+                
+                <div class="divider">или</div>
+                
+                <div class="social-btns">
+                    <div class="social-btn">
+                        <div class="social-icon"></div>
+                        Войти через Google
+                    </div>
+                    <div class="social-btn">
+                        <div class="social-icon"></div>
+                        Войти через ВКонтакте
+                    </div>
+                </div>
+                
+                <div class="auth-footer">
+                    Нет аккаунта? <a href="#" class="register-link">Зарегистрироваться</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

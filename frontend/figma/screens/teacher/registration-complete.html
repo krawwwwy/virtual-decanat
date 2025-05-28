@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Завершение регистрации преподавателя</title>
+    <link rel="stylesheet" href="../../assets/teacher-registration-complete.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400&family=Prosto+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-avatar"></div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="left-section">
+                <div class="background-image"></div>
+                <div class="decanat-title">
+                    <h1>Виртуальный деканат</h1>
+                </div>
+            </div>
+            <div class="right-section">
+                <div class="teacher-tag">/ПРЕПОДАВАТЕЛЬ</div>
+                <h1 class="main-title">Завершение регистрации</h1>
+                <p class="subtitle">Для создания учетной записи заполните следующие поля</p>
+                
+                <form class="registration-form">
+                    <div class="form-group">
+                        <input type="text" name="fio" placeholder="ФИО" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="position" placeholder="Должность" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="department" placeholder="Кафедра / факультет" list="departments" required>
+                        <datalist id="departments">
+                            <option value="Кафедра информационных технологий">
+                            <option value="Кафедра машиностроения">
+                            <option value="Кафедра экономики и менеджмента">
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="degree" placeholder="Ученая степень" list="degrees" required>
+                        <datalist id="degrees">
+                            <option value="Кандидат наук">
+                            <option value="Доктор наук">
+                            <option value="Без степени">
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="title" placeholder="Ученое звание" list="titles" required>
+                        <datalist id="titles">
+                            <option value="Доцент">
+                            <option value="Профессор">
+                            <option value="Без звания">
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" name="birth_date" placeholder="Дата рождения" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Телефон" pattern="[0-9]{11}" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Зарегистрироваться</button>
+                </form>
+            </div>
+        </main>
+        
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат
+            </div>
+        </footer>
+    </div>
+
+    <!-- Подключение общего JavaScript файла -->
+    <script src="../../js/registration-form.js"></script>
+</body>
+</html> 

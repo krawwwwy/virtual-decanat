@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Регистрация</title>
+    <link rel="stylesheet" href="../assets/registration-page.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700&family=Lexend:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="main-page.html">
+                        <img src="../assets/logo.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-menu">
+                    <div class="user-avatar"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="left-section">
+                <div class="background-image"></div>
+            </div>
+            <div class="right-section">
+                <h1 class="main-title">Добро пожаловать в Виртуальный деканат</h1>
+                <p class="subtitle">Для создания учетной записи заполните<br>следующие поля</p>
+                
+                <h3 class="role-title">Выберите вашу роль:</h3>
+                <div class="role-buttons">
+                    <button class="role-btn role-btn-active" data-role="student">Студент</button>
+                    <button class="role-btn" data-role="teacher">Преподаватель</button>
+                    <button class="role-btn" data-role="staff">Сотрудник деканата</button>
+                </div>
+                
+                <form class="registration-form" id="registrationForm">
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Логин" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Пароль" required>
+                        <span class="show-password"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Подтвердите пароль" required>
+                        <span class="show-password"></span>
+                    </div>
+                    <button type="submit" class="btn-submit">Продолжить</button>
+                </form>
+                
+                <div class="login-link">
+                    <span>Уже зарегистрированы?</span>
+                    <a href="login-page.html">Войти</a>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-icon"></a>
+                <a href="#" class="social-icon"></a>
+                <a href="#" class="social-icon"></a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат.<br>Все права защищены.
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработка выбора роли
+            const roleButtons = document.querySelectorAll('.role-btn');
+            let selectedRole = 'student'; // По умолчанию выбран студент
+            
+            roleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Убираем активный класс у всех кнопок
+                    roleButtons.forEach(btn => btn.classList.remove('role-btn-active'));
+                    
+                    // Добавляем активный класс текущей кнопке
+                    this.classList.add('role-btn-active');
+                    
+                    // Сохраняем выбранную роль
+                    selectedRole = this.getAttribute('data-role');
+                });
+            });
+            
+            // Обработка отправки формы
+            const form = document.getElementById('registrationForm');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Редирект на соответствующую страницу завершения регистрации
+                switch(selectedRole) {
+                    case 'student':
+                        window.location.href = 'student/registration-complete.html';
+                        break;
+                    case 'teacher':
+                        window.location.href = 'teacher/registration-complete.html';
+                        break;
+                    case 'staff':
+                        window.location.href = 'staff/registration-complete.html';
+                        break;
+                    default:
+                        window.location.href = 'student/registration-complete.html';
+                }
+            });
+            
+            // Обработка показа/скрытия пароля
+            const showPasswordButtons = document.querySelectorAll('.show-password');
+            
+            showPasswordButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const passwordField = this.previousElementSibling;
+                    
+                    if (passwordField.type === 'password') {
+                        passwordField.type = 'text';
+                        this.classList.add('active');
+                    } else {
+                        passwordField.type = 'password';
+                        this.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -21,9 +21,6 @@ services:
   applicant_service:
     url: http://applicant-service:8085
     timeout: 10s
-  support_service:
-    url: http://support-service:8086
-    timeout: 10s
 
 jwt:
   secret: your-secret-key

@@ -19,7 +19,7 @@ func SetupRouter(logger *zap.Logger) *gin.Engine {
 	proxyHandler := NewProxyHandler(logger)
 
 	// Публичные маршруты
-	public := router.Group("/api")
+	public := router.Group("/")
 	{
 		// Маршруты аутентификации
 		auth := public.Group("/auth")
@@ -41,12 +41,15 @@ func SetupRouter(logger *zap.Logger) *gin.Engine {
 	}
 
 	// Защищенные маршруты (требуют аутентификации)
-	protected := router.Group("/api")
+	protected := router.Group("/")
 	protected.Use(middleware.JWTAuthMiddleware())
 	{
 		// Профиль пользователя
-		protected.GET("/profile", proxyHandler.ProxyRequest("auth_service"))
-		protected.PUT("/profile", proxyHandler.ProxyRequest("auth_service"))
+		users := protected.Group("/users")
+		{
+			users.GET("/profile", proxyHandler.ProxyRequest("auth_service"))
+			users.PUT("/profile", proxyHandler.ProxyRequest("auth_service"))
+		}
 
 		// Расписание
 		schedule := protected.Group("/schedule")
@@ -108,24 +111,6 @@ func SetupRouter(logger *zap.Logger) *gin.Engine {
 				clubsAdmin.PUT("/:id", proxyHandler.ProxyRequest("club_service"))
 				clubsAdmin.DELETE("/:id", proxyHandler.ProxyRequest("club_service"))
 				clubsAdmin.PUT("/applications/:id", proxyHandler.ProxyRequest("club_service"))
-			}
-		}
-
-		// Социальная поддержка
-		support := protected.Group("/support")
-		{
-			support.GET("/types", proxyHandler.ProxyRequest("support_service"))
-			support.POST("/apply", proxyHandler.ProxyRequest("support_service"))
-			support.GET("/applications", proxyHandler.ProxyRequest("support_service"))
-			
-			// Маршруты для сотрудников деканата
-			supportAdmin := support.Group("/")
-			supportAdmin.Use(middleware.RoleAuthMiddleware("dean_office", "admin"))
-			{
-				supportAdmin.POST("/types", proxyHandler.ProxyRequest("support_service"))
-				supportAdmin.PUT("/types/:id", proxyHandler.ProxyRequest("support_service"))
-				supportAdmin.DELETE("/types/:id", proxyHandler.ProxyRequest("support_service"))
-				supportAdmin.PUT("/applications/:id", proxyHandler.ProxyRequest("support_service"))
 			}
 		}
 	}

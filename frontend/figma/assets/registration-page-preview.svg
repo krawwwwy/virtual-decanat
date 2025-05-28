@@ -1,0 +1,81 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Фон -->
+  <rect width="800" height="600" fill="#FFFFFF"/>
+  
+  <!-- Шапка -->
+  <rect width="800" height="40" fill="#F7FAFC" stroke="#E5E8EB" stroke-width="1"/>
+  
+  <!-- Логотип -->
+  <rect x="20" y="12" width="16" height="16" fill="#0E141B"/>
+  <text x="45" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#0D141C">МГТУ Станкин</text>
+  
+  <!-- Аватар пользователя -->
+  <circle cx="760" cy="20" r="15" fill="#DDDDDD"/>
+  
+  <!-- Основной контент -->
+  <rect x="0" y="40" width="570" height="560" fill="#000000"/>
+  <rect x="0" y="40" width="570" height="560" fill="url(#bg-gradient)"/>
+  
+  <!-- Правая панель -->
+  <rect x="570" y="40" width="230" height="560" fill="#FFFFFF"/>
+  
+  <!-- Заголовок формы -->
+  <text x="585" y="80" font-family="Arial" font-size="18" font-weight="bold" fill="#0E141B">Добро пожаловать</text>
+  <text x="585" y="105" font-family="Arial" font-size="18" font-weight="bold" fill="#0E141B">в Виртуальный деканат</text>
+  
+  <!-- Подзаголовок -->
+  <text x="585" y="140" font-family="Arial" font-size="12" fill="#4E7397">Для создания учетной записи</text>
+  <text x="585" y="155" font-family="Arial" font-size="12" fill="#4E7397">заполните следующие поля</text>
+  
+  <!-- Выбор роли -->
+  <text x="585" y="185" font-family="Arial" font-size="12" font-weight="bold" fill="#333333">Выберите вашу роль:</text>
+  
+  <!-- Кнопки ролей -->
+  <rect x="585" y="195" width="60" height="24" fill="#5A6BFF" rx="6"/>
+  <text x="615" y="211" font-family="Arial" font-size="10" fill="#FFFFFF" text-anchor="middle">Студент</text>
+  
+  <rect x="650" y="195" width="90" height="24" fill="#E8EDF2" rx="6"/>
+  <text x="695" y="211" font-family="Arial" font-size="10" fill="#0D141C" text-anchor="middle">Преподаватель</text>
+  
+  <rect x="745" y="195" width="45" height="24" fill="#E8EDF2" rx="6"/>
+  <text x="767" y="211" font-family="Arial" font-size="10" fill="#0D141C" text-anchor="middle">Сотрудник</text>
+  
+  <!-- Форма регистрации -->
+  <rect x="585" y="235" width="185" height="35" fill="#E7EDF3" rx="6"/>
+  <text x="600" y="257" font-family="Arial" font-size="12" fill="#4E7397" opacity="0.7">Email</text>
+  
+  <rect x="585" y="280" width="185" height="35" fill="#E7EDF3" rx="6"/>
+  <text x="600" y="302" font-family="Arial" font-size="12" fill="#4E7397" opacity="0.7">Логин</text>
+  
+  <rect x="585" y="325" width="185" height="35" fill="#E7EDF3" rx="6"/>
+  <text x="600" y="347" font-family="Arial" font-size="12" fill="#4E7397" opacity="0.7">Пароль</text>
+  <circle cx="760" cy="342" r="8" fill="#4E7397" opacity="0.3"/>
+  
+  <rect x="585" y="370" width="185" height="35" fill="#E7EDF3" rx="6"/>
+  <text x="600" y="392" font-family="Arial" font-size="12" fill="#4E7397" opacity="0.7">Подтвердите пароль</text>
+  <circle cx="760" cy="387" r="8" fill="#4E7397" opacity="0.3"/>
+  
+  <!-- Кнопка продолжить -->
+  <rect x="585" y="425" width="185" height="40" fill="url(#button-gradient)" rx="6"/>
+  <text x="678" y="450" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Продолжить</text>
+  
+  <!-- Ссылка на вход -->
+  <text x="620" y="485" font-family="Arial" font-size="12" fill="#637588">Уже зарегистрированы?</text>
+  <text x="735" y="485" font-family="Arial" font-size="12" fill="#19006D" font-weight="bold">Войти</text>
+  
+  <!-- Футер -->
+  <rect x="0" y="540" width="800" height="60" fill="#FFFFFF"/>
+  <text x="400" y="570" font-family="Arial" font-size="10" fill="#4C4C4C" text-anchor="middle">© 2025 Виртуальный деканат. Все права защищены.</text>
+  
+  <!-- Градиенты и прочее -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(0,20,201,0.4)"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </linearGradient>
+    <linearGradient id="button-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A2AAF4"/>
+      <stop offset="100%" stop-color="#0019FF"/>
+    </linearGradient>
+  </defs>
+</svg> 

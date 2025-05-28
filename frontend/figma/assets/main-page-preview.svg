@@ -1,0 +1,55 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Фон -->
+  <rect width="800" height="600" fill="#FFFFFF"/>
+  
+  <!-- Шапка -->
+  <rect width="800" height="70" fill="#FFFFFF" stroke="#E5E8EB" stroke-width="1"/>
+  
+  <!-- Логотип -->
+  <rect x="40" y="25" width="20" height="20" fill="#0D141C"/>
+  <text x="70" y="40" font-family="Arial" font-size="16" font-weight="bold" fill="#0D141C">МГТУ Станкин</text>
+  
+  <!-- Навигация -->
+  <text x="400" y="40" font-family="Arial" font-size="16" fill="#0D141C">Абитуриентам</text>
+  
+  <!-- Кнопки авторизации -->
+  <rect x="550" y="20" width="100" height="30" fill="url(#blue-gradient)" rx="8"/>
+  <text x="600" y="40" font-family="Arial" font-size="14" fill="#FFFFFF" text-anchor="middle">Вход</text>
+  
+  <rect x="660" y="20" width="100" height="30" fill="#E8EDF2" rx="8"/>
+  <text x="710" y="40" font-family="Arial" font-size="14" fill="#0D141C" text-anchor="middle">Регистрация</text>
+  
+  <!-- Герой секция -->
+  <rect x="40" y="100" width="720" height="250" fill="#F0F4F8" rx="12"/>
+  <rect x="40" y="100" width="720" height="250" fill="#F7FAFC" fill-opacity="0.6" rx="12"/>
+  
+  <!-- Заголовок -->
+  <text x="400" y="200" font-family="Arial" font-size="40" font-weight="bold" fill="#0019FF" text-anchor="middle">Виртуальный деканат</text>
+  
+  <!-- Кнопка -->
+  <rect x="320" y="240" width="160" height="40" fill="#FFFFFF" rx="8" filter="url(#shadow)"/>
+  <text x="400" y="265" font-family="Arial" font-size="16" fill="#0D141C" text-anchor="middle">Присоединиться</text>
+  
+  <!-- Новостные карточки -->
+  <rect x="40" y="380" width="170" height="180" fill="#F7FAFC" stroke="#D1DBE8" stroke-width="1" rx="8"/>
+  <rect x="230" y="380" width="170" height="180" fill="#F7FAFC" stroke="#D1DBE8" stroke-width="1" rx="8"/>
+  <rect x="420" y="380" width="170" height="180" fill="#F7FAFC" stroke="#D1DBE8" stroke-width="1" rx="8"/>
+  <rect x="610" y="380" width="170" height="180" fill="#F7FAFC" stroke="#D1DBE8" stroke-width="1" rx="8"/>
+  
+  <!-- Заголовки новостей -->
+  <text x="55" y="430" font-family="Arial" font-size="12" font-weight="bold" fill="#0D141C">Университет вошёл в ТОП-10...</text>
+  <text x="245" y="430" font-family="Arial" font-size="12" font-weight="bold" fill="#0D141C">Открытие нового корпуса...</text>
+  <text x="435" y="430" font-family="Arial" font-size="12" font-weight="bold" fill="#0D141C">Старт приёма документов...</text>
+  <text x="625" y="430" font-family="Arial" font-size="12" font-weight="bold" fill="#0D141C">День открытых дверей...</text>
+  
+  <!-- Дефиниция градиента для кнопки "Вход" -->
+  <defs>
+    <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#808DFF"/>
+      <stop offset="100%" stop-color="#0019FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+</svg> 

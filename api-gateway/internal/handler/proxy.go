@@ -68,7 +68,13 @@ func (h *ProxyHandler) ProxyRequest(serviceName string) gin.HandlerFunc {
 			return
 		}
 		
-		targetURL.Path = c.Request.URL.Path
+		// Добавляем префикс /api/v1 для запросов к сервисам
+		path := c.Request.URL.Path
+		if serviceName == "auth_service" {
+			path = "/api/v1" + path
+		}
+		
+		targetURL.Path = path
 		targetURL.RawQuery = c.Request.URL.RawQuery
 
 		// Читаем тело запроса
