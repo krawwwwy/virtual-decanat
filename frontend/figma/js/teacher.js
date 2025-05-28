@@ -3,6 +3,9 @@ function checkAuth() {
     // Получение информации о пользователе из localStorage
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     
+    // Для отладки: вывод информации о пользователе в консоль
+    console.log('User Info from localStorage:', userInfo);
+    
     // Если пользователь не авторизован или не является преподавателем, перенаправляем на страницу входа
     if (!userInfo || userInfo.role !== 'teacher') {
         window.location.href = '../../screens/login-page.html';
@@ -20,15 +23,20 @@ function updateProfileInfo(userInfo) {
     const profileAvatar = document.querySelector('.profile-avatar');
     
     if (profileName) {
-        profileName.textContent = `${userInfo.firstName} ${userInfo.lastName}`;
+        // Учитываем разные возможные форматы имен полей (camelCase и snake_case)
+        const firstName = userInfo.firstName || userInfo.first_name || '';
+        const lastName = userInfo.lastName || userInfo.last_name || '';
+        profileName.textContent = `${firstName} ${lastName}`;
     }
     
     if (profileAvatar) {
         // Если у пользователя есть аватар, используем его, иначе используем инициалы
         if (userInfo.avatarUrl) {
-            profileAvatar.innerHTML = `<img src="${userInfo.avatarUrl}" alt="${userInfo.firstName}">`;
+            profileAvatar.innerHTML = `<img src="${userInfo.avatarUrl}" alt="${userInfo.firstName || userInfo.first_name || ''}">`;
         } else {
-            const initials = `${userInfo.firstName.charAt(0)}${userInfo.lastName.charAt(0)}`;
+            const firstName = userInfo.firstName || userInfo.first_name || '';
+            const lastName = userInfo.lastName || userInfo.last_name || '';
+            const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
             profileAvatar.textContent = initials;
         }
     }
