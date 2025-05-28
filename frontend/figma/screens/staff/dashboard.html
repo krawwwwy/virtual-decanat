@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МГТУ Станкин - Виртуальный деканат - Панель управления деканата</title>
+    <link rel="stylesheet" href="../../assets/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700&family=Noto+Sans:wght@400;700&family=Inter:wght@400;500;700;800&family=Lexend:wght@400&family=Prosto+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Навигационная панель -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../main-page.html">
+                        <img src="../../assets/logo-header-vector.svg" alt="Логотип">
+                        <span class="logo-text">МГТУ Станкин</span>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <span class="user-name" id="userName">Загрузка...</span>
+                    <div class="user-avatar"></div>
+                    <div class="user-menu">
+                        <a href="#" id="logoutBtn">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active">Главная</a>
+                    <a href="#" class="nav-item">Студенты</a>
+                    <a href="#" class="nav-item">Преподаватели</a>
+                    <a href="#" class="nav-item">Группы</a>
+                    <a href="#" class="nav-item">Расписание</a>
+                    <a href="#" class="nav-item">Успеваемость</a>
+                    <a href="#" class="nav-item">Заявления</a>
+                    <a href="#" class="nav-item">Отчеты</a>
+                </nav>
+            </div>
+            <div class="content">
+                <div class="content-header">
+                    <h1>Панель управления деканата</h1>
+                </div>
+                <div class="dashboard-content">
+                    <div class="welcome-message">
+                        <h2>Добро пожаловать в систему управления деканата!</h2>
+                        <p>Здесь вы можете управлять данными студентов, преподавателей, расписанием и другими аспектами учебного процесса.</p>
+                    </div>
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <h3>Студенты</h3>
+                            <p>Управление данными студентов</p>
+                            <a href="#" class="card-button">Перейти</a>
+                        </div>
+                        <div class="card">
+                            <h3>Преподаватели</h3>
+                            <p>Управление данными преподавателей</p>
+                            <a href="#" class="card-button">Перейти</a>
+                        </div>
+                        <div class="card">
+                            <h3>Расписание</h3>
+                            <p>Управление расписанием занятий</p>
+                            <a href="#" class="card-button">Перейти</a>
+                        </div>
+                        <div class="card">
+                            <h3>Заявления</h3>
+                            <p>Обработка заявлений студентов</p>
+                            <a href="#" class="card-button">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Политика конфиденциальности</a>
+                <a href="#" class="footer-link">Свяжитесь с нами</a>
+                <a href="#" class="footer-link">Условия обслуживания</a>
+            </div>
+            <div class="copyright">
+                © 2025 Виртуальный деканат
+            </div>
+        </footer>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../../js/auth-api.js"></script>
+    <script src="../../js/dashboard.js"></script>
+</body>
+</html> 

@@ -38,6 +38,14 @@ CREATE TABLE IF NOT EXISTS schedule.groups (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Добавление учебных групп
+INSERT INTO schedule.groups (name, faculty, year) 
+VALUES 
+    ('ИДБ-22-10', 'Информатика и системы управления', 2022),
+    ('ИДБ-22-11', 'Информатика и системы управления', 2022),
+    ('ЭДБ-24-13', 'Экономика и менеджмент', 2024)
+ON CONFLICT (name) DO NOTHING;
+
 -- Создание таблицы студентов
 CREATE TABLE IF NOT EXISTS auth.students (
     id SERIAL PRIMARY KEY,
@@ -249,36 +257,36 @@ ON CONFLICT (name) DO NOTHING;
 -- Тестовые данные для performance.grades
 
 -- Тестовые данные для performance.attendance
-INSERT INTO performance.attendance (student_id, schedule_id, date, is_present)
-VALUES (1, 1, '2024-04-01', true), (1, 1, '2024-04-02', false)
-ON CONFLICT DO NOTHING;
+-- INSERT INTO performance.attendance (student_id, schedule_id, date, is_present)
+-- VALUES (1, 1, '2024-04-01', true), (1, 1, '2024-04-02', false)
+-- ON CONFLICT DO NOTHING;
 
 -- Тестовые данные для performance.debts
-INSERT INTO performance.debts (student_id, subject_id, description, deadline, is_resolved)
-VALUES (1, 1, 'Не сдал курсовую', '2024-06-01', false)
-ON CONFLICT DO NOTHING; 
+-- INSERT INTO performance.debts (student_id, subject_id, description, deadline, is_resolved)
+-- VALUES (1, 1, 'Не сдал курсовую', '2024-06-01', false)
+-- ON CONFLICT DO NOTHING; 
 
 -- Вставка тестового абитуриента
-INSERT INTO applicant.applicants (id, first_name, last_name, middle_name, email, password_hash, phone)
-VALUES (1, 'Test', 'Abiturient', 'Testovich', 'test@abiturient.com', 'testhash', '1234567890')
-ON CONFLICT DO NOTHING;
+-- INSERT INTO applicant.applicants (id, first_name, last_name, middle_name, email, password_hash, phone)
+-- VALUES (1, 'Test', 'Abiturient', 'Testovich', 'test@abiturient.com', 'testhash', '1234567890')
+-- ON CONFLICT DO NOTHING;
 
 -- Вставка тестовой заявки абитуриента
-INSERT INTO applicant.applications (
-    id, applicant_id, faculty, program, status, documents_submitted,
-    passport_series, passport_number, passport_issued_by, passport_date,
-    birth_date, birth_place, address,
-    education_type, institution, graduation_year, document_number,
-    document_date, average_grade, has_original_documents
-)
-VALUES (
-    1, 1, 'Факультет информатики', 'Программная инженерия', 'submitted', true,
-    '1234', '567890', 'МВД России', '2015-01-15',
-    '2000-05-20', 'Москва', 'ул. Примерная, д. 1, кв. 1',
-    'Среднее общее', 'Школа №123', 2022, 'A-123456',
-    '15.06.2022', 4.5, true
-)
-ON CONFLICT DO NOTHING;
+-- INSERT INTO applicant.applications (
+--     id, applicant_id, faculty, program, status, documents_submitted,
+--     passport_series, passport_number, passport_issued_by, passport_date,
+--     birth_date, birth_place, address,
+--     education_type, institution, graduation_year, document_number,
+--     document_date, average_grade, has_original_documents
+-- )
+-- VALUES (
+--     1, 1, 'Факультет информатики', 'Программная инженерия', 'submitted', true,
+--     '1234', '567890', 'МВД России', '2015-01-15',
+--     '2000-05-20', 'Москва', 'ул. Примерная, д. 1, кв. 1',
+--     'Среднее общее', 'Школа №123', 2022, 'A-123456',
+--     '15.06.2022', 4.5, true
+-- )
+-- ON CONFLICT DO NOTHING;
 
 
 
